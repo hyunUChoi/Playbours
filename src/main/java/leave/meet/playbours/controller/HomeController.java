@@ -10,4 +10,9 @@ public class HomeController {
     public String home() {
         return "pages/index";
     }
+
+    @RequestMapping("/browse")
+    public String browse() {
+        return "pages/browse";
+    }
 }
