@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Playbours</title>
+	<link rel="shortcut icon" type="image/png" href="/manage/images/logos/favicon.png" />
+	<link rel="stylesheet" href="/manage/css/styles.min.css" />
+	<script src="/manage/libs/jquery/dist/jquery.min.js"></script>
+	<script src="/manage/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="/manage/js/sidebarmenu.js"></script>
+	<script src="/manage/js/app.min.js"></script>
+	<script src="/manage/libs/simplebar/dist/simplebar.js"></script>
+</head>
+<body>
+	<header th:replace="~{common/manage/fragments/header :: header}"></header>
+
+	<th:block layout:fragment="content"></th:block>
+</body>
+</html>
