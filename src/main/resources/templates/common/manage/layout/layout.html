@@ -19,7 +19,7 @@
 </head>
 <body>
 	<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
-		<th:block th:if="${requestURI != '/register' and requestURI != '/login'}">
+		<th:block th:if="${!#strings.contains(requestURI, 'athn')}">
 			<aside th:replace="~{common/manage/fragments/aside :: aside}"></aside>
 
 			<div class="body-wrapper">
@@ -30,7 +30,7 @@
 				</div>
 			</div>
 		</th:block>
-		<th:block th:unless="${requestURI != '/register' and requestURI != '/login'}">
+		<th:block th:unless="${!#strings.contains(requestURI, 'athn')}">
 			<th:block layout:fragment="content"></th:block>
 		</th:block>
 	</div>

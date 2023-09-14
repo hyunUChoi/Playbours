@@ -46,12 +46,12 @@ public class ManageHomeController {
         return "pages/manage/ui-typography";
     }
 
-    @RequestMapping("/login")
+    @RequestMapping("/athnLogin")
     public String login() {
         return "pages/manage/authentication-login";
     }
 
-    @RequestMapping("/register")
+    @RequestMapping("/athnReg")
     public String register() {
         return "pages/manage/authentication-register";
     }
