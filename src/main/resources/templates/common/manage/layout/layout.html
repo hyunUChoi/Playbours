@@ -9,6 +9,8 @@
 	<title>Playbours</title>
 	<link rel="shortcut icon" type="image/png" href="/manage/images/logos/favicon.png" />
 	<link rel="stylesheet" href="/manage/css/styles.min.css" />
+	<!-- bootstrap icon js -->
+	<script src="https://kit.fontawesome.com/61925f7398.js" crossorigin="anonymous"></script>
 	<script src="/manage/libs/jquery/dist/jquery.min.js"></script>
 	<script src="/manage/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="/manage/js/sidebarmenu.js"></script>
@@ -16,8 +18,21 @@
 	<script src="/manage/libs/simplebar/dist/simplebar.js"></script>
 </head>
 <body>
-	<header th:replace="~{common/manage/fragments/header :: header}"></header>
+	<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
+		<th:block th:if="${requestURI != '/register' and requestURI != '/login'}">
+			<aside th:replace="~{common/manage/fragments/aside :: aside}"></aside>
 
-	<th:block layout:fragment="content"></th:block>
+			<div class="body-wrapper">
+				<header th:replace="~{common/manage/fragments/header :: header}"></header>
+
+				<div class="container-fluid">
+					<th:block layout:fragment="content"></th:block>
+				</div>
+			</div>
+		</th:block>
+		<th:block th:unless="${requestURI != '/register' and requestURI != '/login'}">
+			<th:block layout:fragment="content"></th:block>
+		</th:block>
+	</div>
 </body>
 </html>
