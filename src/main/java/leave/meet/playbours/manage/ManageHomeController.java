@@ -1,4 +1,4 @@
-package leave.meet.playbours.controller.manage;
+package leave.meet.playbours.manage;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,11 +44,6 @@ public class ManageHomeController {
     @RequestMapping("/ty")
     public String ty() {
         return "pages/manage/ui-typography";
-    }
-
-    @RequestMapping("/athnLogin")
-    public String login() {
-        return "pages/manage/authentication-login";
     }
 
     @RequestMapping("/athnReg")
