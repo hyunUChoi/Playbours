@@ -10,4 +10,8 @@ class PlayboursApplicationTests {
     void contextLoads() {
     }
 
+    @Test
+    void contextLoads2() {
+    }
+
 }
