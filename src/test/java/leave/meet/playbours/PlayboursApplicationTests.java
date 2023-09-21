@@ -13,10 +13,5 @@ class PlayboursApplicationTests {
     @Test
     void contextLoads2() {
     }
-    @Test
-    void contextLoads3() {
-    }
-    @Test
-    void contextLoads4() {
-    }
+
 }
