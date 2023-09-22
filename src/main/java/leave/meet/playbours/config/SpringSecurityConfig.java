@@ -1,3 +1,4 @@
+/*
 package leave.meet.playbours.config;
 
 import jakarta.servlet.DispatcherType;
@@ -61,3 +62,4 @@ public class SpringSecurityConfig {
     }
 
 }
+*/
