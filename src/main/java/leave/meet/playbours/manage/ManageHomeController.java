@@ -2,6 +2,7 @@ package leave.meet.playbours.manage;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class ManageHomeController {
@@ -13,7 +14,7 @@ public class ManageHomeController {
 
     @RequestMapping("/tables")
     public String tables() {
-        return "pages/manage/tables";
+        return "pages/manage/tables2";
     }
 
 }
