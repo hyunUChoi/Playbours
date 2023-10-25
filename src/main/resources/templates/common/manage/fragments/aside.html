@@ -52,8 +52,8 @@
 
 	<ul class="menu-inner py-1">
 		<!-- Dashboard -->
-		<li class="menu-item active">
-			<a th:href="@{/ma}" class="menu-link">
+		<li class="menu-item" th:classappend="${#strings.contains(requestURI, 'main') ? 'active' : ''}">
+			<a th:href="@{/ma/main/main}" class="menu-link">
 				<i class="menu-icon tf-icons bx bx-home-circle"></i>
 				<div data-i18n="Analytics">Dashboard</div>
 			</a>
@@ -63,8 +63,8 @@
 		<li class="menu-header small text-uppercase">
 			<span class="menu-header-text">System</span>
 		</li>
-		<li class="menu-item">
-			<a th:href="@{/tables}" class="menu-link">
+		<li class="menu-item" th:classappend="${#strings.contains(requestURI, 'menu') ? 'active' : ''}">
+			<a th:href="@{/ma/sys/menu/list}" class="menu-link">
 				<i class="menu-icon tf-icons bx bx-library"></i>
 				<div data-i18n="Menu">Menu</div>
 			</a>
