@@ -1,0 +1,11 @@
+server:
+  port: 8080
+
+spring:
+  thymeleaf:
+    cache: false
+    prefix: file:src/main/resources/templates/
+
+  data:
+    mongodb:
+      uri: mongodb+srv://admin:zzz1234@playcluster.a1hqkve.mongodb.net/playbours?retryWrites=true&w=majority

@@ -12,9 +12,4 @@ public class ManageHomeController {
         return "pages/manage/index";
     }
 
-    @RequestMapping("/tables")
-    public String tables() {
-        return "pages/manage/tables2";
-    }
-
 }
