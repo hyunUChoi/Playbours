@@ -12,37 +12,7 @@
 >
 <script th:inline="javascript">
 	document.addEventListener("DOMContentLoaded", () => {
-        fetch("/ma/sys/menu/addList")
-            .then(function(res) {
-                res.text().then(function(html) {
-                    let html_dom = new DOMParser().parseFromString(html,'text/html'),
-                        frag = document.createDocumentFragment();
-
-                    for(let node of html_dom.body.childNodes) {
-                        frag.appendChild(node);
-                    }
-
-                    fixScriptsSoTheyAreExecuted(frag);
-                    document.getElementById("tbl").append(frag);
-                })
-            });
-
-        /* script 활성화 */
-        function fixScriptsSoTheyAreExecuted(frag) {
-            var scripts = frag.querySelectorAll('script'), script, fixedScript, i, len;
-
-            for (i = 0, len = scripts.length; i < len; i++) {
-                script = scripts[i];
-
-                fixedScript = document.createElement('script');
-                fixedScript.type = script.type;
-                if (script.innerHTML) fixedScript.innerHTML = script.innerHTML;
-                else fixedScript.src = script.src;
-                fixedScript.async = false;
-
-                script.parentNode.replaceChild(fixedScript, script);
-            }
-        }
+        gfnCallAddList("/ma/sys/menu/addList");
 	});
 </script>
 <h4 class="fw-bold py-3 mb-4">MENU</h4>
