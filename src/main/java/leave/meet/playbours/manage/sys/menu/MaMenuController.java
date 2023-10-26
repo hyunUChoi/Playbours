@@ -10,7 +10,12 @@ public class MaMenuController {
 
     @RequestMapping(FOLDER_PATH + "list")
     public String list() {
-        return "pages/manage/sys/menu/tables2";
+        return "pages/manage/sys/menu/list";
+    }
+
+    @RequestMapping(FOLDER_PATH + "addList")
+    public String addList() {
+        return "pages/manage/sys/menu/addList";
     }
 
 }
