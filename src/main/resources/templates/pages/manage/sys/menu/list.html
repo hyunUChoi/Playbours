@@ -17,45 +17,48 @@
 </script>
 <h4 class="fw-bold py-3 mb-4">MENU</h4>
 <div class="card">
-	<div class="card-header">
-		<div class="d-flex justify-content-between align-items-center row py-3 gap-3 gap-md-0">
-			<div class="col-md-4">
-				<label class="form-label" for="selectRole">Role</label>
-				<select id="selectRole" class="form-select color-dropdown">
-					<option value=""> Select Role</option>
-					<option value="Admin">Admin</option>
-					<option value="Author">Author</option>
-					<option value="Editor">Editor</option>
-					<option value="Maintainer">Maintainer</option>
-					<option value="Subscriber">Subscriber</option>
-				</select>
+	<form id="defaultFrm" method="post" onsubmit="return false;">
+		<input type="hidden" name="id" value="1234">
+		<div class="card-header">
+			<div class="d-flex justify-content-between align-items-center row py-3 gap-3 gap-md-0">
+				<div class="col-md-4">
+					<label class="form-label" for="selectRole">Role</label>
+					<select id="selectRole" class="form-select color-dropdown">
+						<option value=""> Select Role</option>
+						<option value="Admin">Admin</option>
+						<option value="Author">Author</option>
+						<option value="Editor">Editor</option>
+						<option value="Maintainer">Maintainer</option>
+						<option value="Subscriber">Subscriber</option>
+					</select>
+				</div>
+				<div class="col-md-4">
+					<label class="form-label" for="selectPlan">Plan</label>
+					<select id="selectPlan" class="form-select color-dropdown">
+						<option value=""> Select Plan</option>
+						<option value="Basic">Basic</option>
+						<option value="Company">Company</option>
+						<option value="Enterprise">Enterprise</option>
+						<option value="Team">Team</option>
+					</select>
+				</div>
+				<div class="col-md-4">
+					<label class="form-label" for="selectStatus">Status</label>
+					<select id="selectStatus" class="form-select color-dropdown">
+						<option value=""> Select Status</option>
+						<option value="Pending" class="text-capitalize">Pending</option>
+						<option value="Active" class="text-capitalize">Active</option>
+						<option value="Inactive" class="text-capitalize">Inactive</option>
+					</select>
+				</div>
 			</div>
-			<div class="col-md-4">
-				<label class="form-label" for="selectPlan">Plan</label>
-				<select id="selectPlan" class="form-select color-dropdown">
-					<option value=""> Select Plan</option>
-					<option value="Basic">Basic</option>
-					<option value="Company">Company</option>
-					<option value="Enterprise">Enterprise</option>
-					<option value="Team">Team</option>
-				</select>
-			</div>
-			<div class="col-md-4">
-				<label class="form-label" for="selectStatus">Status</label>
-				<select id="selectStatus" class="form-select color-dropdown">
-					<option value=""> Select Status</option>
-					<option value="Pending" class="text-capitalize">Pending</option>
-					<option value="Active" class="text-capitalize">Active</option>
-					<option value="Inactive" class="text-capitalize">Inactive</option>
-				</select>
+			<div class="input-group">
+				<span class="input-group-text" id="basic-addon11"><i class="bx bx-search"></i></span>
+				<input type="text" class="form-control" placeholder="Search..." aria-label="Search..." aria-describedby="basic-addon11" style="border-top-right-radius: 0.375rem; border-bottom-right-radius: 0.375rem;"/>
+				<a class="btn btn-outline-primary" href="javascript:void(0);" data-size="large" data-show-count="true" style="margin-left: 10px; border-radius: 0.375rem !important;">Search</a>
 			</div>
 		</div>
-		<div class="input-group">
-			<span class="input-group-text" id="basic-addon11"><i class="bx bx-search"></i></span>
-			<input type="text" class="form-control" placeholder="Search..." aria-label="Search..." aria-describedby="basic-addon11" style="border-top-right-radius: 0.375rem; border-bottom-right-radius: 0.375rem;"/>
-			<a class="btn btn-outline-primary" href="javascript:void(0);" data-size="large" data-show-count="true" style="margin-left: 10px; border-radius: 0.375rem !important;">Search</a>
-		</div>
-	</div>
+	</form>
 	<div class="card-datatable table-responsive">
 		<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
 			<div id="tbl"></div>

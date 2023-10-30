@@ -1,5 +1,7 @@
 function gfnCallAddList(url) {
-    fetch(url)
+    fetch(url, {
+        method: "POST"
+    })
         .then(function(res) {
             res.text().then(function(html) {
                 let html_dom = new DOMParser().parseFromString(html,'text/html'),
@@ -16,7 +18,7 @@ function gfnCallAddList(url) {
 
     /* script 활성화 */
     function fixScriptsSoTheyAreExecuted(frag) {
-        var scripts = frag.querySelectorAll('script'), script, fixedScript, i, len;
+        let scripts = frag.querySelectorAll('script'), script, fixedScript, i, len;
 
         for (i = 0, len = scripts.length; i < len; i++) {
             script = scripts[i];
@@ -30,4 +32,29 @@ function gfnCallAddList(url) {
             script.parentNode.replaceChild(fixedScript, script);
         }
     }
+}
+
+function gfnPageProcess(divn, url, val, valNm) {
+    let frm = document.getElementById("defaultFrm");
+    let path = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
+    frm.setAttribute("action", path + url);
+
+    if(divn === 'insert') {
+
+    } else if(divn === 'update') {
+
+    } else if(divn === 'submit') {
+        formValidation(frm);
+    } else if(divn === 'cancel') {
+
+    } else if(divn === 'list') {
+
+    } else if(divn === 'view') {
+
+    } else if(divn === 'addList') {
+
+    }
+
+    //frm.submit();
+
 }
