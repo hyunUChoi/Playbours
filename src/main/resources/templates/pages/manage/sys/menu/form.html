@@ -14,7 +14,6 @@
     /*document.addEventListener("DOMContentLoaded", () => {
 
     });*/
-
 </script>
 <h4 class="fw-bold py-3 mb-4">Menu</h4>
 <div class="row">
@@ -24,37 +23,45 @@
 				<h5 class="mb-0">신규 메뉴등록</h5>
 			</div>
 			<div class="card-body">
-				<form id="defaultFrm" method="post" onsubmit="return false;">
+				<form id="defaultFrm" th:object="${maMenuDto}" method="post" onsubmit="return false;">
 					<div class="row">
-						<div class="mb-3 col-md-6">
-							<label for="menuDiv" class="form-label">구분</label>
-							<select class="form-select" id="menuDiv">
-								<option selected>선택</option>
+						<div class="mb-3 col-md-4">
+							<label for="menuClCd" class="form-label">구분</label>
+							<select class="form-select" id="menuClCd" title="구분" required>
+								<option value="" selected>선택</option>
 								<option value="ma">관리자</option>
 								<option value="ft">사용자</option>
 							</select>
 						</div>
-						<div class="mb-3 col-md-6">
+						<div class="mb-3 col-md-4">
 							<label class="form-label" for="menuOrd">순서</label>
 							<input type="text" class="form-control" id="menuOrd" title="순서" required/>
 						</div>
+						<div class="mb-3 col-md-4">
+							<label class="form-label" for="useYn">사용여부</label>
+							<select class="form-select" id="useYn" title="사용여부" required>
+								<option value="" selected>선택</option>
+								<option value="Y">사용</option>
+								<option value="N">미사용</option>
+							</select>
+						</div>
 						<div class="mb-3 col-md-6">
 							<label class="form-label" for="menuNm">메뉴명</label>
-							<input type="text" class="form-control" id="menuNm"/>
+							<input type="text" class="form-control" id="menuNm" title="메뉴명" required/>
 						</div>
 						<div class="mb-3 col-md-6">
 							<label class="form-label" for="menuCd">메뉴코드</label>
 							<div class="input-group">
-								<input type="text" class="form-control" id="menuCd"/>
+								<input type="text" class="form-control" id="menuCd" title="메뉴코드" required/>
 								<button class="btn btn-outline-primary" type="button" id="button-addon2">중복확인</button>
 							</div>
 						</div>
 						<div class="mb-3">
 							<label class="form-label" for="menuUrl">URL</label>
-							<input type="text" class="form-control" id="menuUrl"/>
+							<input type="text" class="form-control" id="menuUrl" title="URL" required/>
 						</div>
 						<div class="mb-3">
-							<label class="form-label" for="menuCmt">Message</label>
+							<label class="form-label" for="menuCmt">설명</label>
 							<textarea id="menuCmt" class="form-control"></textarea>
 						</div>
 					</div>

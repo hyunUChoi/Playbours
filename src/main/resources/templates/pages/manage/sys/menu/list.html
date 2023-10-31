@@ -17,8 +17,7 @@
 </script>
 <h4 class="fw-bold py-3 mb-4">MENU</h4>
 <div class="card">
-	<form id="defaultFrm" method="post" onsubmit="return false;">
-		<input type="hidden" name="id" value="1234">
+	<form id="defaultFrm" th:object="${maMenuDto}" method="post" onsubmit="return false;">
 		<div class="card-header">
 			<div class="d-flex justify-content-between align-items-center row py-3 gap-3 gap-md-0">
 				<div class="col-md-4">

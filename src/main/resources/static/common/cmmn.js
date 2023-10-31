@@ -40,11 +40,11 @@ function gfnPageProcess(divn, url, val, valNm) {
     frm.setAttribute("action", path + url);
 
     if(divn === 'insert') {
-
+        frm.submit();
     } else if(divn === 'update') {
 
     } else if(divn === 'submit') {
-        formValidation(frm);
+        if(formValidation(frm)) frm.submit();
     } else if(divn === 'cancel') {
 
     } else if(divn === 'list') {
@@ -54,7 +54,5 @@ function gfnPageProcess(divn, url, val, valNm) {
     } else if(divn === 'addList') {
 
     }
-
-    //frm.submit();
 
 }
