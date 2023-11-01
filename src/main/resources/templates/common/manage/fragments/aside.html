@@ -70,10 +70,33 @@
 			</a>
 		</li>
 		<li class="menu-item">
-			<a th:href="@{/tables}" class="menu-link">
+			<a th:href="@{/ma/sys/auth/list}" class="menu-link">
 				<i class="menu-icon tf-icons bx bx-lock-alt"></i>
 				<div data-i18n="Auth">Auth</div>
 			</a>
+		</li>
+
+		<!-- User -->
+		<li class="menu-header small text-uppercase">
+			<span class="menu-header-text">USERMANAGEr</span>
+		</li>
+		<li class="menu-item">
+			<a href="javascript:void(0)" class="menu-link menu-toggle">
+				<i class="menu-icon tf-icons bx bx-chalkboard"></i>
+				<div data-i18n="User">user</div>
+			</a>
+			<ul class="menu-sub">
+				<li class="menu-item">
+					<a th:href="@{/ma/sys/user/list}" class="menu-link">
+						<div data-i18n="User">User</div>
+					</a>
+				</li>
+				<li class="menu-item">
+					<a href="extended-ui-text-divider.html" class="menu-link">
+						<div data-i18n="aa">aa</div>
+					</a>
+				</li>
+			</ul>
 		</li>
 
 		<!-- Support -->
