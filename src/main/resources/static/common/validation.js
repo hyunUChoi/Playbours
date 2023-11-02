@@ -17,7 +17,7 @@ function formValidation(form) {
     for(let elm of form.elements) {
         if(elm.getAttribute('required') != null) {
             // 입력값 중 사이 공백 검사
-            if(spacePatten.test(elm.value)) {
+            if(elm.type !== 'textarea' && spacePatten.test(elm.value)) {
                 validationMsg('space', elm);
                 valChk += 1;
             }

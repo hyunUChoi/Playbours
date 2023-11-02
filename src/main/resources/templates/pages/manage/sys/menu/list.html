@@ -12,12 +12,13 @@
 >
 <script th:inline="javascript">
 	document.addEventListener("DOMContentLoaded", () => {
-        gfnCallAddList("/ma/sys/menu/addList");
+        gfnPageProcess('addList', 'addList');
 	});
 </script>
 <h4 class="fw-bold py-3 mb-4">MENU</h4>
 <div class="card">
 	<form id="defaultFrm" th:object="${maMenuDto}" method="post" onsubmit="return false;">
+		<input type="hidden" th:field="*{seq}"/>
 		<div class="card-header">
 			<div class="d-flex justify-content-between align-items-center row py-3 gap-3 gap-md-0">
 				<div class="col-md-4">

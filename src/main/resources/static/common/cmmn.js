@@ -39,20 +39,27 @@ function gfnPageProcess(divn, url, val, valNm) {
     let path = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
     frm.setAttribute("action", path + url);
 
-    if(divn === 'insert') {
+    if(divn === 'list') {
         frm.submit();
+
+    } else if(divn === 'addList') {
+        gfnCallAddList(path + url);
+
+    } else if(divn === 'view') {
+        document.getElementById(valNm).value = val;
+        frm.submit();
+
+    } else if(divn === 'insert') {
+        frm.submit();
+
     } else if(divn === 'update') {
+        frm.submit();
 
     } else if(divn === 'submit') {
         if(formValidation(frm)) frm.submit();
-    } else if(divn === 'cancel') {
 
-    } else if(divn === 'list') {
-
-    } else if(divn === 'view') {
-
-    } else if(divn === 'addList') {
+    } else if(divn === 'delete') {
+        frm.submit();
 
     }
-
 }

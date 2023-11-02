@@ -1,4 +1,4 @@
-package leave.meet.playbours.config;
+package leave.meet.playbours.common.config;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.ControllerAdvice;

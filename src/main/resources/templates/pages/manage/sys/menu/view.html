@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"
+      class="light-style layout-menu-fixed"
+      dir="ltr"
+      data-theme="theme-default"
+      data-assets-path="/manage/assets/"
+      data-template="vertical-menu-template-free"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/manage/layout/layout}"
+      layout:fragment="content"
+>
+<script th:inline="javascript">
+    document.addEventListener("DOMContentLoaded", () => {
+
+    });
+</script>
+<h4 class="fw-bold py-3 mb-4">Menu</h4>
+<div class="row">
+	<div class="col-xl">
+		<div class="card mb-4">
+			<div class="card-header d-flex justify-content-between align-items-center">
+				<h5 class="mb-0">메뉴 정보</h5>
+			</div>
+			<div class="card-body">
+				<form id="defaultFrm" th:object="${maMenuDto}" method="post" onsubmit="return false;">
+					<input type="hidden" th:field="*{seq}">
+					<input type="hidden" th:field="*{upperCd}">
+					<div class="row">
+						<div class="mb-3 col-md-4">
+							<label for="menuClCd" class="form-label">구분</label>
+							<input class="form-control-plaintext" id="menuClCd" th:field="*{menuClCd}" readonly>
+						</div>
+						<div class="mb-3 col-md-4">
+							<label class="form-label" for="menuOrd">순서</label>
+							<input type="text" class="form-control-plaintext" id="menuOrd" th:field="*{menuOrd}" readonly/>
+						</div>
+						<div class="mb-3 col-md-4">
+							<label class="form-label" for="useYn">사용여부</label>
+							<input type="text" class="form-control-plaintext" id="useYn" th:field="*{useYn}" readonly/>
+						</div>
+						<div class="mb-3 col-md-6">
+							<label class="form-label" for="menuNm">메뉴명</label>
+							<input type="text" class="form-control-plaintext" id="menuNm" th:field="*{menuNm}" readonly/>
+						</div>
+						<div class="mb-3 col-md-6">
+							<label class="form-label" for="menuCd">메뉴코드</label>
+							<input type="text" class="form-control-plaintext" id="menuCd" th:field="*{menuCd}" readonly/>
+						</div>
+						<div class="mb-3">
+							<label class="form-label" for="menuUrl">URL</label>
+							<input type="text" class="form-control-plaintext" id="menuUrl" th:field="*{menuUrl}" readonly/>
+						</div>
+						<div class="mb-3">
+							<label class="form-label" for="menuCmt">설명</label>
+							<textarea class="form-control-plaintext" id="menuCmt" th:field="*{menuCmt}" readonly></textarea>
+						</div>
+					</div>
+					<div class="text-end">
+						<button type="button" class="btn btn-outline-primary" onclick="gfnPageProcess('submit', 'insertForm')">하위등록</button>
+						<button type="button" class="btn btn-outline-info" onclick="gfnPageProcess('update', 'updateForm')">수정</button>
+						<button type="button" class="btn btn-outline-danger" onclick="gfnPageProcess('delete', 'deleteProc')">삭제</button>
+						<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('list', 'list')">목록</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+</html>
