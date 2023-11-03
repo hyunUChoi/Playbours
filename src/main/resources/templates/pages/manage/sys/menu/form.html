@@ -14,6 +14,46 @@
     document.addEventListener("DOMContentLoaded", () => {
 
     });
+
+	let chk = false;
+
+    /* 메뉴코드 재입력 확인 */
+    function fnOnInput() {
+        chk = false;
+    }
+
+    function fnChkOverlap() {
+        fetch('/ma/sys/menu/chkOverlap', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                menuCd: document.getElementById('menuCd').value
+            })
+        })
+            .then(res => res.json())
+	        .then(data => {
+                let msg;
+                if(data.result === 'true') {
+					msg = '사용 가능한 값입니다.';
+                    chk = true;
+                } else {
+                    msg = '중복된 코드가 존재합니다. 다시 입력해주세요.';
+                    chk = false;
+                }
+                alert(msg);
+	        })
+	        .catch(error => alert('fetch 에러'));
+    }
+
+    function fnSubmit() {
+        if(chk) {
+            gfnPageProcess('submit', 'insertProc')
+        } else {
+			alert("중복검사를 실시해주세요.");
+        }
+    }
 </script>
 <h4 class="fw-bold py-3 mb-4">Menu</h4>
 <div class="row">
@@ -24,57 +64,57 @@
 			</div>
 			<div class="card-body">
 				<form id="defaultFrm" th:object="${maMenuDto}" method="post" onsubmit="return false;">
-					<input type="hidden" th:field="*{seq}">
-					<input type="hidden" th:field="*{upperCd}">
+					<input type="hidden" id="seq" name="seq" th:value="${menuDto.seq}">
+					<input type="hidden" id="upperCd" name="upperCd" th:value="${menuDto.upperCd}">
 					<div class="row">
 						<div class="mb-3 col-md-4">
 							<label for="menuClCd" class="form-label">구분</label>
-							<select class="form-select" id="menuClCd" th:field="*{menuClCd}" title="구분" required>
-								<option value="" selected>선택</option>
-								<option value="ma">관리자</option>
-								<option value="ft">사용자</option>
+							<select class="form-select" id="menuClCd" name="menuClCd" th:value="${menuDto.menuClCd}" title="구분" required>
+								<option value="" th:selected="${menuDto.menuClCd} eq ''">선택</option>
+								<option value="ma" th:selected="${menuDto.menuClCd} eq 'ma'">관리자</option>
+								<option value="ft" th:selected="${menuDto.menuClCd} eq 'ft'">사용자</option>
 							</select>
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="menuOrd">순서</label>
-							<input type="text" class="form-control" id="menuOrd" th:field="*{menuOrd}" title="순서" required/>
+							<input type="text" class="form-control numOnly" id="menuOrd" name="menuOrd" th:value="${menuDto.menuOrd}" title="순서" required/>
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="useYn">사용여부</label>
-							<select class="form-select" id="useYn" th:field="*{useYn}" title="사용여부" required>
-								<option value="" selected>선택</option>
-								<option value="Y">사용</option>
-								<option value="N">미사용</option>
+							<select class="form-select" id="useYn" name="useYn" th:value="${menuDto.useYn}" title="사용여부" required>
+								<option value="" th:selected="${menuDto.useYn} eq ''">선택</option>
+								<option value="Y" th:selected="${menuDto.useYn} eq 'Y'">사용</option>
+								<option value="N" th:selected="${menuDto.useYn} eq 'N'">미사용</option>
 							</select>
 						</div>
 						<div class="mb-3 col-md-6">
 							<label class="form-label" for="menuNm">메뉴명</label>
-							<input type="text" class="form-control" id="menuNm" th:field="*{menuNm}" title="메뉴명" required/>
+							<input type="text" class="form-control" id="menuNm" name="menuNm" th:value="${menuDto.menuNm}" title="메뉴명" required/>
 						</div>
 						<div class="mb-3 col-md-6">
 							<label class="form-label" for="menuCd">메뉴코드</label>
 							<div class="input-group">
-								<input type="text" class="form-control" id="menuCd" th:field="*{menuCd}" title="메뉴코드" required/>
-								<button class="btn btn-outline-primary" type="button" id="button-addon2">중복확인</button>
+								<input type="text" class="form-control alphaOnly" id="menuCd" name="menuCd" th:value="${menuDto.menuCd}" title="메뉴코드" required oninput="fnOnInput();"/>
+								<button class="btn btn-outline-primary" type="button" id="button-addon2" onclick="fnChkOverlap();">중복확인</button>
 							</div>
 						</div>
 						<div class="mb-3">
 							<label class="form-label" for="menuUrl">URL</label>
-							<input type="text" class="form-control" id="menuUrl" th:field="*{menuUrl}" title="URL" required/>
+							<input type="text" class="form-control" id="menuUrl" name="menuUrl" th:value="${menuDto.menuUrl}" title="URL" required/>
 						</div>
 						<div class="mb-3">
 							<label class="form-label" for="menuCmt">설명</label>
-							<textarea class="form-control" id="menuCmt" th:field="*{menuCmt}"></textarea>
+							<textarea class="form-control" id="menuCmt" name="menuCmt" th:value="${menuDto.menuCmt}"></textarea>
 						</div>
 					</div>
 					<div class="text-end">
 						<th:block th:if="${maMenuDto.procType eq 'insert'}">
-							<button type="button" class="btn btn-outline-primary" onclick="gfnPageProcess('submit', 'insertProc')">등록</button>
+							<button type="button" class="btn btn-outline-primary" onclick="fnSubmit()">등록</button>
 							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('list', 'list')">취소</button>
 						</th:block>
 						<th:block th:unless="${maMenuDto.procType eq 'insert'}">
 							<button type="button" class="btn btn-outline-primary" onclick="gfnPageProcess('update', 'updateProc')">수정</button>
-							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('view', 'view', this.getAttribute('parameter'), 'seq')" th:parameter="*{seq}">취소</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('view', 'view', this.getAttribute('parameter'), 'seq')" th:parameter="${menuDto.seq}">취소</button>
 						</th:block>
 					</div>
 				</form>

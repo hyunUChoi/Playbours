@@ -4,12 +4,12 @@ import leave.meet.playbours.manage.sys.menu.repository.MaMenuRepository;
 import leave.meet.playbours.manage.sys.menu.service.MaMenuDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class MaMenuController {
@@ -39,13 +39,32 @@ public class MaMenuController {
     @RequestMapping(FOLDER_PATH + "{procType}Form")
     public String form(@ModelAttribute("maMenuDto") MaMenuDto maMenuDto, @PathVariable String procType, Model model) {
 
+        MaMenuDto menuDto = new MaMenuDto();
+        menuDto.setUpperCd(maMenuDto.getUpperCd());
+
         if(procType.equals("update")) {
-            maMenuDto = menuRepository.findOne(maMenuDto);
+            menuDto = menuRepository.findOne(maMenuDto.getSeq());
         }
 
-        model.addAttribute("maMenuDto", maMenuDto);
+        model.addAttribute("menuDto", menuDto);
 
         return "pages/manage/sys/menu/form";
+    }
+
+    @ResponseBody
+    @RequestMapping(FOLDER_PATH + "chkOverlap")
+    public HashMap<String, String> chkOverlap(@RequestBody Map<String, Object> body) {
+
+        HashMap<String, String> returnMap = new HashMap<>();
+        int count = menuRepository.countByCode((String) body.get("menuCd"));
+
+        if(count > 0) {
+            returnMap.put("result", "false");
+        } else {
+            returnMap.put("result", "true");
+        }
+
+        return returnMap;
     }
 
     @RequestMapping(FOLDER_PATH + "{procType}Proc")
@@ -71,7 +90,7 @@ public class MaMenuController {
 
     @RequestMapping(FOLDER_PATH + "view")
     public String view(@ModelAttribute("maMenuDto") MaMenuDto maMenuDto, Model model) {
-        model.addAttribute("maMenuDto", menuRepository.findOne(maMenuDto));
+        model.addAttribute("maMenuDto", menuRepository.findOne(maMenuDto.getSeq()));
         return "pages/manage/sys/menu/view";
     }
 

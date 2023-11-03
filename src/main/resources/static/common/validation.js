@@ -27,9 +27,34 @@ function formValidation(form) {
                 validationMsg('trim', elm);
                 valChk += 1;
             }
+
+            let vaildCase = elm.className.split(' ');
+            for(let classNm of vaildCase) {
+                switch (classNm) {
+                    case 'numOnly'      : validNum(elm); break;
+                    case 'alphaOnly'    : validAlpha(elm); break;
+                }
+            }
+
         }
     }
     return valChk <= 0;
+}
+
+function validNum(elm) {
+    let patten = /(^[0-9]+$)/g;
+
+    if(!patten.test(elm.value)) {
+        validationMsg('num', elm);
+    }
+}
+
+function validAlpha(elm) {
+    let patten = /(^[a-zA-Z]+$)/g;
+
+    if(!patten.test(elm.value)) {
+        validationMsg('alpha', elm);
+    }
 }
 
 function validationMsg(divn, elm) {
@@ -43,9 +68,12 @@ function validationMsg(divn, elm) {
 
     if(divn === 'trim') {
         alert_el.innerText = elm.getAttribute('title') + '은(는) 필수 ' + (elm.type === 'select-one' ? '선택' : '입력') + '입니다.';
-    } else {
+    } else if(divn === 'space') {
         alert_el.innerText = elm.getAttribute('title') + ' 값에 공백이 포함되어 있습니다. 다시 입력해주세요.';
-
+    } else if(divn === 'num') {
+        alert_el.innerText = elm.getAttribute('title') + ' (은)는 숫자만 입력할 수 있습니다.';
+    } else if(divn === 'alpha') {
+        alert_el.innerText = elm.getAttribute('title') + ' (은)는 알파벳(대, 소문자)만 입력할 수 있습니다.';
     }
 
     if(elm.parentNode.getAttribute('class') === 'input-group') {

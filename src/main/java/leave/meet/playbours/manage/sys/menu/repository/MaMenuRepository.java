@@ -7,7 +7,9 @@ import java.util.List;
 public interface MaMenuRepository {
     List<MaMenuDto> findAll();
 
-    MaMenuDto findOne(MaMenuDto dto);
+    MaMenuDto findOne(String seq);
+
+    int countByCode(String menuCd);
 
     void insert(MaMenuDto dto);
 

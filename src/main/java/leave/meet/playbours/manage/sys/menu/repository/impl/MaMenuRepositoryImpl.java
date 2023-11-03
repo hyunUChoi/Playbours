@@ -32,18 +32,35 @@ public class MaMenuRepositoryImpl implements MaMenuRepository {
     }
 
     @Override
-    public MaMenuDto findOne(MaMenuDto dto) {
+    public MaMenuDto findOne(String seq) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("seq").is(dto.getSeq()));
+        query.addCriteria(Criteria.where("seq").is(seq));
         return mongoTemplate.findOne(query, MaMenuDto.class, COLLECTION_NAME);
     }
 
     @Override
+    public int countByCode(String menuCd) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("menuCd").is(menuCd));
+        query.addCriteria(Criteria.where("useYn").is("Y"));
+        return (int)mongoTemplate.count(query, COLLECTION_NAME);
+    }
+
+    @Override
     public void insert(MaMenuDto dto) {
+        MaMenuDto menuDto = new MaMenuDto();
+        menuDto.setMenuClCd(dto.getMenuClCd());
+        menuDto.setMenuCd(dto.getMenuCd());
+        menuDto.setUpperCd(dto.getUpperCd());
+        menuDto.setMenuNm(dto.getMenuNm());
+        menuDto.setMenuOrd(dto.getMenuOrd());
+        menuDto.setMenuUrl(dto.getMenuUrl());
+        menuDto.setMenuCmt(dto.getMenuCmt());
+        menuDto.setUseYn(dto.getUseYn());
         // TODO 로그인한 아이디로 변경
-        dto.setFrstRegrId("admin");
-        dto.setFrstRegrDt(new Date());
-        mongoTemplate.insert(dto, COLLECTION_NAME);
+        menuDto.setFrstRegrId("admin");
+        menuDto.setFrstRegrDt(new Date());
+        mongoTemplate.insert(menuDto, COLLECTION_NAME);
     }
 
     @Override

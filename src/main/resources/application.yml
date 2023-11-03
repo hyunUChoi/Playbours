@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8081
 
 spring:
   thymeleaf:
@@ -8,4 +8,4 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb+srv://admin:zzz1234@playcluster.a1hqkve.mongodb.net/playbours?retryWrites=true&w=majority
+      uri: mongodb+srv://admin:zzz1234@playcluster.a1hqkve.mongodb.net/Playbours?retryWrites=true&w=majority
