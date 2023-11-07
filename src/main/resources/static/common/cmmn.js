@@ -1,6 +1,12 @@
-function gfnCallAddList(url) {
+function gfnCallAddList(url, val) {
     fetch(url, {
-        method: "POST"
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            param: val
+        })
     })
         .then(function(res) {
             res.text().then(function(html) {
@@ -39,27 +45,51 @@ function gfnPageProcess(divn, url, val, valNm) {
     let path = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
     frm.setAttribute("action", path + url);
 
-    if(divn === 'list') {
-        frm.submit();
+    switch (divn) {
+        case 'list' :
+            frm.submit();
+            break;
 
-    } else if(divn === 'addList') {
-        gfnCallAddList(path + url);
+        case 'addList' :
+            gfnCallAddList(path + url, val);
+            break;
 
-    } else if(divn === 'view') {
-        document.getElementById(valNm).value = val;
-        frm.submit();
+        case 'view' :
+            document.getElementById(valNm).value = val;
+            frm.submit();
+            break;
 
-    } else if(divn === 'insert') {
-        frm.submit();
+        case 'insert' :
+            frm.submit();
+            break;
 
-    } else if(divn === 'update') {
-        frm.submit();
+        case 'update' :
+            if(val === undefined) {
+                alert("수정되었습니다.");
+            } else {
+                alert(val);
+            }
+            frm.submit();
+            break;
 
-    } else if(divn === 'submit') {
-        if(formValidation(frm)) frm.submit();
+        case 'submit' :
+            if(formValidation(frm)) {
+                if(val === undefined) {
+                    alert("등록되었습니다.");
+                } else {
+                    alert(val);
+                }
+                frm.submit();
+            }
+            break;
 
-    } else if(divn === 'delete') {
-        frm.submit();
-
+        case 'delete' :
+            if(confirm("삭제하시겠습니까?")) {
+                alert("삭제되었습니다.");
+                frm.submit();
+            } else {
+                return false;
+            }
+            break;
     }
 }

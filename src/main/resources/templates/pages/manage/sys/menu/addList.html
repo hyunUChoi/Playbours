@@ -13,6 +13,7 @@
 		<col style="width: 15%;">
 		<col style="width: 15%;">
 		<col>
+		<col style="width: 5%;">
 		<col style="width: 15%;">
 		<col style="width: 15%;">
 	</colgroup>
@@ -22,66 +23,70 @@
 			<th>메뉴명</th>
 			<th>메뉴코드</th>
 			<th>URL</th>
+			<th>순서</th>
 			<th>등록자</th>
 			<th>등록일</th>
 		</tr>
 	</thead>
 	<tbody>
-		<th:block th:if="${#lists.size(resultList) gt 0}">
-			<tr class="text-body" th:each="result : ${resultList}" onclick="gfnPageProcess('view', 'view', this.getAttribute('parameter'), 'seq')" th:parameter="${result.seq}" style="cursor: pointer;">
-				<td th:text="${result.menuClCd}"></td>
+		<th:block th:if="${#lists.size(resultList.toList()) gt 0}">
+			<tr class="text-body" th:each="result : ${resultList.content}" onclick="gfnPageProcess('view', 'listView', this.getAttribute('parameter'), 'seq')" th:parameter="${result.seq}" style="cursor: pointer;">
+				<td th:text="${result.menuClCd eq 'ma' ? '관리자' : '사용자'}"></td>
 				<td th:text="${result.menuNm}"></td>
 				<td th:text="${result.menuCd}"></td>
 				<td><span class="text-truncate" th:text="${result.menuUrl}"></span></td>
+				<td th:text="${result.menuOrd}" style="text-align: center;"></td>
 				<td th:text="${result.frstRegrId}"></td>
 				<td th:text="${#dates.format(result.frstRegrDt, 'yyyy-MM-dd')}"></td>
 			</tr>
 		</th:block>
-		<th:block th:unless="${#lists.size(resultList) gt 0}">
+		<th:block th:unless="${#lists.size(resultList.toList()) gt 0}">
 			<tr class="text-body">
-				<td th:colspan="6" style="text-align: center">등록된 데이터가 없습니다.</td>
+				<td th:colspan="7" style="text-align: center">등록된 데이터가 없습니다.</td>
 			</tr>
 		</th:block>
 	</tbody>
 </table>
-<div class="demo-inline-spacing">
-	<button class="dt-button create-new btn btn-primary" onclick="gfnPageProcess('insert', 'insertForm')" style="position: absolute;right: 0;bottom: 1rem;">
-		<span><i class="bx bx-plus me-sm-1"></i>
-			<span class="d-none d-sm-inline-block">Add New Record</span>
-		</span>
-	</button>
-	<nav aria-label="Page navigation">
-		<ul class="pagination">
-			<li class="page-item first">
-				<a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-left"></i></a>
-			</li>
-			<li class="page-item prev">
-				<a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-left"></i></a>
-			</li>
-			<li class="page-item active">
-				<a class="page-link" href="javascript:void(0);">1</a>
-			</li>
-			<li class="page-item">
-				<a class="page-link" href="javascript:void(0);">2</a>
-			</li>
-			<li class="page-item">
-				<a class="page-link" href="javascript:void(0);">3</a>
-			</li>
-			<li class="page-item">
-				<a class="page-link" href="javascript:void(0);">4</a>
-			</li>
-			<li class="page-item">
-				<a class="page-link" href="javascript:void(0);">5</a>
-			</li>
-			<li class="page-item next">
-				<a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
-			</li>
-			<li class="page-item last">
-				<a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-right"></i></a>
-			</li>
-		</ul>
-	</nav>
-</div>
+<th:block th:if="${maMenuDto.procType eq 'list'}">
+	<div class="demo-inline-spacing">
+		<button class="dt-button create-new btn btn-primary" onclick="gfnPageProcess('insert', 'insertForm')" style="position: absolute;right: 0;bottom: 1rem;">
+			<span><i class="bx bx-plus me-sm-1"></i>
+				<span class="d-none d-sm-inline-block">Add New Record</span>
+			</span>
+		</button>
+		<nav aria-label="Page navigation">
+			<ul class="pagination">
+				<li class="page-item first">
+					<a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-left"></i></a>
+				</li>
+				<li class="page-item prev">
+					<a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-left"></i></a>
+				</li>
+				<li th:each="paging : ${resultList.number}" class="page-item active">
+					<a class="page-link" href="javascript:void(0);" th:text="${paging}"></a>
+				</li>
+				<!--<li class="page-item">
+					<a class="page-link" href="javascript:void(0);">2</a>
+				</li>
+				<li class="page-item">
+					<a class="page-link" href="javascript:void(0);">3</a>
+				</li>
+				<li class="page-item">
+					<a class="page-link" href="javascript:void(0);">4</a>
+				</li>
+				<li class="page-item">
+					<a class="page-link" href="javascript:void(0);">5</a>
+				</li>-->
+				<li class="page-item next">
+					<a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
+				</li>
+				<li class="page-item last">
+					<a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-right"></i></a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+</th:block>
 <script th:inline="javascript">
     document.addEventListener("DOMContentLoaded", () => {
 

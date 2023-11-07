@@ -47,11 +47,15 @@
 	        .catch(error => alert('fetch 에러'));
     }
 
-    function fnSubmit() {
-        if(chk) {
-            gfnPageProcess('submit', 'insertProc')
+    function fnSubmit(type) {
+        if([[${maMenuDto.procType}]] === 'update' || [[${maMenuDto.procType}]] === 'lowerUpdate') {
+            gfnPageProcess(type, [[${maMenuDto.procType}]] + 'Proc');
         } else {
-			alert("중복검사를 실시해주세요.");
+            if(chk) {
+                gfnPageProcess(type, [[${maMenuDto.procType}]] + 'Proc');
+            } else {
+                alert("중복검사를 실시해주세요.");
+            }
         }
     }
 </script>
@@ -60,7 +64,7 @@
 	<div class="col-xl">
 		<div class="card mb-4">
 			<div class="card-header d-flex justify-content-between align-items-center">
-				<h5 class="mb-0">신규 메뉴등록</h5>
+				<h5 class="mb-0">메뉴등록</h5>
 			</div>
 			<div class="card-body">
 				<form id="defaultFrm" th:object="${maMenuDto}" method="post" onsubmit="return false;">
@@ -93,10 +97,15 @@
 						</div>
 						<div class="mb-3 col-md-6">
 							<label class="form-label" for="menuCd">메뉴코드</label>
-							<div class="input-group">
-								<input type="text" class="form-control alphaOnly" id="menuCd" name="menuCd" th:value="${menuDto.menuCd}" title="메뉴코드" required oninput="fnOnInput();"/>
-								<button class="btn btn-outline-primary" type="button" id="button-addon2" onclick="fnChkOverlap();">중복확인</button>
-							</div>
+							<th:block th:if="${maMenuDto.procType eq 'insert' or maMenuDto.procType eq 'lowerInsert'}">
+								<div class="input-group">
+									<input type="text" class="form-control alphaOnly" id="menuCd" name="menuCd" th:value="${menuDto.menuCd}" title="메뉴코드" required oninput="fnOnInput();"/>
+									<button class="btn btn-outline-primary" type="button" id="button-addon2" onclick="fnChkOverlap();">중복확인</button>
+								</div>
+							</th:block>
+							<th:block th:unless="${maMenuDto.procType eq 'insert' or maMenuDto.procType eq 'lowerInsert'}">
+								<input type="text" class="form-control-plaintext" th:field="*{menuCd}" readonly/>
+							</th:block>
 						</div>
 						<div class="mb-3">
 							<label class="form-label" for="menuUrl">URL</label>
@@ -109,12 +118,20 @@
 					</div>
 					<div class="text-end">
 						<th:block th:if="${maMenuDto.procType eq 'insert'}">
-							<button type="button" class="btn btn-outline-primary" onclick="fnSubmit()">등록</button>
+							<button type="button" class="btn btn-outline-primary" onclick="fnSubmit('submit')">등록</button>
 							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('list', 'list')">취소</button>
 						</th:block>
-						<th:block th:unless="${maMenuDto.procType eq 'insert'}">
-							<button type="button" class="btn btn-outline-primary" onclick="gfnPageProcess('update', 'updateProc')">수정</button>
-							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('view', 'view', this.getAttribute('parameter'), 'seq')" th:parameter="${menuDto.seq}">취소</button>
+						<th:block th:if="${maMenuDto.procType eq 'lowerInsert'}">
+							<button type="button" class="btn btn-outline-primary" onclick="fnSubmit('submit')">등록</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('view', 'listView', this.getAttribute('parameter'), 'seq')" th:parameter="${menuDto.seq}">취소</button>
+						</th:block>
+						<th:block th:if="${maMenuDto.procType eq 'update'}">
+							<button type="button" class="btn btn-outline-primary" onclick="fnSubmit('update')">수정</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('view', 'listView', this.getAttribute('parameter'), 'seq')" th:parameter="${menuDto.seq}">취소</button>
+						</th:block>
+						<th:block th:if="${maMenuDto.procType eq 'lowerUpdate'}">
+							<button type="button" class="btn btn-outline-primary" onclick="fnSubmit('update')">수정</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('view', 'listView', this.getAttribute('parameter'), 'seq')" th:parameter="${menuDto.seq}">취소</button>
 						</th:block>
 					</div>
 				</form>

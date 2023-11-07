@@ -3,9 +3,9 @@
  * 유효성 적용 tag에 required, title 속성 필요
 */
 let spacePatten = /\s/g;
+let valChk = 0;
 
 function formValidation(form) {
-    let valChk = 0;
 
     /* 메세지 중복 쌓임 방지 */
     for(let cls of document.getElementsByClassName('alert_class')) {
@@ -15,27 +15,29 @@ function formValidation(form) {
     }
 
     for(let elm of form.elements) {
-        if(elm.getAttribute('required') != null) {
-            // 입력값 중 사이 공백 검사
-            if(elm.type !== 'textarea' && spacePatten.test(elm.value)) {
-                validationMsg('space', elm);
-                valChk += 1;
-            }
-
-            // 필수값 미입력
-            if(elm.value.trim() === '') {
-                validationMsg('trim', elm);
-                valChk += 1;
-            }
-
-            let vaildCase = elm.className.split(' ');
-            for(let classNm of vaildCase) {
+        /* 조건 검사 */
+        let validCase = elm.className.split(' ');
+        if(elm.value.trim() !== '') {
+            for(let classNm of validCase) {
                 switch (classNm) {
                     case 'numOnly'      : validNum(elm); break;
                     case 'alphaOnly'    : validAlpha(elm); break;
                 }
             }
+        }
 
+        /* 입력값 중 사이 공백 검사 */
+        if(elm.type !== 'textarea' && spacePatten.test(elm.value)) {
+            validationMsg('space', elm);
+            valChk += 1;
+        }
+
+        /* 필수 값 */
+        if(elm.getAttribute('required') != null) {
+            if(elm.value.trim() === '') {
+                validationMsg('trim', elm);
+                valChk += 1;
+            }
         }
     }
     return valChk <= 0;
@@ -45,6 +47,7 @@ function validNum(elm) {
     let patten = /(^[0-9]+$)/g;
 
     if(!patten.test(elm.value)) {
+        valChk += 1;
         validationMsg('num', elm);
     }
 }
@@ -53,12 +56,13 @@ function validAlpha(elm) {
     let patten = /(^[a-zA-Z]+$)/g;
 
     if(!patten.test(elm.value)) {
+        valChk += 1;
         validationMsg('alpha', elm);
     }
 }
 
 function validationMsg(divn, elm) {
-    let alert_el = document.createElement('strong');
+    let alert_el = document.createElement('p');
     alert_el.id = 'alert_' + elm.getAttribute('id');
     alert_el.classList.add('alert_class');
     alert_el.style.color = '#ff3e1d';

@@ -2,11 +2,12 @@ package leave.meet.playbours.manage.sys.menu.controller;
 
 import leave.meet.playbours.manage.sys.menu.repository.MaMenuRepository;
 import leave.meet.playbours.manage.sys.menu.service.MaMenuDto;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,10 +28,20 @@ public class MaMenuController {
         return "pages/manage/sys/menu/list";
     }
 
-    @RequestMapping(FOLDER_PATH + "addList")
-    public String addList(@ModelAttribute("maMenuDto") MaMenuDto maMenuDto, Model model) {
+    @RequestMapping(FOLDER_PATH + "{procType}AddList")
+    public String addList(@ModelAttribute("maMenuDto") MaMenuDto maMenuDto, @PathVariable String procType, Model model, @RequestBody Map<String, Object> body) {
 
-        List<MaMenuDto> resultList = menuRepository.findAll();
+        Page<MaMenuDto> resultList;
+        HashMap<String, String> paramMap = new HashMap<>();
+
+        if(procType.equals("list")) {
+            paramMap.put("upperCd", "");
+        } else {
+            paramMap.put("upperCd", (String) body.get("param"));
+        }
+
+        resultList = menuRepository.findByPagingAndFiltering(0, 10, paramMap);
+
         model.addAttribute("resultList", resultList);
 
         return "pages/manage/sys/menu/addList";
@@ -40,9 +51,10 @@ public class MaMenuController {
     public String form(@ModelAttribute("maMenuDto") MaMenuDto maMenuDto, @PathVariable String procType, Model model) {
 
         MaMenuDto menuDto = new MaMenuDto();
+        menuDto.setSeq(maMenuDto.getSeq());
         menuDto.setUpperCd(maMenuDto.getUpperCd());
 
-        if(procType.equals("update")) {
+        if(procType.equals("update") || procType.equals("lowerUpdate")) {
             menuDto = menuRepository.findOne(maMenuDto.getSeq());
         }
 
@@ -68,29 +80,46 @@ public class MaMenuController {
     }
 
     @RequestMapping(FOLDER_PATH + "{procType}Proc")
-    public String proc(@ModelAttribute("maMenuDto") MaMenuDto maMenuDto, @PathVariable String procType) {
+    public String proc(@ModelAttribute("maMenuDto") MaMenuDto maMenuDto, @PathVariable String procType, RedirectAttributes attributes) {
 
         switch (procType) {
             case "insert" -> {
                 menuRepository.insert(maMenuDto);
                 return "redirect:" + FOLDER_PATH + "list";
             }
-            case "update" -> {
+            case "lowerInsert" -> {
+                menuRepository.insert(maMenuDto);
+                attributes.addFlashAttribute("maMenuDto", maMenuDto);
+                return "redirect:" + FOLDER_PATH + "listView";
+            }
+            case "update", "lowerUpdate" -> {
                 menuRepository.update(maMenuDto);
-                return "redirect:" + FOLDER_PATH + "view?seq=" + maMenuDto.getSeq();
+                attributes.addFlashAttribute("maMenuDto", maMenuDto);
+                return "redirect:" + FOLDER_PATH + "listView";
             }
             case "delete" -> {
                 menuRepository.delete(maMenuDto);
                 return "redirect:" + FOLDER_PATH + "list";
+            }
+            case "lowerDelete" -> {
+                menuRepository.delete(maMenuDto);
+                attributes.addFlashAttribute("maMenuDto", maMenuDto);
+                return "redirect:" + FOLDER_PATH + "viewView";
             }
         }
 
         return "pages/manage/sys/menu/list";
     }
 
-    @RequestMapping(FOLDER_PATH + "view")
-    public String view(@ModelAttribute("maMenuDto") MaMenuDto maMenuDto, Model model) {
-        model.addAttribute("maMenuDto", menuRepository.findOne(maMenuDto.getSeq()));
+    @RequestMapping(FOLDER_PATH + "{procType}View")
+    public String view(@ModelAttribute("maMenuDto") MaMenuDto maMenuDto, @PathVariable String procType, Model model) {
+
+        if(procType.equals("view")) {
+            model.addAttribute("maMenuDto", menuRepository.findOneByCode(maMenuDto.getUpperCd()));
+        } else {
+            model.addAttribute("maMenuDto", menuRepository.findOne(maMenuDto.getSeq()));
+        }
+
         return "pages/manage/sys/menu/view";
     }
 

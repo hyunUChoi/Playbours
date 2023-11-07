@@ -12,12 +12,12 @@
 >
 <script th:inline="javascript">
     document.addEventListener("DOMContentLoaded", () => {
-
+        gfnPageProcess('addList', 'viewAddList', [[${maMenuDto.menuCd}]]);
     });
 
     function fnInsertMenu() {
 		document.getElementById('upperCd').value = [[${maMenuDto.menuCd}]];
-        gfnPageProcess('submit', 'insertForm');
+        gfnPageProcess('insert', 'lowerInsertForm');
     }
 </script>
 <h4 class="fw-bold py-3 mb-4">Menu</h4>
@@ -63,11 +63,23 @@
 					</div>
 					<div class="text-end">
 						<button type="button" class="btn btn-outline-primary" onclick="fnInsertMenu();">하위등록</button>
-						<button type="button" class="btn btn-outline-info" onclick="gfnPageProcess('update', 'updateForm')">수정</button>
-						<button type="button" class="btn btn-outline-danger" onclick="gfnPageProcess('delete', 'deleteProc')">삭제</button>
-						<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('list', 'list')">목록</button>
+						<th:block th:if="*{upperCd eq ''}">
+							<button type="button" class="btn btn-outline-info" onclick="gfnPageProcess('insert', 'updateForm')">수정</button>
+							<button type="button" class="btn btn-outline-danger" onclick="gfnPageProcess('delete', 'deleteProc')">삭제</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('list', 'list')">목록</button>
+						</th:block>
+						<th:block th:unless="*{upperCd eq ''}">
+							<button type="button" class="btn btn-outline-info" onclick="gfnPageProcess('insert', 'lowerUpdateForm')">수정</button>
+							<button type="button" class="btn btn-outline-danger" onclick="gfnPageProcess('delete', 'lowerDeleteProc')">삭제</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('view', 'viewView', this.getAttribute('parameter'), 'upperCd')" th:parameter="*{upperCd}">목록</button>
+						</th:block>
 					</div>
 				</form>
+			</div>
+			<div class="card-datatable table-responsive">
+				<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+					<div id="tbl"></div>
+				</div>
 			</div>
 		</div>
 	</div>
