@@ -12,7 +12,7 @@
 >
 <script th:inline="javascript">
     document.addEventListener("DOMContentLoaded", () => {
-        gfnPageProcess('addList', 'viewAddList', [[${maMenuDto.menuCd}]]);
+        gfnPageProcess('addList', 'viewAddList', '1', [[${maMenuDto.menuCd}]]);
     });
 
     function fnInsertMenu() {

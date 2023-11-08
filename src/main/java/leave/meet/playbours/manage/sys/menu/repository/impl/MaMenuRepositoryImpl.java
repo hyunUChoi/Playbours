@@ -39,9 +39,13 @@ public class MaMenuRepositoryImpl implements MaMenuRepository {
 
         query.addCriteria(Criteria.where("useYn").is("Y"));
 
+        /*if(.equals(""))*/
+
         /* 쿼리 조건 */
         for (String key : param.keySet()) {
-            query.addCriteria(Criteria.where(key).is(param.get(key)));
+            if(param.get(key) != null && ("keyword".equals(key) || "option".equals(key))) {
+                query.addCriteria(Criteria.where(key).is(param.get(key)));
+            }
         }
 
         query.with(Sort.by(Sort.Direction.DESC, "seq"));

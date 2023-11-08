@@ -1,11 +1,12 @@
-function gfnCallAddList(url, val) {
+function gfnCallAddList(url, val, valNm) {
     fetch(url, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            param: val
+            page: val,
+            menuCd: valNm
         })
     })
         .then(function(res) {
@@ -51,7 +52,7 @@ function gfnPageProcess(divn, url, val, valNm) {
             break;
 
         case 'addList' :
-            gfnCallAddList(path + url, val);
+            gfnCallAddList(path + url, val, valNm);
             break;
 
         case 'view' :
