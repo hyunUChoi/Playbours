@@ -12,7 +12,7 @@
 >
 <script th:inline="javascript">
     document.addEventListener("DOMContentLoaded", () => {
-        gfnPageProcess('addList', 'viewAddList', '1', [[${maMenuDto.menuCd}]]);
+        gfnPageProcess('addList', 'viewAddList', '1');
     });
 
     function fnInsertMenu() {
@@ -31,6 +31,7 @@
 				<form id="defaultFrm" th:object="${maMenuDto}" method="post" onsubmit="return false;">
 					<input type="hidden" th:field="*{seq}">
 					<input type="hidden" th:field="*{upperCd}">
+					<input type="hidden" th:field="*{pageNo}">
 					<div class="row">
 						<div class="mb-3 col-md-4">
 							<label for="menuClCd" class="form-label">구분</label>

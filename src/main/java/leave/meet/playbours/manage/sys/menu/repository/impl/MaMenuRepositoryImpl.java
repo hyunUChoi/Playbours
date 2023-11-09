@@ -39,15 +39,13 @@ public class MaMenuRepositoryImpl implements MaMenuRepository {
 
         query.addCriteria(Criteria.where("useYn").is("Y"));
 
-        /*if(.equals(""))*/
-
         /* 쿼리 조건 */
         for (String key : param.keySet()) {
-            if(param.get(key) != null && ("keyword".equals(key) || "option".equals(key))) {
-                query.addCriteria(Criteria.where(key).is(param.get(key)));
-            }
+            System.out.println(key + ":" + param.get(key));
+            //query.addCriteria(Criteria.where(key).is(param.get(key)));
         }
 
+        query.addCriteria(Criteria.where("upperCd").is(param.get("upperCd")));
         query.with(Sort.by(Sort.Direction.DESC, "seq"));
 
         List<MaMenuDto> filterData = mongoTemplate.find(query, MaMenuDto.class, COLLECTION_NAME);

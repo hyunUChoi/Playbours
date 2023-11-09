@@ -5,12 +5,14 @@ import leave.meet.playbours.common.service.PagingService;
 import leave.meet.playbours.manage.sys.menu.repository.MaMenuRepository;
 import leave.meet.playbours.manage.sys.menu.service.MaMenuDto;
 import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -34,25 +36,24 @@ public class MaMenuController {
     }
 
     @RequestMapping(FOLDER_PATH + "{procType}AddList")
-    public String addList(@ModelAttribute("maMenuDto") MaMenuDto maMenuDto, @PathVariable String procType, Model model, @RequestBody Map<String, Object> body) {
+    public String addList(@ModelAttribute("maMenuDto") MaMenuDto maMenuDto, @PathVariable String procType, Model model, @RequestBody HashMap<String, Object> body) {
 
-        int pageNo = Integer.parseInt((String)body.get("page"));
+        int pageNo = Integer.parseInt((String) body.get("pageNo"));
         pageNo = pageNo == 0 ? 0 : pageNo - 1;
         int pageSize = 10;
         Page<MaMenuDto> resultList;
         HashMap<String, String> paramMap = new HashMap<>();
 
         /* 검색 조건 */
-        paramMap.put("menuClCd", maMenuDto.getSearch1());
-        paramMap.put("option", maMenuDto.getSearchOption());
-        System.out.println(maMenuDto.getSearchOption());
-        paramMap.put("keyword", maMenuDto.getSearchKeyword());
+        for(String key : body.keySet()) {
+            paramMap.put(key, (String) body.get(key));
+        }
 
-        if(procType.equals("list")) {
+        /*if(procType.equals("list")) {
             paramMap.put("upperCd", "");
         } else {
-            paramMap.put("upperCd", (String) body.get("menuCd"));
-        }
+            paramMap.put("upperCd", body.get("menuCd"));
+        }*/
 
         resultList = menuRepository.findByPagingAndFiltering(pageNo, pageSize, paramMap);
 

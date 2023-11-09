@@ -81,8 +81,9 @@
     });
 
     function fnPaging(pageNo) {
+        console.log([[${maMenuDto.procType}]]);
         document.getElementById('tbl').innerHTML = '';
-        gfnPageProcess('addList', [[${maMenuDto.procType}]] + 'AddList', pageNo.getAttribute('pageNo'), [[${maMenuDto.menuCd}]]);
+        gfnPageProcess('addList', [[${maMenuDto.procType}]] + 'AddList', pageNo.getAttribute('pageNo'));
     }
 </script>
 </html>
