@@ -70,6 +70,10 @@
 				<form id="defaultFrm" th:object="${maMenuDto}" method="post" onsubmit="return false;">
 					<input type="hidden" id="seq" name="seq" th:value="${menuDto.seq}">
 					<input type="hidden" id="upperCd" name="upperCd" th:value="${menuDto.upperCd}">
+					<input type="hidden" th:field="*{pageNo}">
+					<input type="hidden" th:field="*{search1}">
+					<input type="hidden" th:field="*{searchOption}">
+					<input type="hidden" th:field="*{searchKeyword}">
 					<div class="row">
 						<div class="mb-3 col-md-4">
 							<label for="menuClCd" class="form-label">구분</label>

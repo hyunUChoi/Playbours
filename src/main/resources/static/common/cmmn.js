@@ -1,10 +1,12 @@
 function gfnCallAddList(url, frm) {
     fetch(url, {
         method: "POST",
-        headers: {
-            'Content-Type' : 'application/json'
-        },
-        body: JSON.stringify(Object.fromEntries(new FormData(frm)))
+        /* multipart/form-data로 통신하는 경우 headers 지정하면 오류발생 */
+        /* 참고자료
+         * https://maivve.tistory.com/298
+         * https://boomrabbit.tistory.com/245
+         */
+        body: new FormData(frm)
     })
         .then(function(res) {
             res.text().then(function(html) {

@@ -12,7 +12,7 @@
 >
 <script th:inline="javascript">
     document.addEventListener("DOMContentLoaded", () => {
-        gfnPageProcess('addList', 'viewAddList', '1');
+        gfnPageProcess('addList', 'viewAddList', document.getElementById('pageNo').value);
     });
 
     function fnInsertMenu() {
@@ -32,6 +32,9 @@
 					<input type="hidden" th:field="*{seq}">
 					<input type="hidden" th:field="*{upperCd}">
 					<input type="hidden" th:field="*{pageNo}">
+					<input type="hidden" th:field="${maMenuDto.search1}">
+					<input type="hidden" th:field="*{searchOption}">
+					<input type="hidden" th:field="*{searchKeyword}">
 					<div class="row">
 						<div class="mb-3 col-md-4">
 							<label for="menuClCd" class="form-label">구분</label>

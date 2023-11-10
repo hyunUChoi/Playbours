@@ -7,11 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface MaMenuRepository {
-    Page<MaMenuDto> findByPagingAndFiltering(int page, int size, HashMap<String, String> param);
+    Page<MaMenuDto> findByPagingAndFiltering(int page, int size, MaMenuDto maMenuDto, String procType); /*HashMap<String, String> param*/
 
-    MaMenuDto findOne(String seq);
+    MaMenuDto findOne(MaMenuDto maMenuDto);
 
-    MaMenuDto findOneByCode(String code);
+    MaMenuDto findOneByCode(MaMenuDto maMenuDto);
 
     int countByCode(String menuCd);
 

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class PagingService {
     public CmmnDto getPageInfo(Page<MaMenuDto> pageList, int pageNo, int pageSize) {
+        pageNo = pageNo == 0 ? 0 : pageNo - 1;
+
         int totalPage = pageList.getTotalPages();
         int startNum = (int)((Math.floor((double) pageNo / pageSize) * pageSize) + 1 <= totalPage ? (Math.floor((double) pageNo / pageSize) * pageSize) + 1 : totalPage);
         int endNum = Math.min(startNum + pageSize - 1, totalPage);
@@ -15,6 +17,6 @@ public class PagingService {
         boolean hasNext = pageList.hasNext();
         int prevIdx = pageList.previousOrFirstPageable().getPageNumber() + 1;
         int nextIdx = pageList.nextOrLastPageable().getPageNumber() + 1;
-        return new CmmnDto(totalPage, startNum, endNum, hasPrev, prevIdx, hasNext, nextIdx);
+        return new CmmnDto(totalPage, startNum, endNum, hasPrev, prevIdx, hasNext, nextIdx, pageNo);
     }
 }

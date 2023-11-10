@@ -30,8 +30,8 @@ public class MaMenuRepositoryImpl implements MaMenuRepository {
     }
 
     @Override
-    public Page<MaMenuDto> findByPagingAndFiltering(int page, int size, HashMap<String, String> param) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("seq"));
+    public Page<MaMenuDto> findByPagingAndFiltering(int page, int size, MaMenuDto maMenuDto, String procType) { /*HashMap<String, String> param*/
+        Pageable pageable = PageRequest.of(page == 0 ? 0 : page - 1, size, Sort.by("seq"));
         Query query = new Query()
                 .with(pageable)
                 .skip((long) pageable.getPageSize() * pageable.getPageNumber())
@@ -40,12 +40,31 @@ public class MaMenuRepositoryImpl implements MaMenuRepository {
         query.addCriteria(Criteria.where("useYn").is("Y"));
 
         /* 쿼리 조건 */
-        for (String key : param.keySet()) {
-            System.out.println(key + ":" + param.get(key));
-            //query.addCriteria(Criteria.where(key).is(param.get(key)));
+        if(maMenuDto.getSearch1() != null && !"".equals(maMenuDto.getSearch1() )) {
+            query.addCriteria(Criteria.where("menuClCd").is(maMenuDto.getSearch1()));
         }
 
-        query.addCriteria(Criteria.where("upperCd").is(param.get("upperCd")));
+        if("list".equals(procType)) {
+            if(maMenuDto.getSearchKeyword() != null && !"".equals(maMenuDto.getSearchKeyword())) {
+                if(maMenuDto.getSearchOption() != null && !"".equals(maMenuDto.getSearchOption())) {
+                    switch (maMenuDto.getSearchOption()) {
+                        case "0" -> {
+                            Criteria criteria = new Criteria();
+                            criteria.orOperator(Criteria.where("menuCd").is(maMenuDto.getSearchKeyword()), Criteria.where("menuNm").is(maMenuDto.getSearchKeyword()));
+                            query.addCriteria(criteria);
+                        }
+                        case "1" -> {
+                            query.addCriteria(Criteria.where("menuNm").is(maMenuDto.getSearchKeyword()));
+                        }
+                        case "2" -> {
+                            query.addCriteria(Criteria.where("menuCd").is(maMenuDto.getSearchKeyword()));
+                        }
+                    }
+                }
+            }
+        }
+
+        query.addCriteria(Criteria.where("upperCd").is("view".equals(procType) ? maMenuDto.getMenuCd() : ""));
         query.with(Sort.by(Sort.Direction.DESC, "seq"));
 
         List<MaMenuDto> filterData = mongoTemplate.find(query, MaMenuDto.class, COLLECTION_NAME);
@@ -56,16 +75,16 @@ public class MaMenuRepositoryImpl implements MaMenuRepository {
     }
 
     @Override
-    public MaMenuDto findOne(String seq) {
+    public MaMenuDto findOne(MaMenuDto maMenuDto) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("seq").is(seq));
+        query.addCriteria(Criteria.where("seq").is(maMenuDto.getSeq()));
         return mongoTemplate.findOne(query, MaMenuDto.class, COLLECTION_NAME);
     }
 
     @Override
-    public MaMenuDto findOneByCode(String code) {
+    public MaMenuDto findOneByCode(MaMenuDto maMenuDto) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("menuCd").is(code));
+        query.addCriteria(Criteria.where("menuCd").is(maMenuDto.getUpperCd()));
         return mongoTemplate.findOne(query, MaMenuDto.class, COLLECTION_NAME);
     }
 

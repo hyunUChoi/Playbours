@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class CmmnDto implements Serializable {
     // 현재 페이지
-    private int pageNo;
+    private int pageNo = 1;
 
     // 총 페이지 수
     private int totalPage;
@@ -58,7 +58,7 @@ public class CmmnDto implements Serializable {
     public CmmnDto() {
     }
 
-    public CmmnDto(int totalPage, int startNum, int endNum, boolean hasPrev, int prevIdx, boolean hasNext, int nextIdx) {
+    public CmmnDto(int totalPage, int startNum, int endNum, boolean hasPrev, int prevIdx, boolean hasNext, int nextIdx, int pageNo) {
         this.totalPage = totalPage;
         this.startNum = startNum;
         this.endNum = endNum;
@@ -66,6 +66,23 @@ public class CmmnDto implements Serializable {
         this.prevIdx = prevIdx;
         this.hasNext = hasNext;
         this.nextIdx = nextIdx;
+        this.pageNo = pageNo;
+    }
+
+    public void setSearch(final CmmnDto dto) {
+        this.pageNo = dto.getPageNo();
+        this.search1 = dto.getSearch1();
+        this.search2 = dto.getSearch2();
+        this.search3 = dto.getSearch3();
+        this.search4 = dto.getSearch4();
+        this.search5 = dto.getSearch5();
+        this.search6 = dto.getSearch6();
+        this.search7 = dto.getSearch7();
+        this.search8 = dto.getSearch8();
+        this.search9 = dto.getSearch9();
+        this.search10 = dto.getSearch10();
+        this.searchOption = dto.getSearchOption();
+        this.searchKeyword = dto.getSearchKeyword();
     }
 
     public int getPageNo() {

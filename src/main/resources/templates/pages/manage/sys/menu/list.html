@@ -12,13 +12,20 @@
 >
 <script th:inline="javascript">
 	document.addEventListener("DOMContentLoaded", () => {
-        gfnPageProcess('addList', 'listAddList', '1');
+        gfnPageProcess('addList', 'listAddList', document.getElementById('pageNo').value);
 	});
 
     function fnSearch() {
         document.getElementById('tbl').innerHTML = '';
         gfnPageProcess('addList', 'listAddList', '1');
     }
+
+    document.addEventListener('keydown', function(event) {
+        if(event.key === 'Enter') {
+            event.preventDefault();
+            fnSearch();
+        }
+    })
 </script>
 <h4 class="fw-bold py-3 mb-4">MENU</h4>
 <div class="card">
@@ -41,9 +48,9 @@
 			<div class="input-group">
 				<div class="col-md-1">
 					<select class="form-select" th:field="*{searchOption}" style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
-						<option value="" selected>전체</option>
-						<option value="menuCd">메뉴명</option>
-						<option value="menuNm">메뉴코드</option>
+						<option value="0" selected>전체</option>
+						<option value="1">메뉴명</option>
+						<option value="2">메뉴코드</option>
 					</select>
 				</div>
 				<input type="text" class="form-control" th:field="*{searchKeyword}"/>
