@@ -1,9 +1,20 @@
-package leave.meet.playbours.manage.sys.menu.service.dto;
+package leave.meet.playbours.manage.sys.menu.service;
 
+import leave.meet.playbours.common.dto.CmmnDto;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
+
+@SuppressWarnings("unused")
+@TypeAlias("MaMenuDto")
 @Document(collection = "TB_MENU")
-public class MaMenuDto {
+public class MaMenuDto extends CmmnDto {
+    // 일련번호
+    @Id
+    private String seq;
+
     // 메뉴 구분
     private String menuClCd;
 
@@ -32,13 +43,21 @@ public class MaMenuDto {
     private String frstRegrId;
 
     // 최초등록일
-    private String frstRegrDt;
+    private Date frstRegrDt;
 
     // 최종수정자
     private String lstChgId;
 
     // 최종수정일
-    private String lstChgDt;
+    private Date lstChgDt;
+
+    public String getSeq() {
+        return seq;
+    }
+
+    public void setSeq(String seq) {
+        this.seq = seq;
+    }
 
     public String getMenuClCd() {
         return menuClCd;
@@ -112,11 +131,11 @@ public class MaMenuDto {
         this.frstRegrId = frstRegrId;
     }
 
-    public String getFrstRegrDt() {
+    public Date getFrstRegrDt() {
         return frstRegrDt;
     }
 
-    public void setFrstRegrDt(String frstRegrDt) {
+    public void setFrstRegrDt(Date frstRegrDt) {
         this.frstRegrDt = frstRegrDt;
     }
 
@@ -128,11 +147,11 @@ public class MaMenuDto {
         this.lstChgId = lstChgId;
     }
 
-    public String getLstChgDt() {
+    public Date getLstChgDt() {
         return lstChgDt;
     }
 
-    public void setLstChgDt(String lstChgDt) {
+    public void setLstChgDt(Date lstChgDt) {
         this.lstChgDt = lstChgDt;
     }
 }
