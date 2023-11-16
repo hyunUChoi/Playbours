@@ -1,4 +1,4 @@
-package leave.meet.playbours.manage.sys.menu.service;
+package leave.meet.playbours.manage.support.board.service;
 
 import leave.meet.playbours.common.dto.CmmnDto;
 import org.springframework.data.annotation.Id;
@@ -8,35 +8,35 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Date;
 
 @SuppressWarnings("unused")
-@TypeAlias("MaMenuDto")
-@Document(collection = "CLT_MENU")
-public class MaMenuDto extends CmmnDto {
+@TypeAlias("MaBoardDto")
+@Document(collection = "CLT_BOARD")
+public class MaBoardDto extends CmmnDto {
     // 일련번호
     @Id
     private String seq;
 
-    // 메뉴 구분
-    private String menuClCd;
+    // 게시판 구분
+    private String boardDivn;
 
-    // 메뉴코드
-    private String menuCd;
+    // 공개여부
+    private String pubYn;
 
-    // 상위 메뉴코드
-    private String upperCd;
+    // 게시글 제목
+    private String title;
 
-    // 메뉴명
-    private String menuNm;
+    // 게시글 내용
+    private String cont;
 
-    // 순서
-    private String menuOrd;
+    // 답변
+    private String reply;
 
-    // url
-    private String menuUrl;
+    // 조회수
+    private int viewCnt;
 
-    // 메뉴설명
-    private String menuCmt;
+    // 첨부파일
+    private String atchFile;
 
-    // 사용여부
+    // 삭제여부
     private String useYn;
 
     // 최초등록자
@@ -59,60 +59,60 @@ public class MaMenuDto extends CmmnDto {
         this.seq = seq;
     }
 
-    public String getMenuClCd() {
-        return menuClCd;
+    public String getBoardDivn() {
+        return boardDivn;
     }
 
-    public void setMenuClCd(String menuClCd) {
-        this.menuClCd = menuClCd;
+    public void setBoardDivn(String boardDivn) {
+        this.boardDivn = boardDivn;
     }
 
-    public String getMenuCd() {
-        return menuCd;
+    public String getPubYn() {
+        return pubYn;
     }
 
-    public void setMenuCd(String menuCd) {
-        this.menuCd = menuCd;
+    public void setPubYn(String pubYn) {
+        this.pubYn = pubYn;
     }
 
-    public String getUpperCd() {
-        return upperCd;
+    public String getTitle() {
+        return title;
     }
 
-    public void setUpperCd(String upperCd) {
-        this.upperCd = upperCd;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getMenuNm() {
-        return menuNm;
+    public String getCont() {
+        return cont;
     }
 
-    public void setMenuNm(String menuNm) {
-        this.menuNm = menuNm;
+    public void setCont(String cont) {
+        this.cont = cont;
     }
 
-    public String getMenuOrd() {
-        return menuOrd;
+    public String getReply() {
+        return reply;
     }
 
-    public void setMenuOrd(String menuOrd) {
-        this.menuOrd = menuOrd;
+    public void setReply(String reply) {
+        this.reply = reply;
     }
 
-    public String getMenuUrl() {
-        return menuUrl;
+    public int getViewCnt() {
+        return viewCnt;
     }
 
-    public void setMenuUrl(String menuUrl) {
-        this.menuUrl = menuUrl;
+    public void setViewCnt(int viewCnt) {
+        this.viewCnt = viewCnt;
     }
 
-    public String getMenuCmt() {
-        return menuCmt;
+    public String getAtchFile() {
+        return atchFile;
     }
 
-    public void setMenuCmt(String menuCmt) {
-        this.menuCmt = menuCmt;
+    public void setAtchFile(String atchFile) {
+        this.atchFile = atchFile;
     }
 
     public String getUseYn() {

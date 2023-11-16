@@ -32,7 +32,7 @@ public class MaMenuController {
         return "pages/manage/sys/menu/list";
     }
 
-    @RequestMapping(FOLDER_PATH + "{procType}AddList")
+    @RequestMapping(FOLDER_PATH + "{procType:view|list}AddList")
     public String addList(@ModelAttribute("maMenuDto") MaMenuDto maMenuDto, @PathVariable String procType, Model model) {
 
         int pageNo = maMenuDto.getPageNo();
@@ -45,7 +45,7 @@ public class MaMenuController {
         return "pages/manage/sys/menu/addList";
     }
 
-    @RequestMapping(FOLDER_PATH + "{procType}Form")
+    @RequestMapping(FOLDER_PATH + "{procType:insert|lowerInsert|update|lowerUpdate}Form")
     public String form(@ModelAttribute("maMenuDto") MaMenuDto maMenuDto, @PathVariable String procType, Model model) {
 
         MaMenuDto menuDto = new MaMenuDto();
@@ -77,7 +77,7 @@ public class MaMenuController {
         return returnMap;
     }
 
-    @RequestMapping(FOLDER_PATH + "{procType}Proc")
+    @RequestMapping(FOLDER_PATH + "{procType:insert|lowerInsert|update|lowerUpdate|delete|lowerDelete}Proc")
     public String proc(@ModelAttribute("maMenuDto") MaMenuDto maMenuDto, @PathVariable String procType, RedirectAttributes attributes) {
 
         switch (procType) {
@@ -109,7 +109,7 @@ public class MaMenuController {
         return "pages/manage/sys/menu/list";
     }
 
-    @RequestMapping(FOLDER_PATH + "{procType}View")
+    @RequestMapping(FOLDER_PATH + "{procType:view|list}View")
     public String view(@ModelAttribute("maMenuDto") MaMenuDto maMenuDto, @PathVariable String procType, Model model) {
 
         MaMenuDto searchVO = maMenuDto;
