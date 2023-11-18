@@ -3,11 +3,8 @@ package leave.meet.playbours.manage.sys.menu.repository;
 import leave.meet.playbours.manage.sys.menu.service.MaMenuDto;
 import org.springframework.data.domain.Page;
 
-import java.util.HashMap;
-import java.util.List;
-
 public interface MaMenuRepository {
-    Page<MaMenuDto> findByPagingAndFiltering(int page, int size, MaMenuDto maMenuDto, String procType); /*HashMap<String, String> param*/
+    Page<MaMenuDto> findByPagingAndFiltering(int page, int size, MaMenuDto maMenuDto, String procType);
 
     MaMenuDto findOne(MaMenuDto maMenuDto);
 

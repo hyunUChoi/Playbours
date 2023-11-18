@@ -1,29 +1,40 @@
 package leave.meet.playbours.common.dto;
 
+
+import org.springframework.data.annotation.Transient;
+
 import java.io.Serializable;
 
 public class CmmnDto implements Serializable {
+    @Transient
     // 현재 페이지
     private int pageNo = 1;
 
+    @Transient
     // 총 페이지 수
     private int totalPage;
 
+    @Transient
     // 시작
     private int startNum;
 
+    @Transient
     // 마지막
     private int endNum;
 
+    @Transient
     // 이전 페이지 여부
     private boolean hasPrev;
 
+    @Transient
     // 이전 페이지 인덱스
     private int prevIdx;
 
+    @Transient
     // 다음 페이지 여부
     private boolean hasNext;
 
+    @Transient
     // 다음 페이지 인덱스
     private int nextIdx;
 

@@ -10,7 +10,7 @@ function formValidation(form) {
     /* 메세지 중복 쌓임 방지 */
     for(let cls of document.getElementsByClassName('alert_class')) {
         // TODO 태그 삭제방식으로 변경
-        // cls.remove();
+        //cls.remove();
         cls.innerHTML = '';
     }
 
@@ -62,7 +62,8 @@ function validAlpha(elm) {
 }
 
 function validationMsg(divn, elm) {
-    let alert_el = document.createElement('p');
+    /* 경고문구 태그 속성 */
+    let alert_el = document.createElement('strong');
     alert_el.id = 'alert_' + elm.getAttribute('id');
     alert_el.classList.add('alert_class');
     alert_el.style.color = '#ff3e1d';
@@ -70,16 +71,25 @@ function validationMsg(divn, elm) {
     alert_el.style.fontFamily = 'inherit';
     alert_el.style.marginTop = '0.3rem';
 
-    if(divn === 'trim') {
-        alert_el.innerText = elm.getAttribute('title') + '은(는) 필수 ' + (elm.type === 'select-one' ? '선택' : '입력') + '입니다.';
-    } else if(divn === 'space') {
-        alert_el.innerText = elm.getAttribute('title') + ' 값에 공백이 포함되어 있습니다. 다시 입력해주세요.';
-    } else if(divn === 'num') {
-        alert_el.innerText = elm.getAttribute('title') + ' (은)는 숫자만 입력할 수 있습니다.';
-    } else if(divn === 'alpha') {
-        alert_el.innerText = elm.getAttribute('title') + ' (은)는 알파벳(대, 소문자)만 입력할 수 있습니다.';
+    /* 경고문구 */
+    let msg;
+    switch (divn) {
+        case 'trim' :
+            msg = '은(는) 필수 ' + (elm.type === 'select-one' ? '선택' : '입력') + '입니다.\n';
+            break;
+        case 'space' :
+            msg = ' 값에 공백이 포함되어 있습니다. 다시 입력해주세요.\n';
+            break;
+        case 'num' :
+            msg = ' (은)는 숫자만 입력할 수 있습니다.\n';
+            break;
+        case 'alpha' :
+            msg = ' (은)는 알파벳(대, 소문자)만 입력할 수 있습니다.\n';
+            break;
     }
+    alert_el.innerText = elm.getAttribute('title') + msg;
 
+    /* 경고문구 붙이는 위치 */
     if(elm.parentNode.getAttribute('class') === 'input-group') {
         elm.parentNode.parentNode.appendChild(alert_el);
     } else {
