@@ -1,5 +1,6 @@
 package leave.meet.playbours.manage.support.board.repository.impl;
 
+/*
 import leave.meet.playbours.manage.support.board.repository.MaBoardRepository;
 import leave.meet.playbours.manage.support.board.service.MaBoardDto;
 import leave.meet.playbours.manage.sys.menu.service.MaMenuDto;
@@ -34,7 +35,9 @@ public class MaBoardRepositoryImpl implements MaBoardRepository {
 
         //query.addCriteria(Criteria.where("useYn").is("Y"));
 
-        /* 쿼리 조건 */
+        */
+/* 쿼리 조건 *//*
+
         if(maMenuDto.getSearch1() != null && !"".equals(maMenuDto.getSearch1() )) {
             query.addCriteria(Criteria.where("menuClCd").is(maMenuDto.getSearch1()));
         }
@@ -69,3 +72,4 @@ public class MaBoardRepositoryImpl implements MaBoardRepository {
         );
     }
 }
+*/

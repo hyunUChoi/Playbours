@@ -1,9 +1,10 @@
 package leave.meet.playbours.manage.sys.user.service.dto;
 
+import leave.meet.playbours.common.dto.CmmnDto;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "TB_USER")
-public class MaUserDto {
+public class MaUserDto extends CmmnDto {
     // 유저구분
     private String userClCd;
 

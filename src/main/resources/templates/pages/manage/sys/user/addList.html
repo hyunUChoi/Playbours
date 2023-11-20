@@ -76,6 +76,13 @@
 	</nav>
 </div>
 <script th:inline="javascript">
+	document.addEventListener("DOMContentLoaded", () => {
 
+    });
+
+    function fnPaging(pageNo) {
+        document.getElementById('tbl').innerHTML = '';
+        gfnPageProcess('addList', [[${maMenuDto.procType}]] + 'AddList', pageNo.getAttribute('pageNo'));
+    }
 </script>
 </html>
