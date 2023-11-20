@@ -18,8 +18,8 @@ public class MaBoardDto extends CmmnDto {
     // 게시판 구분
     private String boardDivn;
 
-    // 공개여부
-    private String pubYn;
+    // 사용여부
+    private String useYn;
 
     // 게시글 제목
     private String title;
@@ -36,9 +36,6 @@ public class MaBoardDto extends CmmnDto {
     // 첨부파일
     private String atchFile;
 
-    // 삭제여부
-    private String useYn;
-
     // 최초등록자
     private String frstRegrId;
 
@@ -50,6 +47,9 @@ public class MaBoardDto extends CmmnDto {
 
     // 최종수정일
     private Date lstChgDt;
+
+    // 삭제여부
+    private String delYn;
 
     public String getSeq() {
         return seq;
@@ -67,12 +67,12 @@ public class MaBoardDto extends CmmnDto {
         this.boardDivn = boardDivn;
     }
 
-    public String getPubYn() {
-        return pubYn;
+    public String getUseYn() {
+        return useYn;
     }
 
-    public void setPubYn(String pubYn) {
-        this.pubYn = pubYn;
+    public void setUseYn(String useYn) {
+        this.useYn = useYn;
     }
 
     public String getTitle() {
@@ -115,14 +115,6 @@ public class MaBoardDto extends CmmnDto {
         this.atchFile = atchFile;
     }
 
-    public String getUseYn() {
-        return useYn;
-    }
-
-    public void setUseYn(String useYn) {
-        this.useYn = useYn;
-    }
-
     public String getFrstRegrId() {
         return frstRegrId;
     }
@@ -154,4 +146,13 @@ public class MaBoardDto extends CmmnDto {
     public void setLstChgDt(Date lstChgDt) {
         this.lstChgDt = lstChgDt;
     }
+
+    public String getDelYn() {
+        return delYn;
+    }
+
+    public void setDelYn(String delYn) {
+        this.delYn = delYn;
+    }
+
 }

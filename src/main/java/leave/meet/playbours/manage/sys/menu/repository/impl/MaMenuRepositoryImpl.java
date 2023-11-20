@@ -33,7 +33,7 @@ public class MaMenuRepositoryImpl implements MaMenuRepository {
                 .skip((long) pageable.getPageSize() * pageable.getPageNumber())
                 .limit(pageable.getPageSize());
 
-        //query.addCriteria(Criteria.where("useYn").is("Y"));
+        query.addCriteria(Criteria.where("delYn").is("N"));
 
         /* 쿼리 조건 */
         if(maMenuDto.getSearch1() != null && !"".equals(maMenuDto.getSearch1() )) {
@@ -74,6 +74,7 @@ public class MaMenuRepositoryImpl implements MaMenuRepository {
     public MaMenuDto findOne(MaMenuDto maMenuDto) {
         Query query = new Query();
         query.addCriteria(Criteria.where("seq").is(maMenuDto.getSeq()));
+        query.addCriteria(Criteria.where("delYn").is("N"));
         return mongoTemplate.findOne(query, MaMenuDto.class);
     }
 
@@ -81,6 +82,7 @@ public class MaMenuRepositoryImpl implements MaMenuRepository {
     public MaMenuDto findOneByCode(MaMenuDto maMenuDto) {
         Query query = new Query();
         query.addCriteria(Criteria.where("menuCd").is(maMenuDto.getUpperCd()));
+        query.addCriteria(Criteria.where("delYn").is("N"));
         return mongoTemplate.findOne(query, MaMenuDto.class);
     }
 
@@ -88,7 +90,7 @@ public class MaMenuRepositoryImpl implements MaMenuRepository {
     public int countByCode(String menuCd) {
         Query query = new Query();
         query.addCriteria(Criteria.where("menuCd").is(menuCd));
-        //query.addCriteria(Criteria.where("useYn").is("Y"));
+        query.addCriteria(Criteria.where("delYn").is("N"));
         return (int) mongoTemplate.count(query, MaMenuDto.class);
     }
 
@@ -106,6 +108,7 @@ public class MaMenuRepositoryImpl implements MaMenuRepository {
         // TODO 로그인한 아이디로 변경
         menuDto.setFrstRegrId("admin");
         menuDto.setFrstRegrDt(new Date());
+        menuDto.setDelYn("N");
         mongoTemplate.insert(menuDto);
     }
 
@@ -132,7 +135,12 @@ public class MaMenuRepositoryImpl implements MaMenuRepository {
     @Override
     public void delete(MaMenuDto dto) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("seq").is(dto.getSeq()));
-        mongoTemplate.remove(query, MaMenuDto.class);
+        Update update = new Update();
+
+        // TODO 로그인한 아이디로 변경
+        update.set("lstChgId", "admin");
+        update.set("lstChgDt", new Date());
+        update.set("delYn", "Y");
+        mongoTemplate.upsert(query, update, MaMenuDto.class);
     }
 }

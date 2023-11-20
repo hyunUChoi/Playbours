@@ -39,6 +39,9 @@ public class MaMenuDto extends CmmnDto {
     // 사용여부
     private String useYn;
 
+    // 삭제여부
+    private String delYn;
+
     // 최초등록자
     private String frstRegrId;
 
@@ -121,6 +124,14 @@ public class MaMenuDto extends CmmnDto {
 
     public void setUseYn(String useYn) {
         this.useYn = useYn;
+    }
+
+    public String getDelYn() {
+        return delYn;
+    }
+
+    public void setDelYn(String delYn) {
+        this.delYn = delYn;
     }
 
     public String getFrstRegrId() {

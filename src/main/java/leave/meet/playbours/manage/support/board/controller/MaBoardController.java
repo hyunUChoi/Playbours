@@ -1,5 +1,4 @@
 package leave.meet.playbours.manage.support.board.controller;
-/*
 
 import jakarta.annotation.Resource;
 import leave.meet.playbours.common.service.PagingService;
@@ -62,4 +61,3 @@ public class MaBoardController {
         }
     }
 }
-*/

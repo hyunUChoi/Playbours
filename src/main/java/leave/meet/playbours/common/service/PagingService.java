@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PagingService {
-    public CmmnDto getPageInfo(Page<MaMenuDto> pageList, int pageNo, int pageSize) {
+    public CmmnDto getPageInfo(Page<?> pageList, int pageNo, int pageSize) {
         pageNo = pageNo == 0 ? 0 : pageNo - 1;
 
         int totalPage = pageList.getTotalPages();
