@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en"
+      class="light-style layout-menu-fixed"
+      dir="ltr"
+      data-theme="theme-default"
+      data-assets-path="/manage/assets/"
+      data-template="vertical-menu-template-free"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/manage/layout/layout}"
+      layout:fragment="content"
+>
+<script th:inline="javascript">
+	document.addEventListener("DOMContentLoaded", () => {
+        gfnCallAddList("/ma/sys/user/addList");
+	});
+
+	function fnSearch() {
+        document.getElementById('tbl').innerHTML = '';
+        gfnPageProcess('addList', 'listAddList', '1');
+    }
+
+    document.addEventListener('keydown', function(event) {
+        if(event.key === 'Enter') {
+            event.preventDefault();
+            fnSearch();
+        }
+    })
+</script>
+<h4 class="fw-bold py-3 mb-4">USER</h4>
+<div class="card">
+	<form id="defaultFrm" th:object="${maMenuDto}" method="post" onsubmit="return false;">
+		<input type="hidden" th:field="*{seq}"/>
+		<input type="hidden" th:field="*{pageNo}"/>
+		<input type="hidden" th:field="*{menuCd}"/>
+		<input type="hidden" th:field="*{upperCd}"/>
+		<div class="card-header">
+			<div class="d-flex justify-content-start align-items-center row py-3 gap-3 gap-md-0">
+				<div class="col-md-4">
+					<label class="form-label" for="selectRole">구분</label>
+					<select id="selectRole" th:field="*{search1}" class="form-select color-dropdown">
+						<option value="">선택</option>
+						<option value="Admin">관리자</option>
+						<option value="Subscriber">일반회원</option>
+					</select>
+				</div>
+				<div class="col-md-4">
+					<label class="form-label" for="selectStatus">상태</label>
+					<select id="selectStatus" th:field="*{search2}" class="form-select color-dropdown">
+						<option value="">선택</option>
+						<option value="Approval" class="text-capitalize">승인</option>
+						<option value="Wait" class="text-capitalize">승인대기</option>
+						<option value="Refuse" class="text-capitalize">승인거부</option>
+						<option value="Reapply" class="text-capitalize">재신청</option>
+					</select>
+				</div>
+			</div>
+			<div class="input-group">
+				<span class="input-group-text" id="basic-addon11"><i class="bx bx-search"></i></span>
+				<input type="text" class="form-control" th:field="*{searchKeyword}"/>
+				<a class="btn btn-outline-primary" onclick="fnSearch();">Search</a>
+			</div>
+		</div>
+	</form>
+	<div class="card-datatable table-responsive">
+		<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+			<div id="tbl"></div>
+		</div>
+	</div>
+</div>
+</html>

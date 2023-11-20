@@ -1,9 +1,10 @@
-package leave.meet.playbours.manage.support.board.repository.impl;
+package leave.meet.playbours.manage.sys.user.repository.impl;
 
-/*
-import leave.meet.playbours.manage.support.board.repository.MaBoardRepository;
-import leave.meet.playbours.manage.support.board.service.MaBoardDto;
+import leave.meet.playbours.manage.sys.menu.repository.MaMenuRepository;
 import leave.meet.playbours.manage.sys.menu.service.MaMenuDto;
+import leave.meet.playbours.manage.sys.user.repository.MaUserRepository;
+import leave.meet.playbours.manage.sys.user.service.dto.MaUserDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,16 +18,16 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class MaBoardRepositoryImpl implements MaBoardRepository {
+public class MaUserRepositoryImpl implements MaUserRepository {
 
     private final MongoTemplate mongoTemplate;
 
-    public MaBoardRepositoryImpl(MongoTemplate mongoTemplate) {
+    public MaUserRepositoryImpl(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
     }
 
     @Override
-    public Page<MaBoardDto> findByPagingAndFiltering(int page, int size, MaBoardDto maBoardDto, String boardDivn) {
+    public Page<MaUserDto> findByPagingAndFiltering(int page, int size, MaUserDto maUserDto, String procType) {
         Pageable pageable = PageRequest.of(page == 0 ? 0 : page - 1, size, Sort.by("seq"));
         Query query = new Query()
                 .with(pageable)
@@ -35,9 +36,7 @@ public class MaBoardRepositoryImpl implements MaBoardRepository {
 
         //query.addCriteria(Criteria.where("useYn").is("Y"));
 
-        */
-/* 쿼리 조건 *//*
-
+        /* 쿼리 조건 */
         if(maMenuDto.getSearch1() != null && !"".equals(maMenuDto.getSearch1() )) {
             query.addCriteria(Criteria.where("menuClCd").is(maMenuDto.getSearch1()));
         }
@@ -72,4 +71,3 @@ public class MaBoardRepositoryImpl implements MaBoardRepository {
         );
     }
 }
-*/
