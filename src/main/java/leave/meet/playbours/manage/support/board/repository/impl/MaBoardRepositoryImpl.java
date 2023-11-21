@@ -31,6 +31,7 @@ public class MaBoardRepositoryImpl implements MaBoardRepository {
                 .skip((long) pageable.getPageSize() * pageable.getPageNumber())
                 .limit(pageable.getPageSize());
 
+        query.addCriteria(Criteria.where("boardDivn").is(boardDivn));
         query.addCriteria(Criteria.where("delYn").is("N"));
 
         /* 쿼리 조건 /*
@@ -38,7 +39,7 @@ public class MaBoardRepositoryImpl implements MaBoardRepository {
             query.addCriteria(Criteria.where("menuClCd").is(maBoardDto.getSearch1()));
         }*/
 
-        if(maBoardDto.getSearchKeyword() != null && !"".equals(maBoardDto.getSearchKeyword())) {
+        /*if(maBoardDto.getSearchKeyword() != null && !"".equals(maBoardDto.getSearchKeyword())) {
             if(maBoardDto.getSearchOption() != null && !"".equals(maBoardDto.getSearchOption())) {
                 switch (maBoardDto.getSearchOption()) {
                     case "0" -> {
@@ -54,7 +55,7 @@ public class MaBoardRepositoryImpl implements MaBoardRepository {
                     }
                 }
             }
-        }
+        }*/
 
         query.with(Sort.by(Sort.Direction.DESC, "seq"));
 

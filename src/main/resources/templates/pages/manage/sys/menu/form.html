@@ -104,7 +104,7 @@
 							<th:block th:if="${maMenuDto.procType eq 'insert' or maMenuDto.procType eq 'lowerInsert'}">
 								<div class="input-group">
 									<input type="text" class="form-control alphaOnly" id="menuCd" name="menuCd" th:value="${menuDto.menuCd}" title="메뉴코드" required oninput="fnOnInput();"/>
-									<button class="btn btn-outline-primary" type="button" id="button-addon2" onclick="fnChkOverlap();">중복확인</button>
+									<button class="btn btn-outline-primary" type="button" onclick="fnChkOverlap();">중복확인</button>
 								</div>
 							</th:block>
 							<th:block th:unless="${maMenuDto.procType eq 'insert' or maMenuDto.procType eq 'lowerInsert'}">

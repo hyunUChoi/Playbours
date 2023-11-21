@@ -28,7 +28,6 @@ public class MaBoardController {
 
     @RequestMapping(FOLDER_PATH + "{boardDivn:faq|notice|qna|sgs}/list")
     public String list(@ModelAttribute("maBoardDto") MaBoardDto maBoardDto, @PathVariable String boardDivn) {
-
         // thymeleaf rendering error
         switch (boardDivn) {
             case "faq" :
@@ -49,9 +48,12 @@ public class MaBoardController {
         int pageSize = 10;
         Page<MaBoardDto> resultList = boardRepository.findByPagingAndFiltering(pageNo, pageSize, maBoardDto, boardDivn);
 
+        model.addAttribute("resultList", resultList);
+        model.addAttribute("paging", pagingService.getPageInfo(resultList, pageNo, pageSize));
+
         switch (boardDivn) {
             case "faq" :
-                return "pages/manage/support/board/faq/list";
+                return "pages/manage/support/board/faq/addList";
             case "notice":
                 return "pages/manage/support/board/notice/list";
             case "qna":

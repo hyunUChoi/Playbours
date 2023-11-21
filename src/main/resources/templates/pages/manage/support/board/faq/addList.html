@@ -47,34 +47,32 @@
 		</th:block>
 	</tbody>
 </table>
-<th:block th:if="${maMenuDto.procType eq 'list'}">
-	<div class="demo-inline-spacing">
-		<button class="dt-button create-new btn btn-primary" onclick="gfnPageProcess('insert', 'insertForm')" style="position: absolute;right: 0;bottom: 1rem;">
-			<span><i class="bx bx-plus me-sm-1"></i>
-				<span class="d-none d-sm-inline-block">Add New Record</span>
-			</span>
-		</button>
-		<nav aria-label="Page navigation" th:if="${paging.totalPage ne 0}">
-			<ul class="pagination" style="cursor: pointer;">
-				<li class="page-item first">
-					<a class="page-link" onclick="fnPaging(this);" th:pageNo="1"><i class="tf-icon bx bx-chevrons-left"></i></a>
-				</li>
-				<li class="page-item prev" th:if="${paging.hasPrev} ? 'disalbe'">
-					<a class="page-link" onclick="fnPaging(this);" th:pageNo="${paging.prevIdx}"><i class="tf-icon bx bx-chevron-left"></i></a>
-				</li>
-				<li th:each="page : ${#numbers.sequence(paging.startNum, paging.endNum)}" class="page-item" th:classappend="${page eq paging.pageNo + 1} ? 'active' : ''">
-					<a class="page-link" onclick="fnPaging(this);" th:pageNo="${page}" th:text="${page}"></a>
-				</li>
-				<li class="page-item next" th:if="${paging.hasNext} ? 'disalbe'">
-					<a class="page-link" onclick="fnPaging(this);" th:pageNo="${paging.nextIdx}"><i class="tf-icon bx bx-chevron-right"></i></a>
-				</li>
-				<li class="page-item last">
-					<a class="page-link" onclick="fnPaging(this);" th:pageNo="${paging.totalPage}"><i class="tf-icon bx bx-chevrons-right"></i></a>
-				</li>
-			</ul>
-		</nav>
-	</div>
-</th:block>
+<div class="demo-inline-spacing">
+	<button class="dt-button create-new btn btn-primary" onclick="gfnPageProcess('insert', 'insertForm')" style="position: absolute;right: 0;bottom: 1rem;">
+		<span><i class="bx bx-plus me-sm-1"></i>
+			<span class="d-none d-sm-inline-block">Add New Record</span>
+		</span>
+	</button>
+	<nav aria-label="Page navigation" th:if="${paging.totalPage ne 0}">
+		<ul class="pagination" style="cursor: pointer;">
+			<li class="page-item first">
+				<a class="page-link" onclick="fnPaging(this);" th:pageNo="1"><i class="tf-icon bx bx-chevrons-left"></i></a>
+			</li>
+			<li class="page-item prev" th:if="${paging.hasPrev} ? 'disalbe'">
+				<a class="page-link" onclick="fnPaging(this);" th:pageNo="${paging.prevIdx}"><i class="tf-icon bx bx-chevron-left"></i></a>
+			</li>
+			<li th:each="page : ${#numbers.sequence(paging.startNum, paging.endNum)}" class="page-item" th:classappend="${page eq paging.pageNo + 1} ? 'active' : ''">
+				<a class="page-link" onclick="fnPaging(this);" th:pageNo="${page}" th:text="${page}"></a>
+			</li>
+			<li class="page-item next" th:if="${paging.hasNext} ? 'disalbe'">
+				<a class="page-link" onclick="fnPaging(this);" th:pageNo="${paging.nextIdx}"><i class="tf-icon bx bx-chevron-right"></i></a>
+			</li>
+			<li class="page-item last">
+				<a class="page-link" onclick="fnPaging(this);" th:pageNo="${paging.totalPage}"><i class="tf-icon bx bx-chevrons-right"></i></a>
+			</li>
+		</ul>
+	</nav>
+</div>
 <script th:inline="javascript">
     document.addEventListener("DOMContentLoaded", () => {
 
@@ -82,7 +80,7 @@
 
     function fnPaging(pageNo) {
         document.getElementById('tbl').innerHTML = '';
-        gfnPageProcess('addList', [[${maMenuDto.procType}]] + 'AddList', pageNo.getAttribute('pageNo'));
+        gfnPageProcess('addList', 'addList', pageNo.getAttribute('pageNo'));
     }
 </script>
 </html>

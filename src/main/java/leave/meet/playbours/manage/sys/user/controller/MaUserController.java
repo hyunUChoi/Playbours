@@ -17,15 +17,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class MaUserController {
 
-    private final MaUserRepository userRepository;
+    /*private final MaUserRepository userRepository;*/
 
     @Resource(name= "pagingService")
     private PagingService pagingService;
 
-    public MaUserController(MaUserRepository userRepository, PagingService pagingService) {
+    /*public MaUserController(MaUserRepository userRepository, PagingService pagingService) {
         this.userRepository = userRepository;
         this.pagingService = pagingService;
-    }
+    }*/
 
     private final static String FOLDER_PATH = "/ma/sys/user/";
     private final static String HTML_PATH = "/pages/manage/sys/user/";
@@ -35,7 +35,7 @@ public class MaUserController {
         return  HTML_PATH +"list";
     }
 
-    @RequestMapping(FOLDER_PATH + "addList")
+    /*@RequestMapping(FOLDER_PATH + "addList")
     public String addList(@ModelAttribute("maUserDto") MaUserDto maUserDto, @PathVariable String procType, Model model) {
 
         int pageNo = maUserDto.getPageNo();
@@ -56,6 +56,6 @@ public class MaUserController {
 
         }
         return HTML_PATH + "form";
-    }
+    }*/
 
 }
