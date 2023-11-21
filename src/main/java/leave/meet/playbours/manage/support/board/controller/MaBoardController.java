@@ -55,11 +55,11 @@ public class MaBoardController {
             case "faq" :
                 return "pages/manage/support/board/faq/addList";
             case "notice":
-                return "pages/manage/support/board/notice/list";
+                return "pages/manage/support/board/notice/addList";
             case "qna":
-                return "pages/manage/support/board/qna/list";
+                return "pages/manage/support/board/qna/addList";
             default:
-                return "pages/manage/support/board/sgs/list";
+                return "pages/manage/support/board/sgs/addList";
         }
     }
 }

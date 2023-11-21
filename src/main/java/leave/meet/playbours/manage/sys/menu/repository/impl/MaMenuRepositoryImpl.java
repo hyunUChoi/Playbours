@@ -26,7 +26,7 @@ public class MaMenuRepositoryImpl implements MaMenuRepository {
     }
 
     @Override
-    public Page<MaMenuDto> findByPagingAndFiltering(int page, int size, MaMenuDto maMenuDto, String procType) {
+    public Page<MaMenuDto> findByPagingAndFiltering(int page, int size, MaMenuDto dto, String procType) {
         Pageable pageable = PageRequest.of(page == 0 ? 0 : page - 1, size, Sort.by("seq"));
         Query query = new Query()
                 .with(pageable)
@@ -36,31 +36,31 @@ public class MaMenuRepositoryImpl implements MaMenuRepository {
         query.addCriteria(Criteria.where("delYn").is("N"));
 
         /* 쿼리 조건 */
-        if(maMenuDto.getSearch1() != null && !"".equals(maMenuDto.getSearch1() )) {
-            query.addCriteria(Criteria.where("menuClCd").is(maMenuDto.getSearch1()));
+        if(dto.getSearch1() != null && !"".equals(dto.getSearch1() )) {
+            query.addCriteria(Criteria.where("menuClCd").is(dto.getSearch1()));
         }
 
         if("list".equals(procType)) {
-            if(maMenuDto.getSearchKeyword() != null && !"".equals(maMenuDto.getSearchKeyword())) {
-                if(maMenuDto.getSearchOption() != null && !"".equals(maMenuDto.getSearchOption())) {
-                    switch (maMenuDto.getSearchOption()) {
+            if(dto.getSearchKeyword() != null && !"".equals(dto.getSearchKeyword())) {
+                if(dto.getSearchOption() != null && !"".equals(dto.getSearchOption())) {
+                    switch (dto.getSearchOption()) {
                         case "0" -> {
                             Criteria criteria = new Criteria();
-                            criteria.orOperator(Criteria.where("menuCd").is(maMenuDto.getSearchKeyword()), Criteria.where("menuNm").is(maMenuDto.getSearchKeyword()));
+                            criteria.orOperator(Criteria.where("menuCd").is(dto.getSearchKeyword()), Criteria.where("menuNm").is(dto.getSearchKeyword()));
                             query.addCriteria(criteria);
                         }
                         case "1" -> {
-                            query.addCriteria(Criteria.where("menuNm").is(maMenuDto.getSearchKeyword()));
+                            query.addCriteria(Criteria.where("menuNm").is(dto.getSearchKeyword()));
                         }
                         case "2" -> {
-                            query.addCriteria(Criteria.where("menuCd").is(maMenuDto.getSearchKeyword()));
+                            query.addCriteria(Criteria.where("menuCd").is(dto.getSearchKeyword()));
                         }
                     }
                 }
             }
         }
 
-        query.addCriteria(Criteria.where("upperCd").is("view".equals(procType) ? maMenuDto.getMenuCd() : ""));
+        query.addCriteria(Criteria.where("upperCd").is("view".equals(procType) ? dto.getMenuCd() : ""));
         query.with(Sort.by(Sort.Direction.DESC, "seq"));
 
         List<MaMenuDto> filterData = mongoTemplate.find(query, MaMenuDto.class);
@@ -71,17 +71,17 @@ public class MaMenuRepositoryImpl implements MaMenuRepository {
     }
 
     @Override
-    public MaMenuDto findOne(MaMenuDto maMenuDto) {
+    public MaMenuDto findOne(MaMenuDto dto) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("seq").is(maMenuDto.getSeq()));
+        query.addCriteria(Criteria.where("seq").is(dto.getSeq()));
         query.addCriteria(Criteria.where("delYn").is("N"));
         return mongoTemplate.findOne(query, MaMenuDto.class);
     }
 
     @Override
-    public MaMenuDto findOneByCode(MaMenuDto maMenuDto) {
+    public MaMenuDto findOneByCode(MaMenuDto dto) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("menuCd").is(maMenuDto.getUpperCd()));
+        query.addCriteria(Criteria.where("menuCd").is(dto.getUpperCd()));
         query.addCriteria(Criteria.where("delYn").is("N"));
         return mongoTemplate.findOne(query, MaMenuDto.class);
     }
@@ -142,5 +142,16 @@ public class MaMenuRepositoryImpl implements MaMenuRepository {
         update.set("lstChgDt", new Date());
         update.set("delYn", "Y");
         mongoTemplate.upsert(query, update, MaMenuDto.class);
+    }
+
+    @Override
+    public List<MaMenuDto> findMenuList(MaMenuDto dto) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("menuClCd").is(dto.getMenuClCd()));
+        query.addCriteria(Criteria.where("upperCd").is(dto.getUpperCd()));
+        query.addCriteria(Criteria.where("useYn").is("Y"));
+        query.addCriteria(Criteria.where("delYn").is("N"));
+        query.with(Sort.by(Sort.Direction.ASC, "menuOrd"));
+        return mongoTemplate.find(query, MaMenuDto.class);
     }
 }
