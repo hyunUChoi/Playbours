@@ -1,13 +1,13 @@
 package leave.meet.playbours.common.service;
 
 import leave.meet.playbours.common.dto.CmmnDto;
-import leave.meet.playbours.manage.sys.menu.service.MaMenuDto;
+import leave.meet.playbours.common.dto.PagingDto;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PagingService {
-    public CmmnDto getPageInfo(Page<MaMenuDto> pageList, int pageNo, int pageSize) {
+    public PagingDto getPageInfo(Page<?> pageList, int pageNo, int pageSize) {
         pageNo = pageNo == 0 ? 0 : pageNo - 1;
 
         int totalPage = pageList.getTotalPages();
@@ -17,7 +17,7 @@ public class PagingService {
         boolean hasNext = pageList.hasNext();
         int prevIdx = pageList.previousOrFirstPageable().getPageNumber() + 1;
         int nextIdx = pageList.nextOrLastPageable().getPageNumber() + 1;
-        return new CmmnDto(totalPage, startNum, endNum, hasPrev, prevIdx, hasNext, nextIdx, pageNo);
+        return new PagingDto(pageNo, pageSize, totalPage, startNum, endNum, hasPrev, prevIdx, hasNext, nextIdx);
     }
 
 }

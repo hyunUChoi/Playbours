@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"
+      class="light-style layout-menu-fixed"
+      dir="ltr"
+      data-theme="theme-default"
+      data-assets-path="/manage/assets/"
+      data-template="vertical-menu-template-free"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/manage/layout/layout}"
+      layout:fragment="content"
+>
+<script th:inline="javascript">
+    document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("boardDivn").value = [[${boardDivn}]];
+    })
+</script>
+<h4 class="fw-bold py-3 mb-4">QnA</h4>
+<div class="row">
+	<div class="col-xl">
+		<div class="card mb-4">
+			<div class="card-header d-flex justify-content-between align-items-center">
+				<h5 class="mb-0">qna</h5>
+			</div>
+			<div class="card-body">
+				<form id="defaultFrm" th:object="${maBoardDto}" method="post" onsubmit="return false;">
+					<input type="hidden" id="boardDivn" name="boardDivn"/>
+					<div class="row">
+						<div class="mb-3">
+							<label for="title" class="form-label">제목</label>
+							<input type="text" class="form-control" id="title" th:field="*{title}" title="순서" required/>
+						</div>
+						<div class="mb-3">
+							<label class="form-label" for="useYn">공개여부</label>
+							<select class="form-select" id="useYn" th:field="*{useYn}" title="사용여부" required>
+								<option value="">선택</option>
+								<option value="Y">공개</option>
+								<option value="N">비공개(작성자만 내용 열람 가능)</option>
+							</select>
+						</div>
+						<div class="mb-3">
+							<label class="form-label" for="cont">내용</label>
+							<textarea class="form-control" id="cont" th:field="*{cont}" title="사용여부" required></textarea>
+						</div>
+						<div class="mb-3">
+							<label for="atchFile" class="form-label">첨부파일</label>
+							<input class="form-control" type="file" id="atchFile" th:field="*{atchFile}" multiple/>
+						</div>
+					</div>
+					<div class="text-end">
+						<button type="button" class="btn btn-outline-primary" onclick="gfnPageProcess('submit', 'insertProc')">등록</button>
+						<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('list', 'list')">취소</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+</html>

@@ -26,12 +26,6 @@ function formValidation(form) {
             }
         }
 
-        /* 입력값 중 사이 공백 검사 */
-        if(elm.type !== 'textarea' && spacePatten.test(elm.value)) {
-            validationMsg('space', elm);
-            valChk += 1;
-        }
-
         /* 필수 값 */
         if(elm.getAttribute('required') != null) {
             if(elm.value.trim() === '') {
@@ -76,9 +70,6 @@ function validationMsg(divn, elm) {
     switch (divn) {
         case 'trim' :
             msg = '은(는) 필수 ' + (elm.type === 'select-one' ? '선택' : '입력') + '입니다.\n';
-            break;
-        case 'space' :
-            msg = ' 값에 공백이 포함되어 있습니다. 다시 입력해주세요.\n';
             break;
         case 'num' :
             msg = ' (은)는 숫자만 입력할 수 있습니다.\n';

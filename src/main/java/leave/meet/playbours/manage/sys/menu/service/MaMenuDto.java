@@ -6,6 +6,7 @@ import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
+import java.util.List;
 
 @SuppressWarnings("unused")
 @TypeAlias("MaMenuDto")
@@ -39,6 +40,9 @@ public class MaMenuDto extends CmmnDto {
     // 사용여부
     private String useYn;
 
+    // 삭제여부
+    private String delYn = "N";
+
     // 최초등록자
     private String frstRegrId;
 
@@ -50,6 +54,10 @@ public class MaMenuDto extends CmmnDto {
 
     // 최종수정일
     private Date lstChgDt;
+
+    private List<MaMenuDto> menuList;
+
+    private MaMenuDto maMenuDto;
 
     public String getSeq() {
         return seq;
@@ -123,6 +131,14 @@ public class MaMenuDto extends CmmnDto {
         this.useYn = useYn;
     }
 
+    public String getDelYn() {
+        return delYn;
+    }
+
+    public void setDelYn(String delYn) {
+        this.delYn = delYn;
+    }
+
     public String getFrstRegrId() {
         return frstRegrId;
     }
@@ -153,5 +169,21 @@ public class MaMenuDto extends CmmnDto {
 
     public void setLstChgDt(Date lstChgDt) {
         this.lstChgDt = lstChgDt;
+    }
+
+    public List<MaMenuDto> getMenuList() {
+        return menuList;
+    }
+
+    public void setMenuList(List<MaMenuDto> menuList) {
+        this.menuList = menuList;
+    }
+
+    public MaMenuDto getMaMenuDto() {
+        return maMenuDto;
+    }
+
+    public void setMaMenuDto(MaMenuDto maMenuDto) {
+        this.maMenuDto = maMenuDto;
     }
 }

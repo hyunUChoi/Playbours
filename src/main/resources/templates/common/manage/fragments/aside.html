@@ -51,91 +51,33 @@
 	<div class="menu-inner-shadow"></div>
 
 	<ul class="menu-inner py-1">
-		<!-- Dashboard -->
-		<li class="menu-item" th:classappend="${#strings.contains(requestURI, 'main') ? 'active' : ''}">
+		<li class="menu-item" th:classappend="${#strings.contains(session.requestURI, 'main') ? 'active' : ''}">
 			<a th:href="@{/ma/main/main}" class="menu-link">
-				<i class="menu-icon tf-icons bx bx-home-circle"></i>
-				<div data-i18n="Analytics">Dashboard</div>
+				<div>Home</div>
 			</a>
 		</li>
 
-		<!-- System -->
-		<li class="menu-header small text-uppercase">
-			<span class="menu-header-text">System</span>
-		</li>
-		<li class="menu-item" th:classappend="${#strings.contains(requestURI, 'menu') ? 'active' : ''}">
-			<a th:href="@{/ma/sys/menu/list}" class="menu-link">
-				<i class="menu-icon tf-icons bx bx-library"></i>
-				<div data-i18n="Menu">Menu</div>
-			</a>
-		</li>
-		<li class="menu-item">
-			<a th:href="@{/ma/sys/auth/list}" class="menu-link">
-				<i class="menu-icon tf-icons bx bx-lock-alt"></i>
-				<div data-i18n="Auth">Auth</div>
-			</a>
-		</li>
-
-		<!-- User -->
-		<li class="menu-header small text-uppercase">
-			<span class="menu-header-text">USERMANAGEr</span>
-		</li>
-		<li class="menu-item">
-			<a href="javascript:void(0)" class="menu-link menu-toggle">
-				<i class="menu-icon tf-icons bx bx-chalkboard"></i>
-				<div data-i18n="User">user</div>
-			</a>
-			<ul class="menu-sub">
-				<li class="menu-item">
-					<a th:href="@{/ma/sys/user/list}" class="menu-link">
-						<div data-i18n="User">User</div>
+		<th:block th:each="depth1 : ${session.menuList}">
+			<li class="menu-header small text-uppercase">
+				<span class="menu-header-text" th:text="${depth1.menuNm}"></span>
+			</li>
+			<th:block th:each="depth2 : ${depth1.menuList}">
+				<li class="menu-item" th:classappend="${#strings.contains(session.requestURI, depth2.menuCd) ? 'active open' : ''}">
+					<a th:href="${depth2.menuUrl}" class="menu-link" th:classappend="${#lists.size(depth2.menuList) > 0 ? 'menu-toggle' : ''}">
+						<div th:text="${depth2.menuNm}"></div>
 					</a>
+					<th:block th:each="depth3 : ${depth2.menuList}">
+						<ul class="menu-sub">
+							<li class="menu-item" th:classappend="${#strings.contains(session.requestURI, depth3.menuCd) ? 'active' : ''}">
+								<a th:href="${depth3.menuUrl}" class="menu-link">
+									<div th:text="${depth3.menuNm}"></div>
+								</a>
+							</li>
+						</ul>
+					</th:block>
 				</li>
-				<li class="menu-item">
-					<a href="extended-ui-text-divider.html" class="menu-link">
-						<div data-i18n="aa">aa</div>
-					</a>
-				</li>
-			</ul>
-		</li>
-
-		<!-- Support -->
-		<li class="menu-header small text-uppercase"><span class="menu-header-text">Support</span></li>
-		<!-- CmmnBoard -->
-		<li class="menu-item">
-			<a href="javascript:void(0)" class="menu-link menu-toggle">
-				<i class="menu-icon tf-icons bx bx-chalkboard"></i>
-				<div data-i18n="Board">Board</div>
-			</a>
-			<ul class="menu-sub">
-				<li class="menu-item">
-					<a href="extended-ui-perfect-scrollbar.html" class="menu-link">
-						<div data-i18n="Notice">Notice</div>
-					</a>
-				</li>
-				<li class="menu-item">
-					<a href="extended-ui-text-divider.html" class="menu-link">
-						<div data-i18n="QnA">QnA</div>
-					</a>
-				</li>
-				<li class="menu-item">
-					<a href="extended-ui-text-divider.html" class="menu-link">
-						<div data-i18n="Suggestion">Suggestion</div>
-					</a>
-				</li>
-			</ul>
-		</li>
-
-		<!-- Forms & Tables -->
-		<li class="menu-header small text-uppercase"><span class="menu-header-text">Forms &amp; Tables</span>
-		</li>
-		<!-- Tables -->
-		<li class="menu-item">
-			<a th:href="@{/tables}" class="menu-link">
-				<i class="menu-icon tf-icons bx bx-table"></i>
-				<div data-i18n="Tables">Tables</div>
-			</a>
-		</li>
+			</th:block>
+		</th:block>
 	</ul>
 </aside>
 <!-- / Menu -->

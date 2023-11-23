@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+/*@Repository
 public class MaUserRepositoryImpl implements MaUserRepository {
 
     private final MongoTemplate mongoTemplate;
@@ -34,9 +34,15 @@ public class MaUserRepositoryImpl implements MaUserRepository {
 
         //query.addCriteria(Criteria.where("useYn").is("Y"));
 
+<<<<<<< HEAD
         /* 쿼리 조건 */
         if(maUserDto.getSearch1() != null && !"".equals(maUserDto.getSearch1() )) {
             query.addCriteria(Criteria.where("userClCd").is(maUserDto.getSearch1()));
+=======
+        *//* 쿼리 조건 *//*
+        if(maMenuDto.getSearch1() != null && !"".equals(maMenuDto.getSearch1() )) {
+            query.addCriteria(Criteria.where("menuClCd").is(maMenuDto.getSearch1()));
+>>>>>>> upstearm/main
         }
 
         if("list".equals(procType)) {
@@ -68,4 +74,4 @@ public class MaUserRepositoryImpl implements MaUserRepository {
                 filterData, pageable, () -> mongoTemplate.count(query.skip(-1).limit(-1), MaUserDto.class)
         );
     }
-}
+}*/

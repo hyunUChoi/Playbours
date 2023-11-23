@@ -5,38 +5,11 @@ import org.springframework.data.annotation.Transient;
 
 import java.io.Serializable;
 
+@SuppressWarnings("unused")
 public class CmmnDto implements Serializable {
     @Transient
     // 현재 페이지
     private int pageNo = 1;
-
-    @Transient
-    // 총 페이지 수
-    private int totalPage;
-
-    @Transient
-    // 시작
-    private int startNum;
-
-    @Transient
-    // 마지막
-    private int endNum;
-
-    @Transient
-    // 이전 페이지 여부
-    private boolean hasPrev;
-
-    @Transient
-    // 이전 페이지 인덱스
-    private int prevIdx;
-
-    @Transient
-    // 다음 페이지 여부
-    private boolean hasNext;
-
-    @Transient
-    // 다음 페이지 인덱스
-    private int nextIdx;
 
     // 구분값
     private String procType;
@@ -69,17 +42,6 @@ public class CmmnDto implements Serializable {
     public CmmnDto() {
     }
 
-    public CmmnDto(int totalPage, int startNum, int endNum, boolean hasPrev, int prevIdx, boolean hasNext, int nextIdx, int pageNo) {
-        this.totalPage = totalPage;
-        this.startNum = startNum;
-        this.endNum = endNum;
-        this.hasPrev = hasPrev;
-        this.prevIdx = prevIdx;
-        this.hasNext = hasNext;
-        this.nextIdx = nextIdx;
-        this.pageNo = pageNo;
-    }
-
     public void setSearch(final CmmnDto dto) {
         this.pageNo = dto.getPageNo();
         this.search1 = dto.getSearch1();
@@ -102,62 +64,6 @@ public class CmmnDto implements Serializable {
 
     public void setPageNo(int pageNo) {
         this.pageNo = pageNo;
-    }
-
-    public int getTotalPage() {
-        return totalPage;
-    }
-
-    public void setTotalPage(int totalPage) {
-        this.totalPage = totalPage;
-    }
-
-    public int getStartNum() {
-        return startNum;
-    }
-
-    public void setStartNum(int startNum) {
-        this.startNum = startNum;
-    }
-
-    public int getEndNum() {
-        return endNum;
-    }
-
-    public void setEndNum(int endNum) {
-        this.endNum = endNum;
-    }
-
-    public boolean isHasPrev() {
-        return hasPrev;
-    }
-
-    public void setHasPrev(boolean hasPrev) {
-        this.hasPrev = hasPrev;
-    }
-
-    public int getPrevIdx() {
-        return prevIdx;
-    }
-
-    public void setPrevIdx(int prevIdx) {
-        this.prevIdx = prevIdx;
-    }
-
-    public boolean isHasNext() {
-        return hasNext;
-    }
-
-    public void setHasNext(boolean hasNext) {
-        this.hasNext = hasNext;
-    }
-
-    public int getNextIdx() {
-        return nextIdx;
-    }
-
-    public void setNextIdx(int nextIdx) {
-        this.nextIdx = nextIdx;
     }
 
     public String getProcType() {

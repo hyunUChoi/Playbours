@@ -54,7 +54,7 @@
 	<script src="/common/cmmn.js"></script>
 </head>
 <body>
-	<th:block th:if="${!#strings.contains(requestURI, 'login')}">
+	<th:block th:if="${!#strings.contains(session.requestURI, 'login')}">
 		<div class="layout-wrapper layout-content-navbar">
 			<div class="layout-container">
 				<aside th:replace="~{common/manage/fragments/aside :: aside}"></aside>
@@ -81,7 +81,7 @@
 		</div>
 	</th:block>
 
-	<th:block th:unless="${!#strings.contains(requestURI, 'login')}">
+	<th:block th:unless="${!#strings.contains(session.requestURI, 'login')}">
 		<th:block layout:fragment="content"></th:block>
 	</th:block>
 

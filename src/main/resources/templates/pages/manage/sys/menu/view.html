@@ -32,13 +32,13 @@
 					<input type="hidden" th:field="*{seq}">
 					<input type="hidden" th:field="*{upperCd}">
 					<input type="hidden" th:field="*{pageNo}">
-					<input type="hidden" th:field="${maMenuDto.search1}">
+					<input type="hidden" th:field="*{search1}">
 					<input type="hidden" th:field="*{searchOption}">
 					<input type="hidden" th:field="*{searchKeyword}">
 					<div class="row">
 						<div class="mb-3 col-md-4">
 							<label for="menuClCd" class="form-label">구분</label>
-							<input class="form-control-plaintext" id="menuClCd" name="menuClCd" th:value="*{menuClCd} eq 'ma' ? '관리자' : '사용자'" readonly>
+							<input class="form-control-plaintext" id="menuClCd" th:value="*{menuClCd} eq 'ma' ? '관리자' : '사용자'" readonly>
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="menuOrd">순서</label>
@@ -46,7 +46,7 @@
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="useYn">사용여부</label>
-							<input type="text" class="form-control-plaintext" id="useYn" name="useYn" th:value="*{useYn} eq 'Y' ? '사용' : '미사용'" readonly/>
+							<input type="text" class="form-control-plaintext" id="useYn" th:value="*{useYn} eq 'Y' ? '사용' : '미사용'" readonly/>
 						</div>
 						<div class="mb-3 col-md-6">
 							<label class="form-label" for="menuNm">메뉴명</label>
@@ -81,7 +81,7 @@
 				</form>
 			</div>
 			<div class="card-datatable table-responsive">
-				<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+				<div class="dataTables_wrapper dt-bootstrap5 no-footer">
 					<div id="tbl"></div>
 				</div>
 			</div>

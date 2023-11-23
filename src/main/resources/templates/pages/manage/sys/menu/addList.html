@@ -7,7 +7,7 @@
       data-template="vertical-menu-template-free"
       xmlns:th="http://www.thymeleaf.org"
 >
-<table class="datatables-users table border-top dataTable no-footer dtr-column" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 100%;">
+<table class="datatables-users table border-top dataTable no-footer dtr-column" style="width: 100%;">
 	<colgroup>
 		<col style="width: 10%;">
 		<col style="width: 15%;">
@@ -62,7 +62,7 @@
 				<li class="page-item prev" th:if="${paging.hasPrev} ? 'disalbe'">
 					<a class="page-link" onclick="fnPaging(this);" th:pageNo="${paging.prevIdx}"><i class="tf-icon bx bx-chevron-left"></i></a>
 				</li>
-				<li th:each="page : ${#numbers.sequence(paging.startNum, paging.endNum)}" class="page-item" th:classappend="${page eq paging.pageNo + 1} ? 'active' : ''">
+				<li th:each="page : ${#numbers.sequence(paging.startNum, paging.endNum)}" class="page-item" th:classappend="${page eq paging.currentPageNo + 1} ? 'active' : ''">
 					<a class="page-link" onclick="fnPaging(this);" th:pageNo="${page}" th:text="${page}"></a>
 				</li>
 				<li class="page-item next" th:if="${paging.hasNext} ? 'disalbe'">

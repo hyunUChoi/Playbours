@@ -12,12 +12,12 @@
 >
 <script th:inline="javascript">
 	document.addEventListener("DOMContentLoaded", () => {
-        gfnPageProcess('addList', 'listAddList', document.getElementById('pageNo').value);
+        gfnPageProcess('addList', 'addList', document.getElementById('pageNo').value);
 	});
 
     function fnSearch() {
         document.getElementById('tbl').innerHTML = '';
-        gfnPageProcess('addList', 'listAddList', '1');
+        gfnPageProcess('addList', 'addList', '1');
     }
 
     document.addEventListener('keydown', function(event) {
@@ -27,7 +27,7 @@
         }
     })
 </script>
-<h4 class="fw-bold py-3 mb-4">MENU</h4>
+<h4 class="fw-bold py-3 mb-4">QnA</h4>
 <div class="card">
 	<form id="defaultFrm" th:object="${maBoardDto}" method="post" onsubmit="return false;">
 		<input type="hidden" th:field="*{seq}"/>
@@ -57,7 +57,7 @@
 		</div>
 	</form>
 	<div class="card-datatable table-responsive">
-		<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+		<div class="dataTables_wrapper dt-bootstrap5 no-footer">
 			<div id="tbl"></div>
 		</div>
 	</div>
