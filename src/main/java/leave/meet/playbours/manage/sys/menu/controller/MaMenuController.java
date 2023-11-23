@@ -1,6 +1,7 @@
 package leave.meet.playbours.manage.sys.menu.controller;
 
 import jakarta.annotation.Resource;
+import leave.meet.playbours.common.dto.PagingDto;
 import leave.meet.playbours.common.service.PagingService;
 import leave.meet.playbours.manage.sys.menu.repository.MaMenuRepository;
 import leave.meet.playbours.manage.sys.menu.service.MaMenuDto;
@@ -39,8 +40,10 @@ public class MaMenuController {
         int pageSize = 10;
         Page<MaMenuDto> resultList = menuRepository.findByPagingAndFiltering(pageNo, pageSize, maMenuDto, procType);
 
+        PagingDto paging = pagingService.getPageInfo(resultList, pageNo, pageSize);
+
         model.addAttribute("resultList", resultList);
-        model.addAttribute("paging", pagingService.getPageInfo(resultList, pageNo, pageSize));
+        model.addAttribute("paging", paging);
 
         return "pages/manage/sys/menu/addList";
     }

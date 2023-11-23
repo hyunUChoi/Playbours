@@ -1,6 +1,7 @@
 package leave.meet.playbours.manage.support.board.controller;
 
 import jakarta.annotation.Resource;
+import leave.meet.playbours.common.dto.PagingDto;
 import leave.meet.playbours.common.service.PagingService;
 import leave.meet.playbours.manage.support.board.repository.MaBoardRepository;
 import leave.meet.playbours.manage.support.board.service.MaBoardDto;
@@ -48,8 +49,11 @@ public class MaBoardController {
         int pageSize = 10;
         Page<MaBoardDto> resultList = boardRepository.findByPagingAndFiltering(pageNo, pageSize, maBoardDto, boardDivn);
 
+        PagingDto paging = pagingService.getPageInfo(resultList, pageNo, pageSize);
+        paging.setTotalRecord(boardRepository.countTotalRecords(maBoardDto, boardDivn));
+
         model.addAttribute("resultList", resultList);
-        model.addAttribute("paging", pagingService.getPageInfo(resultList, pageNo, pageSize));
+        model.addAttribute("paging", paging);
 
         switch (boardDivn) {
             case "faq" :
@@ -60,6 +64,58 @@ public class MaBoardController {
                 return "pages/manage/support/board/qna/addList";
             default:
                 return "pages/manage/support/board/sgs/addList";
+        }
+    }
+
+    @RequestMapping(FOLDER_PATH + "{boardDivn:faq|notice|qna|sgs}/form")
+    public String form(@ModelAttribute("maBoardDto") MaBoardDto maBoardDto, @PathVariable String boardDivn, Model model) {
+
+        switch (boardDivn) {
+            case "faq" :
+                return "pages/manage/support/board/faq/form";
+            case "notice":
+                return "pages/manage/support/board/notice/form";
+            case "qna":
+                return "pages/manage/support/board/qna/form";
+            default:
+                return "pages/manage/support/board/sgs/form";
+        }
+    }
+
+    @RequestMapping(FOLDER_PATH + "{boardDivn:faq|notice|qna|sgs}/{procType}Proc")
+    public String form(@ModelAttribute("maBoardDto") MaBoardDto maBoardDto, @PathVariable String boardDivn, @PathVariable String procType) {
+
+        switch (procType) {
+            case "insert" -> {
+                boardRepository.insert(maBoardDto, boardDivn);
+                return "redirect:" + FOLDER_PATH + boardDivn + "/list";
+            }
+            case "delete" -> {
+                boardRepository.delete(maBoardDto);
+                return "redirect:" + FOLDER_PATH + boardDivn + "/list";
+            }
+        }
+
+        return "pages/manage/support/board/qna/list";
+    }
+
+    @RequestMapping(FOLDER_PATH + "{boardDivn:faq|notice|qna|sgs}/view")
+    public String view(@ModelAttribute("maBoardDto") MaBoardDto maBoardDto, @PathVariable String boardDivn, Model model) {
+
+        MaBoardDto searchVO = maBoardDto;
+        maBoardDto = boardRepository.findOne(maBoardDto);
+        maBoardDto.setSearch(searchVO);
+        model.addAttribute("maBoardDto",  maBoardDto);
+
+        switch (boardDivn) {
+            case "faq" :
+                return "pages/manage/support/board/faq/view";
+            case "notice":
+                return "pages/manage/support/board/notice/view";
+            case "qna":
+                return "pages/manage/support/board/qna/view";
+            default:
+                return "pages/manage/support/board/sgs/view";
         }
     }
 }

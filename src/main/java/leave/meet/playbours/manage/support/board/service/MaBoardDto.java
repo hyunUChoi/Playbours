@@ -18,7 +18,7 @@ public class MaBoardDto extends CmmnDto {
     // 게시판 구분
     private String boardDivn;
 
-    // 사용여부
+    // 공개여부
     private String useYn;
 
     // 게시글 제목
@@ -31,7 +31,7 @@ public class MaBoardDto extends CmmnDto {
     private String reply;
 
     // 조회수
-    private int viewCnt;
+    private int viewCnt = 0;
 
     // 첨부파일
     private String atchFile;
@@ -49,7 +49,7 @@ public class MaBoardDto extends CmmnDto {
     private Date lstChgDt;
 
     // 삭제여부
-    private String delYn;
+    private String delYn = "N";
 
     public String getSeq() {
         return seq;

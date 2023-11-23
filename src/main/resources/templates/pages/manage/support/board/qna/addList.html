@@ -9,18 +9,16 @@
 >
 <table class="datatables-users table border-top dataTable no-footer dtr-column" style="width: 100%;">
 	<colgroup>
-		<col style="width: 5%;">
-		<col style="width: 15%;">
+		<col style="width: 10%;">
 		<col>
 		<col style="width: 10%;">
 		<col style="width: 15%;">
 		<col style="width: 15%;">
-		<col style="width: 5%;">
+		<col style="width: 10%;">
 	</colgroup>
 	<thead>
 		<tr>
 			<th>번호</th>
-			<th>문의구분</th>
 			<th>제목</th>
 			<th>진행현황</th>
 			<th>작성자</th>
@@ -31,27 +29,26 @@
 	<tbody>
 		<th:block th:if="${#lists.size(resultList.toList()) gt 0}">
 			<tr class="text-body" th:each="result, status : ${resultList.content}" onclick="gfnPageProcess('view', 'view', this.getAttribute('parameter'), 'seq')" th:parameter="${result.seq}" style="cursor: pointer;">
-				<td th:text="${status.count}"></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
+				<td th:text="${paging.totalRecord + 1 - ((maBoardDto.pageNo - 1) * paging.pageSize +  status.count)}"></td>
+				<td><span class="text-truncate" th:text="${result.title}"></span></td>
+				<td th:text="${result.reply gt 0 ? '답변완료' : '확인중'}"></td>
+				<td th:text="${result.frstRegrId}"></td>
+				<td th:text="${#dates.format(result.frstRegrDt, 'yyyy-MM-dd')}"></td>
+				<td th:text="${result.viewCnt}"></td>
 			</tr>
 		</th:block>
 		<th:block th:unless="${#lists.size(resultList.toList()) gt 0}">
 			<tr class="text-body">
-				<td th:colspan="7" style="text-align: center; height: 5rem;">등록된 데이터가 없습니다.</td>
+				<td th:colspan="6" style="text-align: center; height: 5rem;">등록된 데이터가 없습니다.</td>
 			</tr>
 		</th:block>
 	</tbody>
 </table>
 <div class="demo-inline-spacing">
-	<button class="dt-button create-new btn btn-primary" onclick="gfnPageProcess('insert', 'insertForm')" style="position: absolute;right: 0;bottom: 1rem;">
-		<span><i class="bx bx-plus me-sm-1"></i>
-			<span class="d-none d-sm-inline-block">Add New Record</span>
-		</span>
+	<button class="dt-button create-new btn btn-primary" onclick="gfnPageProcess('insert', 'form')" style="position: absolute;right: 0;bottom: 1rem;">
+			<span><i class="bx bx-plus me-sm-1"></i>
+				<span class="d-none d-sm-inline-block">Add New Record</span>
+			</span>
 	</button>
 	<nav aria-label="Page navigation" th:if="${paging.totalPage ne 0}">
 		<ul class="pagination" style="cursor: pointer;">
@@ -61,7 +58,7 @@
 			<li class="page-item prev" th:if="${paging.hasPrev} ? 'disalbe'">
 				<a class="page-link" onclick="fnPaging(this);" th:pageNo="${paging.prevIdx}"><i class="tf-icon bx bx-chevron-left"></i></a>
 			</li>
-			<li th:each="page : ${#numbers.sequence(paging.startNum, paging.endNum)}" class="page-item" th:classappend="${page eq paging.pageNo + 1} ? 'active' : ''">
+			<li th:each="page : ${#numbers.sequence(paging.startNum, paging.endNum)}" class="page-item" th:classappend="${page eq paging.currentPageNo + 1} ? 'active' : ''">
 				<a class="page-link" onclick="fnPaging(this);" th:pageNo="${page}" th:text="${page}"></a>
 			</li>
 			<li class="page-item next" th:if="${paging.hasNext} ? 'disalbe'">

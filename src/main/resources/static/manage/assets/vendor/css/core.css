@@ -5762,9 +5762,12 @@ textarea.form-control-lg {
 }
 
 .text-truncate {
+  display: block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  word-break: break-all;
+  width: 95%;
 }
 
 .vr {

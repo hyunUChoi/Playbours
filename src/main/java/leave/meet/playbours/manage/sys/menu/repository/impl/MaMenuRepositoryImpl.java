@@ -108,7 +108,7 @@ public class MaMenuRepositoryImpl implements MaMenuRepository {
         // TODO 로그인한 아이디로 변경
         menuDto.setFrstRegrId("admin");
         menuDto.setFrstRegrDt(new Date());
-        menuDto.setDelYn("N");
+        menuDto.setDelYn(dto.getDelYn());
         mongoTemplate.insert(menuDto);
     }
 
@@ -137,6 +137,7 @@ public class MaMenuRepositoryImpl implements MaMenuRepository {
         Query query = new Query();
         Update update = new Update();
 
+        query.addCriteria(Criteria.where("seq").is(dto.getSeq()));
         // TODO 로그인한 아이디로 변경
         update.set("lstChgId", "admin");
         update.set("lstChgDt", new Date());

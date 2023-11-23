@@ -41,7 +41,7 @@ public class MaMenuDto extends CmmnDto {
     private String useYn;
 
     // 삭제여부
-    private String delYn;
+    private String delYn = "N";
 
     // 최초등록자
     private String frstRegrId;
