@@ -19,4 +19,5 @@ public class PagingService {
         int nextIdx = pageList.nextOrLastPageable().getPageNumber() + 1;
         return new CmmnDto(totalPage, startNum, endNum, hasPrev, prevIdx, hasNext, nextIdx, pageNo);
     }
+
 }

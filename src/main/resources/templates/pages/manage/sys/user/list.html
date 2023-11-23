@@ -29,10 +29,10 @@
 </script>
 <h4 class="fw-bold py-3 mb-4">USER</h4>
 <div class="card">
-	<form id="defaultFrm" th:object="${maMenuDto}" method="post" onsubmit="return false;">
+	<form id="defaultFrm" th:object="${maUserDto}" method="post" onsubmit="return false;">
 		<input type="hidden" th:field="*{seq}"/>
 		<input type="hidden" th:field="*{pageNo}"/>
-		<input type="hidden" th:field="*{menuCd}"/>
+		<input type="hidden" th:field="*{userCd}"/>
 		<input type="hidden" th:field="*{upperCd}"/>
 		<div class="card-header">
 			<div class="d-flex justify-content-start align-items-center row py-3 gap-3 gap-md-0">

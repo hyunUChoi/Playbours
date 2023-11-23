@@ -1,10 +1,8 @@
 package leave.meet.playbours.manage.sys.user.repository.impl;
 
-import leave.meet.playbours.manage.sys.menu.repository.MaMenuRepository;
 import leave.meet.playbours.manage.sys.menu.service.MaMenuDto;
 import leave.meet.playbours.manage.sys.user.repository.MaUserRepository;
-import leave.meet.playbours.manage.sys.user.service.dto.MaUserDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import leave.meet.playbours.manage.sys.user.service.MaUserDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -37,37 +35,37 @@ public class MaUserRepositoryImpl implements MaUserRepository {
         //query.addCriteria(Criteria.where("useYn").is("Y"));
 
         /* 쿼리 조건 */
-        if(maMenuDto.getSearch1() != null && !"".equals(maMenuDto.getSearch1() )) {
-            query.addCriteria(Criteria.where("menuClCd").is(maMenuDto.getSearch1()));
+        if(maUserDto.getSearch1() != null && !"".equals(maUserDto.getSearch1() )) {
+            query.addCriteria(Criteria.where("userClCd").is(maUserDto.getSearch1()));
         }
 
         if("list".equals(procType)) {
-            if(maMenuDto.getSearchKeyword() != null && !"".equals(maMenuDto.getSearchKeyword())) {
-                if(maMenuDto.getSearchOption() != null && !"".equals(maMenuDto.getSearchOption())) {
-                    switch (maMenuDto.getSearchOption()) {
+            if(maUserDto.getSearchKeyword() != null && !"".equals(maUserDto.getSearchKeyword())) {
+                if(maUserDto.getSearchOption() != null && !"".equals(maUserDto.getSearchOption())) {
+                    switch (maUserDto.getSearchOption()) {
                         case "0" -> {
                             Criteria criteria = new Criteria();
-                            criteria.orOperator(Criteria.where("menuCd").is(maMenuDto.getSearchKeyword()), Criteria.where("menuNm").is(maMenuDto.getSearchKeyword()));
+                            criteria.orOperator(Criteria.where("userCd").is(maUserDto.getSearchKeyword()), Criteria.where("userNm").is(maUserDto.getSearchKeyword()));
                             query.addCriteria(criteria);
                         }
                         case "1" -> {
-                            query.addCriteria(Criteria.where("menuNm").is(maMenuDto.getSearchKeyword()));
+                            query.addCriteria(Criteria.where("userNm").is(maUserDto.getSearchKeyword()));
                         }
                         case "2" -> {
-                            query.addCriteria(Criteria.where("menuCd").is(maMenuDto.getSearchKeyword()));
+                            query.addCriteria(Criteria.where("userCd").is(maUserDto.getSearchKeyword()));
                         }
                     }
                 }
             }
         }
 
-        query.addCriteria(Criteria.where("upperCd").is("view".equals(procType) ? maMenuDto.getMenuCd() : ""));
+        query.addCriteria(Criteria.where("upperCd").is("view".equals(procType) ? maUserDto.getUserCd() : ""));
         query.with(Sort.by(Sort.Direction.DESC, "seq"));
 
-        List<MaMenuDto> filterData = mongoTemplate.find(query, MaMenuDto.class);
+        List<MaUserDto> filterData = mongoTemplate.find(query, MaUserDto.class);
 
         return PageableExecutionUtils.getPage(
-                filterData, pageable, () -> mongoTemplate.count(query.skip(-1).limit(-1), MaMenuDto.class)
+                filterData, pageable, () -> mongoTemplate.count(query.skip(-1).limit(-1), MaUserDto.class)
         );
     }
 }

@@ -1,15 +1,18 @@
-package leave.meet.playbours.manage.sys.user.service.dto;
+package leave.meet.playbours.manage.sys.user.service;
 
 import leave.meet.playbours.common.dto.CmmnDto;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "TB_USER")
 public class MaUserDto extends CmmnDto {
+
+    // 인덱스
+    private String seq;
     // 유저구분
     private String userClCd;
 
     // 유저 고유 코드
-    private String userSeq;
+    private String userCd;
 
     // 유저 아이디
     private String userId;
@@ -50,20 +53,20 @@ public class MaUserDto extends CmmnDto {
     // 최종수정일
     private String lstChgDt;
 
-    public String getUserClCd() {
-        return userClCd;
+    public String getUserCd() {
+        return userCd;
     }
 
-    public void setUserClCd(String userClCd) {
-        this.userClCd = userClCd;
+    public void setUserCd(String userCd) {
+        this.userCd = userCd;
     }
 
-    public String getUserSeq() {
-        return userSeq;
+    public String getSeq() {
+        return seq;
     }
 
-    public void setUserSeq(String userSeq) {
-        this.userSeq = userSeq;
+    public void setSeq(String seq) {
+        this.seq = seq;
     }
 
     public String getUserId() {
@@ -136,5 +139,13 @@ public class MaUserDto extends CmmnDto {
 
     public void setLstChgDt(String lstChgDt) {
         this.lstChgDt = lstChgDt;
+    }
+
+    public String getUserClCd() {
+        return userClCd;
+    }
+
+    public void setUserClCd(String userClCd) {
+        this.userClCd = userClCd;
     }
 }
