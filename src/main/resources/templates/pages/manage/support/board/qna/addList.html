@@ -11,7 +11,7 @@
 	<colgroup>
 		<col style="width: 10%;">
 		<col>
-		<col style="width: 10%;">
+		<col style="width: 15%;">
 		<col style="width: 15%;">
 		<col style="width: 15%;">
 		<col style="width: 10%;">
@@ -31,7 +31,7 @@
 			<tr class="text-body" th:each="result, status : ${resultList.content}" onclick="gfnPageProcess('view', 'view', this.getAttribute('parameter'), 'seq')" th:parameter="${result.seq}" style="cursor: pointer;">
 				<td th:text="${paging.totalRecord + 1 - ((maBoardDto.pageNo - 1) * paging.pageSize +  status.count)}"></td>
 				<td><span class="text-truncate" th:text="${result.title}"></span></td>
-				<td th:text="${result.reply gt 0 ? '답변완료' : '확인중'}"></td>
+				<td th:text="${#strings.isEmpty(result.reply) ? '확인중' : '답변완료'}"></td>
 				<td th:text="${result.frstRegrId}"></td>
 				<td th:text="${#dates.format(result.frstRegrDt, 'yyyy-MM-dd')}"></td>
 				<td th:text="${result.viewCnt}"></td>

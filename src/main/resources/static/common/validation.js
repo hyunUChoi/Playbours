@@ -6,6 +6,7 @@ let spacePatten = /\s/g;
 let valChk = 0;
 
 function formValidation(form) {
+    valChk = 0;
 
     /* 메세지 중복 쌓임 방지 */
     for(let cls of document.getElementsByClassName('alert_class')) {

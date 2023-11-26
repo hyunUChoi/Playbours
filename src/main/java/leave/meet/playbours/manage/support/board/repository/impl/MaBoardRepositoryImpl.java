@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.CriteriaDefinition;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.data.support.PageableExecutionUtils;
@@ -35,30 +36,7 @@ public class MaBoardRepositoryImpl implements MaBoardRepository {
 
         query.addCriteria(Criteria.where("boardDivn").is(boardDivn));
         query.addCriteria(Criteria.where("delYn").is("N"));
-
-        /* 쿼리 조건 /*
-        /*if(maBoardDto.getSearch1() != null && !"".equals(maBoardDto.getSearch1() )) {
-            query.addCriteria(Criteria.where("menuClCd").is(maBoardDto.getSearch1()));
-        }*/
-
-        /*if(maBoardDto.getSearchKeyword() != null && !"".equals(maBoardDto.getSearchKeyword())) {
-            if(maBoardDto.getSearchOption() != null && !"".equals(maBoardDto.getSearchOption())) {
-                switch (maBoardDto.getSearchOption()) {
-                    case "0" -> {
-                        Criteria criteria = new Criteria();
-                        criteria.orOperator(Criteria.where("menuCd").is(maBoardDto.getSearchKeyword()), Criteria.where("menuNm").is(maBoardDto.getSearchKeyword()));
-                        query.addCriteria(criteria);
-                    }
-                    case "1" -> {
-                        query.addCriteria(Criteria.where("menuNm").is(maBoardDto.getSearchKeyword()));
-                    }
-                    case "2" -> {
-                        query.addCriteria(Criteria.where("menuCd").is(maBoardDto.getSearchKeyword()));
-                    }
-                }
-            }
-        }*/
-
+        query.addCriteria(searchCondition(dto));
         query.with(Sort.by(Sort.Direction.DESC, "seq"));
 
         List<MaBoardDto> filterData = mongoTemplate.find(query, MaBoardDto.class);
@@ -73,7 +51,39 @@ public class MaBoardRepositoryImpl implements MaBoardRepository {
         Query query = new Query();
         query.addCriteria(Criteria.where("boardDivn").is(boardDivn));
         query.addCriteria(Criteria.where("delYn").is("N"));
+        query.addCriteria(searchCondition(dto));
         return (int) mongoTemplate.count(query, MaBoardDto.class);
+    }
+
+    /* 검색 조건문 */
+    public Criteria searchCondition(MaBoardDto dto) {
+        Criteria criteria = new Criteria();
+
+        if(dto.getSearch1() != null && !"".equals(dto.getSearch1() )) {
+            if("1".equals(dto.getSearch1())) {
+                criteria = Criteria.where("reply").is(null);
+            } else {
+                criteria = Criteria.where("reply").ne(null);
+            }
+        }
+
+        if(dto.getSearchKeyword() != null && !"".equals(dto.getSearchKeyword())) {
+            if(dto.getSearchOption() != null && !"".equals(dto.getSearchOption())) {
+                switch (dto.getSearchOption()) {
+                    case "0" -> {
+                        criteria = criteria.orOperator(Criteria.where("title").is(dto.getSearchKeyword()), Criteria.where("cont").is(dto.getSearchKeyword()));
+                    }
+                    case "1" -> {
+                        criteria = Criteria.where("title").is(dto.getSearchKeyword());
+                    }
+                    case "2" -> {
+                        criteria = Criteria.where("cont").is(dto.getSearchKeyword());
+                    }
+                }
+            }
+        }
+
+        return criteria;
     }
 
     @Override
@@ -93,10 +103,36 @@ public class MaBoardRepositoryImpl implements MaBoardRepository {
         boardDto.setCont(dto.getCont());
         boardDto.setAtchFile(dto.getAtchFile());
         boardDto.setViewCnt(dto.getViewCnt());
+        // TODO 로그인한 아이디로 변경
         boardDto.setFrstRegrId("admin");
         boardDto.setFrstRegrDt(new Date());
         boardDto.setDelYn(dto.getDelYn());
         mongoTemplate.insert(boardDto);
+    }
+
+    @Override
+    public void update(MaBoardDto dto) {
+        Query query = new Query();
+        Update update = new Update();
+
+        query.addCriteria(Criteria.where("seq").is(dto.getSeq()));
+        update.set("title", dto.getTitle());
+        update.set("cont", dto.getCont());
+        update.set("useYn", dto.getUseYn());
+        update.set("atchFile", dto.getAtchFile());
+        // TODO 로그인한 아이디로 변경
+        update.set("lstChgId", "admin");
+        update.set("lstChgDt", new Date());
+    }
+
+    @Override
+    public void updateReply(MaBoardDto dto) {
+        Query query = new Query();
+        Update update = new Update();
+
+        query.addCriteria(Criteria.where("seq").is(dto.getSeq()));
+        update.set("reply", dto.getReply());
+        mongoTemplate.upsert(query, update, MaBoardDto.class);
     }
 
     @Override
@@ -105,9 +141,20 @@ public class MaBoardRepositoryImpl implements MaBoardRepository {
         Update update = new Update();
 
         query.addCriteria(Criteria.where("seq").is(dto.getSeq()));
+        // TODO 로그인한 아이디로 변경
         update.set("lstChgId", "admin");
         update.set("lstChgDt", new Date());
         update.set("delYn", "Y");
+        mongoTemplate.upsert(query, update, MaBoardDto.class);
+    }
+
+    @Override
+    public void deleteReply(MaBoardDto dto) {
+        Query query = new Query();
+        Update update = new Update();
+
+        query.addCriteria(Criteria.where("seq").is(dto.getSeq()));
+        update.set("reply", "");
         mongoTemplate.upsert(query, update, MaBoardDto.class);
     }
 }

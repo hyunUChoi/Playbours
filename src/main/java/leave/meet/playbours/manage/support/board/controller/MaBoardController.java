@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class MaBoardController {
@@ -68,7 +69,7 @@ public class MaBoardController {
     }
 
     @RequestMapping(FOLDER_PATH + "{boardDivn:faq|notice|qna|sgs}/form")
-    public String form(@ModelAttribute("maBoardDto") MaBoardDto maBoardDto, @PathVariable String boardDivn, Model model) {
+    public String form(@ModelAttribute("maBoardDto") MaBoardDto maBoardDto, @PathVariable String boardDivn) {
 
         switch (boardDivn) {
             case "faq" :
@@ -82,17 +83,32 @@ public class MaBoardController {
         }
     }
 
-    @RequestMapping(FOLDER_PATH + "{boardDivn:faq|notice|qna|sgs}/{procType}Proc")
-    public String form(@ModelAttribute("maBoardDto") MaBoardDto maBoardDto, @PathVariable String boardDivn, @PathVariable String procType) {
+    @RequestMapping(FOLDER_PATH + "{boardDivn:faq|notice|qna|sgs}/{procType:insert|update|updateReply|delete|deleteReply}Proc")
+    public String form(@ModelAttribute("maBoardDto") MaBoardDto maBoardDto, @PathVariable String boardDivn, @PathVariable String procType, RedirectAttributes attributes) {
 
         switch (procType) {
             case "insert" -> {
                 boardRepository.insert(maBoardDto, boardDivn);
                 return "redirect:" + FOLDER_PATH + boardDivn + "/list";
             }
+            case "update" -> {
+                boardRepository.update(maBoardDto);
+                attributes.addFlashAttribute("maBoardDto", maBoardDto);
+                return "redirect:" + FOLDER_PATH + boardDivn + "/view";
+            }
+            case "updateReply" -> {
+                boardRepository.updateReply(maBoardDto);
+                attributes.addFlashAttribute("maBoardDto", maBoardDto);
+                return "redirect:" + FOLDER_PATH + boardDivn + "/view";
+            }
             case "delete" -> {
                 boardRepository.delete(maBoardDto);
                 return "redirect:" + FOLDER_PATH + boardDivn + "/list";
+            }
+            case "deleteReply" -> {
+                boardRepository.deleteReply(maBoardDto);
+                attributes.addFlashAttribute("maBoardDto", maBoardDto);
+                return "redirect:" + FOLDER_PATH + boardDivn + "/view";
             }
         }
 

@@ -12,5 +12,11 @@ public interface MaBoardRepository {
 
     void insert(MaBoardDto dto, String boardDivn);
 
+    void update(MaBoardDto dto);
+
+    void updateReply(MaBoardDto dto);
+
     void delete(MaBoardDto dto);
+
+    void deleteReply(MaBoardDto dto);
 }
