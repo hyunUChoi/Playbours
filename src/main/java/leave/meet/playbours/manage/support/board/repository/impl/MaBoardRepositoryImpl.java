@@ -36,7 +36,7 @@ public class MaBoardRepositoryImpl implements MaBoardRepository {
 
         query.addCriteria(Criteria.where("boardDivn").is(boardDivn));
         query.addCriteria(Criteria.where("delYn").is("N"));
-        query.addCriteria(searchCondition(dto));
+        query.addCriteria(searchCondition(dto, boardDivn));
         query.with(Sort.by(Sort.Direction.DESC, "seq"));
 
         List<MaBoardDto> filterData = mongoTemplate.find(query, MaBoardDto.class);
@@ -51,12 +51,12 @@ public class MaBoardRepositoryImpl implements MaBoardRepository {
         Query query = new Query();
         query.addCriteria(Criteria.where("boardDivn").is(boardDivn));
         query.addCriteria(Criteria.where("delYn").is("N"));
-        query.addCriteria(searchCondition(dto));
+        query.addCriteria(searchCondition(dto, boardDivn));
         return (int) mongoTemplate.count(query, MaBoardDto.class);
     }
 
     /* 검색 조건문 */
-    public Criteria searchCondition(MaBoardDto dto) {
+    public Criteria searchCondition(MaBoardDto dto, String boardDivn) {
         Criteria criteria = new Criteria();
 
         if(dto.getSearch1() != null && !"".equals(dto.getSearch1() )) {

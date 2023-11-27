@@ -4,6 +4,7 @@ package leave.meet.playbours.common.dto;
 import org.springframework.data.annotation.Transient;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @SuppressWarnings("unused")
 public class CmmnDto implements Serializable {
@@ -35,6 +36,10 @@ public class CmmnDto implements Serializable {
 
     private String search10;
 
+    private Date searchStrDt;
+
+    private Date searchEndDt;
+
     private String searchKeyword;
 
     private String searchOption;
@@ -54,6 +59,8 @@ public class CmmnDto implements Serializable {
         this.search8 = dto.getSearch8();
         this.search9 = dto.getSearch9();
         this.search10 = dto.getSearch10();
+        this.searchStrDt = dto.getSearchStrDt();
+        this.searchEndDt = dto.getSearchEndDt();
         this.searchOption = dto.getSearchOption();
         this.searchKeyword = dto.getSearchKeyword();
     }
@@ -152,6 +159,22 @@ public class CmmnDto implements Serializable {
 
     public void setSearch10(String search10) {
         this.search10 = search10;
+    }
+
+    public Date getSearchStrDt() {
+        return searchStrDt;
+    }
+
+    public void setSearchStrDt(Date searchStrDt) {
+        this.searchStrDt = searchStrDt;
+    }
+
+    public Date getSearchEndDt() {
+        return searchEndDt;
+    }
+
+    public void setSearchEndDt(Date searchEndDt) {
+        this.searchEndDt = searchEndDt;
     }
 
     public String getSearchKeyword() {

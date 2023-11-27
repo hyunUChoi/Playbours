@@ -23,6 +23,9 @@ function gfnCallAddList(url, frm) {
         });
 
     /* script 활성화 */
+    /*
+    * https://stackoverflow.com/questions/28112807/why-script-elements-created-through-domparser-do-not-execute
+    */
     function fixScriptsSoTheyAreExecuted(frag) {
         let scripts = frag.querySelectorAll('script'), script, fixedScript, i, len;
 
