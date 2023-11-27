@@ -35,18 +35,18 @@ public class MaUserController {
     }
 
     @RequestMapping(FOLDER_PATH + "addList")
-    public String addList(@ModelAttribute("maUserDto") MaUserDto maUserDto, @PathVariable String procType, Model model) {
+    public String addList(@ModelAttribute("maUserDto") MaUserDto maUserDto, Model model) {
 
         int pageNo = maUserDto.getPageNo();
         int pageSize = 10;
-        Page<MaUserDto> resultList = userRepository.findByPagingAndFiltering(pageNo, pageSize, maUserDto, procType);
+        Page<MaUserDto> resultList = userRepository.findByPagingAndFiltering(pageNo, pageSize, maUserDto);
 
         PagingDto paging = pagingService.getPageInfo(resultList, pageNo, pageSize);
 
         model.addAttribute("resultList", resultList);
         model.addAttribute("paging", paging);
 
-        return HTML_PATH + "addList";
+        return "/pages/manage/member/user/addList";
     }
 
     @RequestMapping(FOLDER_PATH + "{procType}Form")

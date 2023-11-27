@@ -82,7 +82,7 @@
 
     function fnPaging(pageNo) {
         document.getElementById('tbl').innerHTML = '';
-        gfnPageProcess('addList', [[${maMenuDto.procType}]] + 'AddList', pageNo.getAttribute('pageNo'));
+        gfnPageProcess('addList', 'addList', pageNo.getAttribute('pageNo'));
     }
 </script>
 </html>

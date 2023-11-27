@@ -24,7 +24,7 @@ public class MaUserRepositoryImpl implements MaUserRepository {
     }
 
     @Override
-    public Page<MaUserDto> findByPagingAndFiltering(int page, int size, MaUserDto dto, String procType) {
+    public Page<MaUserDto> findByPagingAndFiltering(int page, int size, MaUserDto dto) {
         Pageable pageable = PageRequest.of(page == 0 ? 0 : page - 1, size, Sort.by("seq"));
         Query query = new Query()
                 .with(pageable)
@@ -38,27 +38,24 @@ public class MaUserRepositoryImpl implements MaUserRepository {
             query.addCriteria(Criteria.where("menuClCd").is(dto.getSearch1()));
         }
 
-        if("list".equals(procType)) {
-            if(dto.getSearchKeyword() != null && !"".equals(dto.getSearchKeyword())) {
-                if(dto.getSearchOption() != null && !"".equals(dto.getSearchOption())) {
-                    switch (dto.getSearchOption()) {
-                        case "0" -> {
-                            Criteria criteria = new Criteria();
-                            criteria.orOperator(Criteria.where("menuCd").is(dto.getSearchKeyword()), Criteria.where("menuNm").is(dto.getSearchKeyword()));
-                            query.addCriteria(criteria);
-                        }
-                        case "1" -> {
-                            query.addCriteria(Criteria.where("menuNm").is(dto.getSearchKeyword()));
-                        }
-                        case "2" -> {
-                            query.addCriteria(Criteria.where("menuCd").is(dto.getSearchKeyword()));
-                        }
+        if(dto.getSearchKeyword() != null && !"".equals(dto.getSearchKeyword())) {
+            if(dto.getSearchOption() != null && !"".equals(dto.getSearchOption())) {
+                switch (dto.getSearchOption()) {
+                    case "0" -> {
+                        Criteria criteria = new Criteria();
+                        criteria.orOperator(Criteria.where("menuCd").is(dto.getSearchKeyword()), Criteria.where("menuNm").is(dto.getSearchKeyword()));
+                        query.addCriteria(criteria);
+                    }
+                    case "1" -> {
+                        query.addCriteria(Criteria.where("menuNm").is(dto.getSearchKeyword()));
+                    }
+                    case "2" -> {
+                        query.addCriteria(Criteria.where("menuCd").is(dto.getSearchKeyword()));
                     }
                 }
             }
         }
 
-        query.addCriteria(Criteria.where("upperCd").is("view".equals(procType) ? dto.getUserCd() : ""));
         query.with(Sort.by(Sort.Direction.DESC, "seq"));
 
         List<MaUserDto> filterData = mongoTemplate.find(query, MaUserDto.class);

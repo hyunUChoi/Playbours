@@ -5,5 +5,5 @@ import org.springframework.data.domain.Page;
 
 public interface MaUserRepository {
 
-    Page<MaUserDto> findByPagingAndFiltering(int page, int size, MaUserDto maUserDto, String procType);
+    Page<MaUserDto> findByPagingAndFiltering(int page, int size, MaUserDto maUserDto);
 }
