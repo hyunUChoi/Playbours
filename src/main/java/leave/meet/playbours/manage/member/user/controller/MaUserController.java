@@ -1,54 +1,56 @@
-package leave.meet.playbours.manage.sys.user.controller;
+package leave.meet.playbours.manage.member.user.controller;
 
 import jakarta.annotation.Resource;
+import leave.meet.playbours.common.dto.PagingDto;
 import leave.meet.playbours.common.service.PagingService;
-import leave.meet.playbours.manage.sys.menu.repository.MaMenuRepository;
-import leave.meet.playbours.manage.sys.menu.service.MaMenuDto;
-import leave.meet.playbours.manage.sys.user.repository.MaUserRepository;
-import leave.meet.playbours.manage.sys.user.service.dto.MaUserDto;
+import leave.meet.playbours.manage.member.user.service.MaUserDto;
+import leave.meet.playbours.manage.member.user.repository.MaUserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class MaUserController {
 
-    /*private final MaUserRepository userRepository;*/
+    private final MaUserRepository userRepository;
 
     @Resource(name= "pagingService")
     private PagingService pagingService;
 
-    /*public MaUserController(MaUserRepository userRepository, PagingService pagingService) {
+    public MaUserController(MaUserRepository userRepository, PagingService pagingService) {
         this.userRepository = userRepository;
         this.pagingService = pagingService;
-    }*/
-
-    private final static String FOLDER_PATH = "/ma/sys/user/";
-    private final static String HTML_PATH = "/pages/manage/sys/user/";
-
-    @RequestMapping(FOLDER_PATH + "list")
-    public String list(MaUserDto maUserDto) {
-        return  HTML_PATH +"list";
     }
 
-    /*@RequestMapping(FOLDER_PATH + "addList")
+    private final static String FOLDER_PATH = "/ma/member/user/";
+    private final static String HTML_PATH = "/pages/manage/member/user/";
+
+    @RequestMapping(FOLDER_PATH + "list")
+    public String list(@ModelAttribute("maUserDto") MaUserDto maUserDto) {
+
+        return "/pages/manage/member/user/list";
+    }
+
+    @RequestMapping(FOLDER_PATH + "addList")
     public String addList(@ModelAttribute("maUserDto") MaUserDto maUserDto, @PathVariable String procType, Model model) {
 
         int pageNo = maUserDto.getPageNo();
         int pageSize = 10;
-        Page<MaMenuDto> resultList = userRepository.findByPagingAndFiltering(pageNo, pageSize, maUserDto, procType);
+        Page<MaUserDto> resultList = userRepository.findByPagingAndFiltering(pageNo, pageSize, maUserDto, procType);
+
+        PagingDto paging = pagingService.getPageInfo(resultList, pageNo, pageSize);
 
         model.addAttribute("resultList", resultList);
-        model.addAttribute("paging", pagingService.getPageInfo(resultList, pageNo, pageSize));
+        model.addAttribute("paging", paging);
+
         return HTML_PATH + "addList";
     }
 
     @RequestMapping(FOLDER_PATH + "{procType}Form")
-    public String form(@PathVariable String procType) {
+    public String form(@ModelAttribute("maUserDto") MaUserDto maUserDto,@PathVariable String procType,Model model) {
 
         if("insert".equals(procType)){
 
@@ -56,6 +58,6 @@ public class MaUserController {
 
         }
         return HTML_PATH + "form";
-    }*/
+    }
 
 }

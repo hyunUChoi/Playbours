@@ -12,7 +12,7 @@
 >
 <script th:inline="javascript">
 	document.addEventListener("DOMContentLoaded", () => {
-        gfnCallAddList("/ma/sys/user/addList");
+        gfnCallAddList("/ma/member/user/addList");
 	});
 
 	function fnSearch() {
@@ -29,16 +29,14 @@
 </script>
 <h4 class="fw-bold py-3 mb-4">USER</h4>
 <div class="card">
-	<form id="defaultFrm" th:object="${maMenuDto}" method="post" onsubmit="return false;">
+	<form id="defaultFrm" th:object="${maUserDto}" method="post" onsubmit="return false;">
 		<input type="hidden" th:field="*{seq}"/>
 		<input type="hidden" th:field="*{pageNo}"/>
-		<input type="hidden" th:field="*{menuCd}"/>
-		<input type="hidden" th:field="*{upperCd}"/>
 		<div class="card-header">
 			<div class="d-flex justify-content-start align-items-center row py-3 gap-3 gap-md-0">
 				<div class="col-md-4">
 					<label class="form-label" for="selectRole">구분</label>
-					<select id="selectRole" th:field="*{search1}" class="form-select color-dropdown">
+					<select id="selectRole" th:field="*{userClCd}" class="form-select color-dropdown">
 						<option value="">선택</option>
 						<option value="Admin">관리자</option>
 						<option value="Subscriber">일반회원</option>
