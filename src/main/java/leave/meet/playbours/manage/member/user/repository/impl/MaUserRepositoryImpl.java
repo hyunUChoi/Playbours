@@ -1,7 +1,7 @@
-package leave.meet.playbours.manage.sys.user.repository.impl;
+package leave.meet.playbours.manage.member.user.repository.impl;
 
-import leave.meet.playbours.manage.sys.user.service.MaUserDto;
-import leave.meet.playbours.manage.sys.user.repository.MaUserRepository;
+import leave.meet.playbours.manage.member.user.service.MaUserDto;
+import leave.meet.playbours.manage.member.user.repository.MaUserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,41 +24,41 @@ public class MaUserRepositoryImpl implements MaUserRepository {
     }
 
     @Override
-    public Page<MaUserDto> findByPagingAndFiltering(int page, int size, MaUserDto maUserDto, String procType) {
+    public Page<MaUserDto> findByPagingAndFiltering(int page, int size, MaUserDto dto, String procType) {
         Pageable pageable = PageRequest.of(page == 0 ? 0 : page - 1, size, Sort.by("seq"));
         Query query = new Query()
                 .with(pageable)
                 .skip((long) pageable.getPageSize() * pageable.getPageNumber())
                 .limit(pageable.getPageSize());
 
-        //query.addCriteria(Criteria.where("useYn").is("Y"));
+        query.addCriteria(Criteria.where("delYn").is("N"));
 
         /* 쿼리 조건 */
-        if (maUserDto.getSearch1() != null && !"".equals(maUserDto.getSearch1())) {
-            query.addCriteria(Criteria.where("menuClCd").is(maUserDto.getSearch1()));
+        if(dto.getSearch1() != null && !"".equals(dto.getSearch1() )) {
+            query.addCriteria(Criteria.where("menuClCd").is(dto.getSearch1()));
         }
 
-        if ("list".equals(procType)) {
-            if (maUserDto.getSearchKeyword() != null && !"".equals(maUserDto.getSearchKeyword())) {
-                if (maUserDto.getSearchOption() != null && !"".equals(maUserDto.getSearchOption())) {
-                    switch (maUserDto.getSearchOption()) {
+        if("list".equals(procType)) {
+            if(dto.getSearchKeyword() != null && !"".equals(dto.getSearchKeyword())) {
+                if(dto.getSearchOption() != null && !"".equals(dto.getSearchOption())) {
+                    switch (dto.getSearchOption()) {
                         case "0" -> {
                             Criteria criteria = new Criteria();
-                            criteria.orOperator(Criteria.where("userCd").is(maUserDto.getSearchKeyword()), Criteria.where("userNm").is(maUserDto.getSearchKeyword()));
+                            criteria.orOperator(Criteria.where("menuCd").is(dto.getSearchKeyword()), Criteria.where("menuNm").is(dto.getSearchKeyword()));
                             query.addCriteria(criteria);
                         }
                         case "1" -> {
-                            query.addCriteria(Criteria.where("userNm").is(maUserDto.getSearchKeyword()));
+                            query.addCriteria(Criteria.where("menuNm").is(dto.getSearchKeyword()));
                         }
                         case "2" -> {
-                            query.addCriteria(Criteria.where("userCd").is(maUserDto.getSearchKeyword()));
+                            query.addCriteria(Criteria.where("menuCd").is(dto.getSearchKeyword()));
                         }
                     }
                 }
             }
         }
 
-        query.addCriteria(Criteria.where("upperCd").is("view".equals(procType) ? maUserDto.getUserCd() : ""));
+        query.addCriteria(Criteria.where("upperCd").is("view".equals(procType) ? dto.getUserCd() : ""));
         query.with(Sort.by(Sort.Direction.DESC, "seq"));
 
         List<MaUserDto> filterData = mongoTemplate.find(query, MaUserDto.class);

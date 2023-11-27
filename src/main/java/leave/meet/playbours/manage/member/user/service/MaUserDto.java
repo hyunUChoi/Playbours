@@ -1,4 +1,4 @@
-package leave.meet.playbours.manage.sys.user.service;
+package leave.meet.playbours.manage.member.user.service;
 
 import leave.meet.playbours.common.dto.CmmnDto;
 import org.springframework.data.mongodb.core.mapping.Document;
