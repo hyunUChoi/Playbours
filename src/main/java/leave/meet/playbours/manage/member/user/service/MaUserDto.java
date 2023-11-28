@@ -1,9 +1,12 @@
 package leave.meet.playbours.manage.member.user.service;
 
 import leave.meet.playbours.common.dto.CmmnDto;
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "TB_USER")
+@SuppressWarnings("unused")
+@TypeAlias("MaUserDto")
+@Document(collection = "CLT_USER")
 public class MaUserDto extends CmmnDto {
 
     // 인덱스

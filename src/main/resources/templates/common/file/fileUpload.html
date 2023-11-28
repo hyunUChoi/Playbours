@@ -7,10 +7,13 @@
       data-template="vertical-menu-template-free"
       xmlns:th="http://www.thymeleaf.org"
 >
+<div class="mb-3">
+	<label for="atchFile" class="form-label">첨부파일</label>
+	<input class="form-control" type="file" id="atchFile" multiple/>
+</div>
 <script th:inline="javascript">
     document.addEventListener("DOMContentLoaded", () => {
 
     });
 </script>
-
 </html>

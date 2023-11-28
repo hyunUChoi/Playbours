@@ -21,25 +21,25 @@ function gfnCallAddList(url, frm) {
                 document.getElementById("tbl").append(frag);
             })
         });
+}
 
-    /* script 활성화 */
-    /*
-    * https://stackoverflow.com/questions/28112807/why-script-elements-created-through-domparser-do-not-execute
-    */
-    function fixScriptsSoTheyAreExecuted(frag) {
-        let scripts = frag.querySelectorAll('script'), script, fixedScript, i, len;
+/* script 활성화 */
+/*
+* https://stackoverflow.com/questions/28112807/why-script-elements-created-through-domparser-do-not-execute
+*/
+function fixScriptsSoTheyAreExecuted(frag) {
+    let scripts = frag.querySelectorAll('script'), script, fixedScript, i, len;
 
-        for (i = 0, len = scripts.length; i < len; i++) {
-            script = scripts[i];
+    for (i = 0, len = scripts.length; i < len; i++) {
+        script = scripts[i];
 
-            fixedScript = document.createElement('script');
-            fixedScript.type = script.type;
-            if (script.innerHTML) fixedScript.innerHTML = script.innerHTML;
-            else fixedScript.src = script.src;
-            fixedScript.async = false;
+        fixedScript = document.createElement('script');
+        fixedScript.type = script.type;
+        if (script.innerHTML) fixedScript.innerHTML = script.innerHTML;
+        else fixedScript.src = script.src;
+        fixedScript.async = false;
 
-            script.parentNode.replaceChild(fixedScript, script);
-        }
+        script.parentNode.replaceChild(fixedScript, script);
     }
 }
 

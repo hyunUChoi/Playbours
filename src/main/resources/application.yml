@@ -4,8 +4,16 @@ server:
 spring:
   thymeleaf:
     cache: false
-    prefix: file:src/main/resources/templates/
 
   data:
     mongodb:
       uri: mongodb+srv://admin:zzz1234@playcluster.a1hqkve.mongodb.net/Playbours?retryWrites=true&w=majority
+
+# 파일업로드 관련
+  servlet:
+    multipart:
+      enabled: true
+      # 파일 하나당 최대 업로드 가능 용량
+      max-file-size: 10MB
+      # 한번에 최대 업로드 가능 용량
+      max-request-size: 50MB

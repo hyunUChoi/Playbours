@@ -42,10 +42,7 @@
 							<label class="form-label" for="cont">내용</label>
 							<textarea class="form-control" id="cont" th:field="*{cont}" title="사용여부" required></textarea>
 						</div>
-						<div class="mb-3">
-							<label for="atchFile" class="form-label">첨부파일</label>
-							<input class="form-control" type="file" id="atchFile" th:field="*{atchFile}" multiple/>
-						</div>
+						<div id="fileTbl"></div>
 					</div>
 					<div class="text-end">
 						<button type="button" class="btn btn-outline-primary" onclick="gfnPageProcess('submit', 'insertProc')">등록</button>

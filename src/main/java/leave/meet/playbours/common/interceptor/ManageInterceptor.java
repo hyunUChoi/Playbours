@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import java.util.Enumeration;
 import java.util.List;
 
 @Component
@@ -28,6 +29,14 @@ public class ManageInterceptor implements HandlerInterceptor {
         LOGGER.info("========================= MANAGE INTERCEPTOR START =========================");
         HttpSession session = request.getSession();
         String requestURI = request.getRequestURI();
+
+        Enumeration<String> params = request.getParameterNames();
+
+        while (params.hasMoreElements()) {
+            String paramName = params.nextElement();
+            String paramValue =  request.getParameter(paramName);
+            LOGGER.info(paramName + " : " + paramValue);
+        }
 
         // 1차 메뉴
         MaMenuDto menuDto = new MaMenuDto();
