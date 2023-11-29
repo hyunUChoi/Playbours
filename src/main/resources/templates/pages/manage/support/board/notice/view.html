@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en"
+      class="light-style layout-menu-fixed"
+      dir="ltr"
+      data-theme="theme-default"
+      data-assets-path="/manage/assets/"
+      data-template="vertical-menu-template-free"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/manage/layout/layout}"
+      layout:fragment="content"
+>
+<script th:inline="javascript">
+    document.addEventListener("DOMContentLoaded", () => {
+
+    });
+</script>
+<h4 class="fw-bold py-3 mb-4">공지사항</h4>
+<div class="row">
+	<div class="col-xl">
+		<div class="card mb-4">
+			<div class="card-header d-flex justify-content-between align-items-center">
+				<h5 class="mb-0">공지사항 상세</h5>
+			</div>
+			<form id="defaultFrm" th:object="${maBoardDto}" method="post" onsubmit="return false;">
+				<input type="hidden" th:field="*{seq}">
+				<input type="hidden" th:field="*{pageNo}">
+				<input type="hidden" th:field="*{search1}">
+				<input type="hidden" th:field="*{searchStrDt}">
+				<input type="hidden" th:field="*{searchEndDt}">
+				<input type="hidden" th:field="*{searchOption}">
+				<input type="hidden" th:field="*{searchKeyword}">
+				<div class="card-body">
+					<div class="row">
+						<div class="mb-3">
+							<label class="form-label" for="title">제목</label>
+							<input class="form-control-plaintext" id="title" th:value="*{title}" readonly>
+						</div>
+						<div class="mb-3 col-md-6">
+							<label class="form-label" for="frstRegrId">작성자</label>
+							<input type="text" class="form-control-plaintext" id="frstRegrId" th:value="*{frstRegrId}" readonly/>
+						</div>
+						<div class="mb-3 col-md-6">
+							<label class="form-label" for="frstRegrDt">작성일</label>
+							<span class="form-control-plaintext" id="frstRegrDt" th:text="*{#dates.format(frstRegrDt, 'yyyy-MM-dd')}" readonly></span>
+						</div>
+						<div class="mb-3 col-md-4">
+							<label class="form-label" for="useYn">공개여부</label>
+							<input class="form-control-plaintext" id="useYn" th:value="*{useYn} eq 'Y' ? '공개' : '비공개'" readonly/>
+						</div>
+						<div class="col-md-4 col-md-4">
+							<label for="notiStrDt" class="col-form-label">공지시작일</label>
+							<div>
+								<span class="form-control-plaintext" id="notiStrDt" th:text="*{#dates.format(notiStrDt, 'yyyy-MM-dd')}" readonly></span>
+							</div>
+						</div>
+						<div class="col-md-4 col-md-4">
+							<label for="notiEndDt" class="col-form-label">공지종료일</label>
+							<div>
+								<span class="form-control-plaintext" id="notiEndDt" th:text="*{#dates.format(notiEndDt, 'yyyy-MM-dd')}" readonly></span>
+							</div>
+						</div>
+						<div class="mb-3">
+							<label class="form-label" for="cont">내용</label>
+							<textarea class="form-control-plaintext" id="cont" th:field="*{cont}" readonly></textarea>
+						</div>
+						<div class="mb-3">
+							<label class="form-label" for="atchFile">첨부파일</label>
+							<input type="text" class="form-control-plaintext" id="atchFile" th:field="*{atchFile}" readonly/>
+						</div>
+					</div>
+					<div class="text-end">
+						<button type="button" class="btn btn-outline-info" onclick="gfnPageProcess('insert', 'updateForm')">수정</button>
+						<button type="button" class="btn btn-outline-danger" onclick="gfnPageProcess('delete', 'deleteProc')">삭제</button>
+						<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('list', 'list')">목록</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+</html>

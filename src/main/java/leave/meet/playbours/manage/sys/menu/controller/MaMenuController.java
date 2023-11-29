@@ -52,6 +52,7 @@ public class MaMenuController {
     public String form(@ModelAttribute("maMenuDto") MaMenuDto maMenuDto, @PathVariable String procType, Model model) {
 
         MaMenuDto menuDto = new MaMenuDto();
+        /* 하위등록 취소 시 view로 돌아가기 위한 파라미터 */
         menuDto.setSeq(maMenuDto.getSeq());
         menuDto.setUpperCd(maMenuDto.getUpperCd());
 

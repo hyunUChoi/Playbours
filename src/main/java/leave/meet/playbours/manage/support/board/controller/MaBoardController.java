@@ -68,8 +68,16 @@ public class MaBoardController {
         }
     }
 
-    @RequestMapping(FOLDER_PATH + "{boardDivn:faq|notice|qna|sgs}/form")
-    public String form(@ModelAttribute("maBoardDto") MaBoardDto maBoardDto, @PathVariable String boardDivn) {
+    @RequestMapping(FOLDER_PATH + "{boardDivn:faq|notice|qna|sgs}/{procType:insert|update}Form")
+    public String form(@ModelAttribute("maBoardDto") MaBoardDto maBoardDto, @PathVariable String boardDivn, @PathVariable String procType, Model model) {
+
+        MaBoardDto boardDto = new MaBoardDto();
+
+        if("update".equals(procType)) {
+            boardDto = boardRepository.findOne(maBoardDto);
+        }
+
+        model.addAttribute("boardDto", boardDto);
 
         switch (boardDivn) {
             case "faq" :
@@ -84,7 +92,7 @@ public class MaBoardController {
     }
 
     @RequestMapping(FOLDER_PATH + "{boardDivn:faq|notice|qna|sgs}/{procType:insert|update|updateReply|delete|deleteReply}Proc")
-    public String form(@ModelAttribute("maBoardDto") MaBoardDto maBoardDto, @PathVariable String boardDivn, @PathVariable String procType, RedirectAttributes attributes) {
+    public String proc(@ModelAttribute("maBoardDto") MaBoardDto maBoardDto, @PathVariable String boardDivn, @PathVariable String procType, RedirectAttributes attributes) {
 
         switch (procType) {
             case "insert" -> {
@@ -92,7 +100,7 @@ public class MaBoardController {
                 return "redirect:" + FOLDER_PATH + boardDivn + "/list";
             }
             case "update" -> {
-                boardRepository.update(maBoardDto);
+                boardRepository.update(maBoardDto, boardDivn);
                 attributes.addFlashAttribute("maBoardDto", maBoardDto);
                 return "redirect:" + FOLDER_PATH + boardDivn + "/view";
             }

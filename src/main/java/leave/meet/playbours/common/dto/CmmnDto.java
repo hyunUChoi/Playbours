@@ -2,6 +2,7 @@ package leave.meet.playbours.common.dto;
 
 
 import org.springframework.data.annotation.Transient;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -36,8 +37,10 @@ public class CmmnDto implements Serializable {
 
     private String search10;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date searchStrDt;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date searchEndDt;
 
     private String searchKeyword;

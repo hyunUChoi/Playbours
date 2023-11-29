@@ -9,18 +9,22 @@
 >
 <table class="datatables-users table border-top dataTable no-footer dtr-column" style="width: 100%;">
 	<colgroup>
-		<col style="width: 10%;">
+		<col style="width: 5%;">
 		<col>
-		<col style="width: 15%;">
-		<col style="width: 15%;">
-		<col style="width: 15%;">
 		<col style="width: 10%;">
+		<col style="width: 10%;">
+		<col style="width: 10%;">
+		<col style="width: 10%;">
+		<col style="width: 10%;">
+		<col style="width: 5%;">
 	</colgroup>
 	<thead>
 		<tr>
 			<th>번호</th>
 			<th>제목</th>
-			<th>진행현황</th>
+			<th>공개여부</th>
+			<th>공지시작일</th>
+			<th>공지종료일</th>
 			<th>작성자</th>
 			<th>작성일</th>
 			<th>조회수</th>
@@ -31,7 +35,9 @@
 			<tr class="text-body" th:each="result, status : ${resultList.content}" onclick="gfnPageProcess('view', 'view', this.getAttribute('parameter'), 'seq')" th:parameter="${result.seq}" style="cursor: pointer;">
 				<td th:text="${paging.totalRecord + 1 - ((maBoardDto.pageNo - 1) * paging.pageSize +  status.count)}"></td>
 				<td><span class="text-truncate" th:text="${result.title}"></span></td>
-				<td th:text="${#strings.isEmpty(result.reply) ? '확인중' : '답변완료'}"></td>
+				<td th:text="${result.useYn} eq 'Y' ? '공개' : '비공개'"></td>
+				<td th:text="${#dates.format(result.notiStrDt, 'yyyy-MM-dd')}"></td>
+				<td th:text="${#dates.format(result.notiEndDt, 'yyyy-MM-dd')}"></td>
 				<td th:text="${result.frstRegrId}"></td>
 				<td th:text="${#dates.format(result.frstRegrDt, 'yyyy-MM-dd')}"></td>
 				<td th:text="${result.viewCnt}"></td>
@@ -39,16 +45,16 @@
 		</th:block>
 		<th:block th:unless="${#lists.size(resultList.toList()) gt 0}">
 			<tr class="text-body">
-				<td th:colspan="6" style="text-align: center; height: 5rem;">등록된 데이터가 없습니다.</td>
+				<td th:colspan="8" style="text-align: center; height: 5rem;">등록된 데이터가 없습니다.</td>
 			</tr>
 		</th:block>
 	</tbody>
 </table>
 <div class="demo-inline-spacing">
 	<button class="dt-button create-new btn btn-primary" onclick="gfnPageProcess('insert', 'insertForm')" style="position: absolute;right: 0;bottom: 1rem;">
-		<span><i class="bx bx-plus me-sm-1"></i>
-			<span class="d-none d-sm-inline-block">Add New Record</span>
-		</span>
+			<span><i class="bx bx-plus me-sm-1"></i>
+				<span class="d-none d-sm-inline-block">Add New Record</span>
+			</span>
 	</button>
 	<nav aria-label="Page navigation" th:if="${paging.totalPage ne 0}">
 		<ul class="pagination" style="cursor: pointer;">

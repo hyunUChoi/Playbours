@@ -1,4 +1,4 @@
-function gfnCallAddList(url, frm) {
+function gfnCallPage(url, frm, atch) {
     fetch(url, {
         method: "POST",
         /* multipart/form-data로 통신하는 경우 headers 지정하면 오류발생 */
@@ -18,7 +18,7 @@ function gfnCallAddList(url, frm) {
                 }
 
                 fixScriptsSoTheyAreExecuted(frag);
-                document.getElementById("tbl").append(frag);
+                document.getElementById(atch).append(frag);
             })
         });
 }
@@ -55,7 +55,11 @@ function gfnPageProcess(divn, url, val, valNm) {
 
         case 'addList' :
             document.getElementById('pageNo').value = val;
-            gfnCallAddList(path + url, frm);
+            gfnCallPage(path + url, frm, 'tbl');
+            break;
+
+        case 'file' :
+            gfnCallPage(url, frm, 'fileTbl');
             break;
 
         case 'view' :

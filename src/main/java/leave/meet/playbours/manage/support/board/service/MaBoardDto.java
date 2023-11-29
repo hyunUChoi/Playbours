@@ -4,6 +4,7 @@ import leave.meet.playbours.common.dto.CmmnDto;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -20,6 +21,14 @@ public class MaBoardDto extends CmmnDto {
 
     // 공개여부
     private String useYn;
+
+    // 공지시작일
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date notiStrDt;
+
+    // 공지종료일
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date notiEndDt;
 
     // 게시글 제목
     private String title;
@@ -73,6 +82,22 @@ public class MaBoardDto extends CmmnDto {
 
     public void setUseYn(String useYn) {
         this.useYn = useYn;
+    }
+
+    public Date getNotiStrDt() {
+        return notiStrDt;
+    }
+
+    public void setNotiStrDt(Date notiStrDt) {
+        this.notiStrDt = notiStrDt;
+    }
+
+    public Date getNotiEndDt() {
+        return notiEndDt;
+    }
+
+    public void setNotiEndDt(Date notiEndDt) {
+        this.notiEndDt = notiEndDt;
     }
 
     public String getTitle() {

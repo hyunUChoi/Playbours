@@ -12,7 +12,7 @@ public interface MaBoardRepository {
 
     void insert(MaBoardDto dto, String boardDivn);
 
-    void update(MaBoardDto dto);
+    void update(MaBoardDto dto, String boardDivn);
 
     void updateReply(MaBoardDto dto);
 
