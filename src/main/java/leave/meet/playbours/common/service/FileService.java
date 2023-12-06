@@ -49,4 +49,8 @@ public class FileService {
 
         return fileDto;
     }
+
+    public void deleteFile(String id) throws IOException {
+        gridFsTemplate.delete(new Query(Criteria.where("_id").is(id)));
+    }
 }

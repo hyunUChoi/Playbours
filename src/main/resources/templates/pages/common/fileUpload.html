@@ -9,11 +9,21 @@
 >
 <div class="mb-3">
 	<label for="atchFile" class="form-label">첨부파일</label>
-	<input class="form-control" type="file" id="atchFile" multiple/>
+	<input class="form-control" type="file" id="atchFile" name="atchFile" onchange="fnFileUpload(this.files);"/>
 </div>
 <script th:inline="javascript">
-    document.addEventListener("DOMContentLoaded", () => {
+	function fnFileUpload(files) {
+        let formData = new FormData();
+        formData.append("file", files[0]);
 
-    });
+        fetch('/file/upload', {
+            method: "POST",
+	        body: formData
+        })
+	        .then(res => res.text())
+	        .then(data => {
+                document.getElementById('atchFile').value = data;
+	        })
+	}
 </script>
 </html>
