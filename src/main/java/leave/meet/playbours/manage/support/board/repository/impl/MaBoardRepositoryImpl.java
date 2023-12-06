@@ -36,7 +36,7 @@ public class MaBoardRepositoryImpl implements MaBoardRepository {
 
         query.addCriteria(Criteria.where("boardDivn").is(boardDivn));
         query.addCriteria(Criteria.where("delYn").is("N"));
-        query.addCriteria(searchCondition(dto, boardDivn));
+        searchCondition(query, dto, boardDivn);
         query.with(Sort.by(Sort.Direction.DESC, "seq"));
 
         List<MaBoardDto> filterData = mongoTemplate.find(query, MaBoardDto.class);
@@ -51,28 +51,27 @@ public class MaBoardRepositoryImpl implements MaBoardRepository {
         Query query = new Query();
         query.addCriteria(Criteria.where("boardDivn").is(boardDivn));
         query.addCriteria(Criteria.where("delYn").is("N"));
-        query.addCriteria(searchCondition(dto, boardDivn));
+        searchCondition(query, dto, boardDivn);
         return (int) mongoTemplate.count(query, MaBoardDto.class);
     }
 
     /* 검색 조건문 */
-    public Criteria searchCondition(MaBoardDto dto, String boardDivn) {
-        Criteria criteria = new Criteria();
+    public Query searchCondition(Query query, MaBoardDto dto, String boardDivn) {
 
         if(dto.getSearch1() != null && !"".equals(dto.getSearch1() )) {
             switch (boardDivn) {
                 case "qna" -> {
                     if("1".equals(dto.getSearch1())) {
-                        criteria = Criteria.where("reply").is(null);
+                        query.addCriteria(Criteria.where("reply").is(null));
                     } else {
-                        criteria = Criteria.where("reply").ne(null);
+                        query.addCriteria(Criteria.where("reply").ne(null));
                     }
                 }
                 case "notice", "faq" -> {
                     if("Y".equals(dto.getSearch1())) {
-                        criteria = Criteria.where("useYn").is("Y");
+                        query.addCriteria(Criteria.where("useYn").is("Y"));
                     } else {
-                        criteria = Criteria.where("useYn").is("N");
+                        query.addCriteria(Criteria.where("useYn").is("N"));
                     }
                 }
             }
@@ -80,29 +79,31 @@ public class MaBoardRepositoryImpl implements MaBoardRepository {
 
         /* 날짜 조건 */
         if(dto.getSearchStrDt() != null) {
-            criteria = Criteria.where("notiStrDt").gte(dto.getSearchStrDt());
+            query.addCriteria(Criteria.where("notiStrDt").gte(dto.getSearchStrDt()));
         }
         if(dto.getSearchEndDt() != null) {
-            criteria = Criteria.where("notiEndDt").lte(dto.getSearchEndDt());
+            query.addCriteria(Criteria.where("notiEndDt").lte(dto.getSearchEndDt()));
         }
 
         if(dto.getSearchKeyword() != null && !"".equals(dto.getSearchKeyword())) {
             if(dto.getSearchOption() != null && !"".equals(dto.getSearchOption())) {
                 switch (dto.getSearchOption()) {
                     case "0" -> {
+                        Criteria criteria = new Criteria();
                         criteria = criteria.orOperator(Criteria.where("title").is(dto.getSearchKeyword()), Criteria.where("cont").is(dto.getSearchKeyword()));
+                        query.addCriteria(criteria);
                     }
                     case "1" -> {
-                        criteria = Criteria.where("title").is(dto.getSearchKeyword());
+                        query.addCriteria(Criteria.where("title").is(dto.getSearchKeyword()));
                     }
                     case "2" -> {
-                        criteria = Criteria.where("cont").is(dto.getSearchKeyword());
+                        query.addCriteria(Criteria.where("cont").is(dto.getSearchKeyword()));
                     }
                 }
             }
         }
 
-        return criteria;
+        return query;
     }
 
     @Override
