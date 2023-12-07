@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en"
-	  class="light-style layout-menu-fixed"
+	  class="light-style layout-user-fixed"
 	  dir="ltr"
 	  data-theme="theme-default"
 	  data-assets-path="/manage/assets/"
-	  data-template="vertical-menu-template-free"
+	  data-template="vertical-user-template-free"
 	  xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="~{common/manage/layout/layout}"
@@ -23,13 +23,13 @@
     }
 
     function fnChkOverlap() {
-        fetch('/ma/sys/menu/chkOverlap', {
+        fetch('/ma/sys/user/chkOverlap', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                menuCd: document.getElementById('menuCd').value
+                userCd: document.getElementById('userCd').value
             })
         })
             .then(res => res.json())
@@ -48,93 +48,129 @@
     }
 
     function fnSubmit(type) {
-        if([[${maUserDto.procType}]].indexOf('date') > -1) {
-            gfnPageProcess(type, [[${maUserDto.procType}]] + 'Proc');
+        if([[${userDto.procType}]].indexOf('date') > -1) {
+            gfnPageProcess(type, [[${userDto.procType}]] + 'Proc');
         } else {
             if(chk) {
-                gfnPageProcess(type, [[${maUserDto.procType}]] + 'Proc');
+                gfnPageProcess(type, [[${userDto.procType}]] + 'Proc');
             } else {
                 alert("중복검사를 실시해주세요.");
             }
         }
     }
 </script>
-<h4 class="fw-bold py-3 mb-4">MENU</h4>
+<h4 class="fw-bold py-3 mb-4">MEMBER > User</h4>
 <div class="row">
 	<div class="col-xl">
 		<div class="card mb-4">
 			<div class="card-header d-flex justify-content-between align-items-center">
-				<h5 class="mb-0">메뉴<th:block th:text="${maUserDto.procType eq 'insert' or maUserDto.procType eq 'lowerInsert' ? '등록' : '수정'}"></th:block></h5>
+				<h5 class="mb-0">유저<th:block th:text="${userDto.procType eq 'insert' or userDto.procType eq 'lowerInsert' ? '등록' : '수정'}"></th:block></h5>
 			</div>
 			<div class="card-body">
-				<form id="defaultFrm" th:object="${maUserDto}" method="post" onsubmit="return false;">
-					<input type="hidden" id="seq" name="seq" th:value="${UserDto.seq}">
+				<form id="defaultFrm" th:object="${userDto}" method="post" onsubmit="return false;">
+					<input type="hidden" id="seq" name="seq" th:value="${userDto.seq}">
 					<input type="hidden" th:field="*{pageNo}">
 					<input type="hidden" th:field="*{search1}">
 					<input type="hidden" th:field="*{searchOption}">
 					<input type="hidden" th:field="*{searchKeyword}">
 					<div class="row">
 						<div class="mb-3 col-md-4">
-							<label for="menuClCd" class="form-label">구분</label>
-							<select class="form-select" id="menuClCd" name="menuClCd" th:value="${UserDto.menuClCd}" title="구분" required>
-								<option value="" th:selected="${UserDto.menuClCd} eq ''">선택</option>
-								<option value="ma" th:selected="${UserDto.menuClCd} eq 'ma'">관리자</option>
-								<option value="ft" th:selected="${UserDto.menuClCd} eq 'ft'">사용자</option>
+							<label for="userClCd" class="form-label">구분</label>
+							<select class="form-select" id="userClCd" name="userClCd" th:value="${userDto.userClCd}" title="구분" required>
+								<option value="" th:selected="${userDto.userClCd} eq ''">선택</option>
+								<option value="ma" th:selected="${userDto.userClCd} eq 'ma'">관리자</option>
+								<option value="ft" th:selected="${userDto.userClCd} eq 'ft'">사용자</option>
 							</select>
 						</div>
 						<div class="mb-3 col-md-4">
-							<label class="form-label" for="menuOrd">순서</label>
-							<input type="text" class="form-control numOnly" id="menuOrd" name="menuOrd" th:value="${UserDto.menuOrd}" title="순서" required/>
-						</div>
-						<div class="mb-3 col-md-4">
-							<label class="form-label" for="useYn">사용여부</label>
-							<select class="form-select" id="useYn" name="useYn" th:value="${UserDto.useYn}" title="사용여부" required>
-								<option value="" th:selected="${UserDto.useYn} eq ''">선택</option>
-								<option value="Y" th:selected="${UserDto.useYn} eq 'Y'">사용</option>
-								<option value="N" th:selected="${UserDto.useYn} eq 'N'">미사용</option>
+							<label class="form-label" for="useYn">승인여부</label>
+							<select class="form-select" id="useYn" name="useYn" th:value="${userDto.useYn}" title="승인여부" required>
+								<option value="" th:selected="${userDto.useYn} eq ''">선택</option>
+								<option value="Y" th:selected="${userDto.useYn} eq 'Y'">승인</option>
+								<option value="N" th:selected="${userDto.useYn} eq 'N'">제한</option>
 							</select>
 						</div>
 						<div class="mb-3 col-md-6">
-							<label class="form-label" for="menuNm">메뉴명</label>
-							<input type="text" class="form-control" id="menuNm" name="menuNm" th:value="${UserDto.menuNm}" title="메뉴명" required/>
-						</div>
-						<div class="mb-3 col-md-6">
-							<label class="form-label" for="menuCd">메뉴코드</label>
-							<th:block th:if="${maUserDto.procType eq 'insert' or maUserDto.procType eq 'lowerInsert'}">
+							<label class="form-label" for="userId">아이디</label>
+							<th:block th:if="${userDto.procType eq 'insert' or userDto.procType eq 'lowerInsert'}">
 								<div class="input-group">
-									<input type="text" class="form-control alphaOnly" id="menuCd" name="menuCd" th:value="${UserDto.menuCd}" title="메뉴코드" required oninput="fnOnInput();"/>
+									<input type="text" class="form-control alphaOnly" id="userId" name="userId" th:value="${userDto.userId}" title="아이디" required oninput="fnOnInput();"/>
 									<button class="btn btn-outline-primary" type="button" onclick="fnChkOverlap();">중복확인</button>
 								</div>
 							</th:block>
-							<th:block th:unless="${maUserDto.procType eq 'insert' or maUserDto.procType eq 'lowerInsert'}">
-								<input type="text" class="form-control-plaintext" th:field="*{menuCd}" readonly/>
+							<th:block th:unless="${userDto.procType eq 'insert' or userDto.procType eq 'lowerInsert'}">
+								<input type="text" class="form-control-plaintext" th:field="*{userId}" readonly/>
 							</th:block>
 						</div>
 						<div class="mb-3">
-							<label class="form-label" for="menuUrl">URL</label>
-							<input type="text" class="form-control" id="menuUrl" name="menuUrl" th:value="${UserDto.menuUrl}" title="URL" required/>
+							<label class="form-label" for="userPwd">비밀번호</label>
+							<input type="text" class="form-control" id="userPwd" name="userPwd" th:value="${userDto.userPwd}" title="비밀번호" required/>
+							<label class="form-label" for="userPwdChk">비밀번호 확인</label>
+							<input type="text" class="form-control" id="userPwdChk" title="URL" required/>
+						</div>
+						<div class="mb-3 col-md-6">
+							<label class="form-label" for="userNm">이름</label>
+							<input type="text" class="form-control" id="userNm" name="userNm" th:value="${userDto.userNm}" title="유저명" required/>
+						</div>
+						<div class="mb-3 col-md-6">
+							<label class="form-label" for="userAge">나이</label>
+							<input type="text" class="form-control" id="userAge" name="userAge" th:value="${userDto.userAge}" title="나이" required/>
+						</div>
+						<div class="mb-3 col-md-6">
+							<label class="form-label" for="userSex">성별</label>
+							<select class="form-select" id="userSex" name="userSex" th:value="${userDto.userSex}" title="성별" required>
+								<option value="" th:selected="${userDto.userSex} eq ''">선택</option>
+								<option value="M" th:selected="${userDto.userSex} eq 'Y'">남성</option>
+								<option value="F" th:selected="${userDto.userSex} eq 'N'">여성</option>
+							</select>
+						</div>
+						<div class="mb-3 col-md-6">
+							<label class="form-label" for="userPhone">전화번호</label>
+							<input type="text" class="form-control" id="userPhone" name="userPhone" th:value="${userDto.userPhone}" title="전화번호" required/>
+						</div>
+						<div class="mb-3 col-md-6">
+							<label class="form-label" for="userEmail">이메일</label>
+							<input type="text" class="form-control" id="userEmail" name="userEmail" th:value="${userDto.userEmail}" title="이메일" required/>
+						</div>
+						<div class="mb-3 col-md-6">
+
+							<label class="form-label" >관심사</label>
+							<label class="form-label" for="interest1">독서</label>
+							<input type="checkbox" class="form-control" id="interest1" name="interest" th:value="${userDto.interest}" title="독서" required/>
+							<label class="form-label" for="interest2">영화</label>
+							<input type="checkbox" class="form-control" id="interest2" name="interest" th:value="${userDto.interest}" title="독서" required/>
+							<label class="form-label" for="interest3">운동</label>
+							<input type="checkbox" class="form-control" id="interest3" name="interest" th:value="${userDto.interest}" title="독서" required/>
+						</div>
+						<div class="mb-3 col-md-6">
+							<label class="form-label" for="activeArea">주요 활동지역</label>
+							<select class="form-select" id="activeArea" name="activeArea" th:value="${userDto.activeArea}" title="주요 활동지역" required>
+								<option value="" th:selected="${userDto.activeArea} eq ''">선택</option>
+								<option value="M" th:selected="${userDto.activeArea} eq '1100'">서울</option>
+								<option value="F" th:selected="${userDto.activeArea} eq '1200'">광주</option>
+							</select>
 						</div>
 						<div class="mb-3">
-							<label class="form-label" for="menuCmt">설명</label>
-							<textarea class="form-control" id="menuCmt" th:field="${UserDto.menuCmt}"></textarea>
+							<label class="form-label" for="userCmt">비고</label>
+							<textarea class="form-control" id="userCmt" th:field="${userDto.userCmt}"></textarea>
 						</div>
 					</div>
 					<div class="text-end">
-						<th:block th:if="${maUserDto.procType eq 'insert'}">
+						<th:block th:if="${userDto.procType eq 'insert'}">
 							<button type="button" class="btn btn-outline-primary" onclick="fnSubmit('submit')">등록</button>
 							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('list', 'list')">취소</button>
 						</th:block>
-						<th:block th:if="${maUserDto.procType eq 'lowerInsert'}">
+						<th:block th:if="${userDto.procType eq 'lowerInsert'}">
 							<button type="button" class="btn btn-outline-primary" onclick="fnSubmit('submit')">등록</button>
-							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('view', 'listView', this.getAttribute('parameter'), 'seq')" th:parameter="${UserDto.seq}">취소</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('view', 'listView', this.getAttribute('parameter'), 'seq')" th:parameter="${userDto.seq}">취소</button>
 						</th:block>
-						<th:block th:if="${maUserDto.procType eq 'update'}">
+						<th:block th:if="${userDto.procType eq 'update'}">
 							<button type="button" class="btn btn-outline-primary" onclick="fnSubmit('update')">수정</button>
-							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('view', 'listView', this.getAttribute('parameter'), 'seq')" th:parameter="${UserDto.seq}">취소</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('view', 'listView', this.getAttribute('parameter'), 'seq')" th:parameter="${userDto.seq}">취소</button>
 						</th:block>
-						<th:block th:if="${maUserDto.procType eq 'lowerUpdate'}">
+						<th:block th:if="${userDto.procType eq 'lowerUpdate'}">
 							<button type="button" class="btn btn-outline-primary" onclick="fnSubmit('update')">수정</button>
-							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('view', 'listView', this.getAttribute('parameter'), 'seq')" th:parameter="${UserDto.seq}">취소</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('view', 'listView', this.getAttribute('parameter'), 'seq')" th:parameter="${userDto.seq}">취소</button>
 						</th:block>
 					</div>
 				</form>
