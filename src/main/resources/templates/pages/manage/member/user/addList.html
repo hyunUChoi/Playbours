@@ -7,7 +7,7 @@
       data-template="vertical-menu-template-free"
       xmlns:th="http://www.thymeleaf.org"
 >
-<table class="datatables-users table border-top dataTable no-footer dtr-column" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 100%;">
+<table class="datatables-users table border-top dataTable no-footer dtr-column" style="width: 100%;">
 	<colgroup>
 		<col style="width: 10%;">
 		<col style="width: 15%;">
@@ -18,29 +18,36 @@
 	</colgroup>
 	<thead>
 		<tr>
+			<th>No.</th>
 			<th>구분</th>
-			<th>메뉴명</th>
-			<th>메뉴코드</th>
-			<th>URL</th>
-			<th>등록자</th>
-			<th>등록일</th>
+			<th>아이디</th>
+			<th>이름</th>
+			<th>가입일</th>
+			<th>승인여부</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr class="text-body" style="cursor: pointer;" href="javascript:void(0);">
-			<td>관리자</td>
-			<td>메뉴관리</td>
-			<td>menu</td>
-			<td><span class="text-truncate">/ma/menu/list</span></td>
-			<td>admin</td>
-			<td>2023.10.25</td>
-		</tr>
+		<th:block th:if="${#lists.size(resultList.toList()) gt 0}">
+			<tr varStatus="status" class="text-body" th:each="result, status : ${resultList.content}" onclick="gfnPageProcess('view', 'view', this.getAttribute('parameter'), 'seq')" th:parameter="${result.seq}" style="cursor: pointer;">
+				<td th:text="${paging.totalRecord + 1 - ((maUserDto.pageNo - 1) * paging.pageSize +  status.count)}"></td>
+				<td th:text="${result.userClCd eq 'ma' ? '관리자' : '사용자'}"></td>
+				<td th:text="${result.userId}"></td>
+				<td th:text="${result.userNm}"></td>
+				<td th:text="${#dates.format(result.frstRegrDt, 'yyyy-MM-dd')}"></td>
+				<td th:text="${result.useYn}"></td>
+			</tr>
+		</th:block>
+		<th:block th:unless="${#lists.size(resultList.toList()) eq 0}">
+			<tr class="text-body">
+				<td th:colspan="6" style="text-align: center; height: 5rem;">등록된 데이터가 없습니다.</td>
+			</tr>
+		</th:block>
 	</tbody>
 </table>
 <div class="demo-inline-spacing">
 	<button class="dt-button create-new btn btn-primary" onclick="gfnPageProcess('insert', 'insertForm')" style="position: absolute;right: 0;bottom: 1rem;">
 		<span><i class="bx bx-plus me-sm-1"></i>
-			<span class="d-none d-sm-inline-block">Add New Record</span>
+			<span class="d-none d-sm-inline-block">유저 등록</span>
 		</span>
 	</button>
 	<nav aria-label="Page navigation">

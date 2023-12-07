@@ -31,7 +31,7 @@ public class MaUserController {
     @RequestMapping(FOLDER_PATH + "list")
     public String list(@ModelAttribute("maUserDto") MaUserDto maUserDto) {
 
-        return "/pages/manage/member/user/list";
+        return HTML_PATH + "list";
     }
 
     @RequestMapping(FOLDER_PATH + "addList")
@@ -42,21 +42,23 @@ public class MaUserController {
         Page<MaUserDto> resultList = userRepository.findByPagingAndFiltering(pageNo, pageSize, maUserDto);
 
         PagingDto paging = pagingService.getPageInfo(resultList, pageNo, pageSize);
+        paging.setTotalRecord(userRepository.countTotalRecords(maUserDto));
 
         model.addAttribute("resultList", resultList);
         model.addAttribute("paging", paging);
 
-        return "/pages/manage/member/user/addList";
+        return HTML_PATH + "addList";
     }
 
     @RequestMapping(FOLDER_PATH + "{procType}Form")
     public String form(@ModelAttribute("maUserDto") MaUserDto maUserDto,@PathVariable String procType,Model model) {
 
-        if("insert".equals(procType)){
-
-        }else if("update".equals(procType)){
-
+        MaUserDto userDto = new MaUserDto();
+        if("update".equals(procType)){
+            userDto = userRepository.findOne(maUserDto);
         }
+        model.addAttribute("userDto", userDto);
+
         return HTML_PATH + "form";
     }
 
