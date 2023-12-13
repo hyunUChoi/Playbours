@@ -27,16 +27,13 @@
 		})
 				.then(res => res.json())
 				.then(data => {
-					let content = '<option value="" th:selected="${userDto.areaSido} eq \'\'">시/군/구</option>';
+                    // selected 할거면 이런식으로 [[${userDto.areaSido}]] === ''
+					let content = '<option value="" th:selected="">시/군/구</option>';
 					data.codeList.forEach((value, index)=> {
-						console.log(value);
-						console.log(value.code);
-						console.log(value.name);
-						content += '<option value="value.code" th:selected="value.code eq ${maUserDto.areaSido}">value.name</option>';
-						console.log(content);
+						content += '<option value=' + value.code + ' th:selected=' + value.code + '>' + value.name + '</option>';
 					});
-					const target =document.getElementById('areaSido')
-					target.html(content);
+					const target = document.getElementById('areaSido');
+					target.innerHTML = content;
 				})
 				.catch(error => alert('fetch 에러'));
 	}
@@ -50,7 +47,7 @@
     }
 	function fnChkOverlap() {
 		const userId = document.getElementById('userId').value;
-		if(userId == ""){
+		if(userId === ""){
 			alert("아이디를 입력해주세요.")
 			document.getElementById('userId').focus();
 			return false;
@@ -170,7 +167,7 @@
 							</select>
 						</div>
 						<div class="mb-3 col-md-4">
-							<label class="form-label" for="activeArea">주요 활동지역</label>
+							<label class="form-label" for="areaSido">주요 활동지역</label>
 							<select class="form-select" id="areaSido" name="areaSido"  title="시/도" required>
 								<option value="" th:selected="${userDto.areaSido} eq ''">시/도</option>
 							</select>
