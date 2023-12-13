@@ -23,6 +23,10 @@ function formValidation(form) {
                 switch (classNm) {
                     case 'numOnly'      : validNum(elm); break;
                     case 'alphaOnly'    : validAlpha(elm); break;
+                    case 'koreanOnly'   : validKorean(elm); break;
+                    case 'idOnly'       : validId(elm); break;
+                    case 'phoneOnly'    : validEmail(elm); break;
+                    case 'emailOnly'    : validPhone(elm); break;
                 }
             }
         }
@@ -56,6 +60,42 @@ function validAlpha(elm) {
     }
 }
 
+function validKorean(elm) {
+    let patten = /(^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]+$)/g;
+
+    if(!patten.test(elm.value)) {
+        valChk += 1;
+        validationMsg('korean', elm);
+    }
+}
+
+function validId(elm) {
+    let patten = /(^[a-zA-Z0-9]+$)/g;
+
+    if(!patten.test(elm.value)) {
+        valChk += 1;
+        validationMsg('id', elm);
+    }
+}
+
+function validPhone(elm) {
+    let patten = /(^[a-zA-Z]+$)/g;
+
+    if(!patten.test(elm.value)) {
+        valChk += 1;
+        validationMsg('phone', elm);
+    }
+}
+
+function validEmail(elm) {
+    let patten = /(^[a-zA-Z]+$)/g;
+
+    if(!patten.test(elm.value)) {
+        valChk += 1;
+        validationMsg('email', elm);
+    }
+}
+
 function validationMsg(divn, elm) {
     /* 경고문구 태그 속성 */
     let alert_el = document.createElement('strong');
@@ -77,6 +117,9 @@ function validationMsg(divn, elm) {
             break;
         case 'alpha' :
             msg = ' (은)는 알파벳(대, 소문자)만 입력할 수 있습니다.\n';
+            break;
+        case 'id' :
+            msg = ' (은)는 알파벳(대, 소문자)와 숫자만 입력할 수 있습니다.\n';
             break;
     }
     alert_el.innerText = elm.getAttribute('title') + msg;

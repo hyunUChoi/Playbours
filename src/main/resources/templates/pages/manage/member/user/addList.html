@@ -12,7 +12,7 @@
 		<col style="width: 10%;">
 		<col style="width: 15%;">
 		<col style="width: 15%;">
-		<col>
+		<col style="width: 15%;">
 		<col style="width: 15%;">
 		<col style="width: 15%;">
 	</colgroup>
@@ -34,7 +34,7 @@
 				<td th:text="${result.userId}"></td>
 				<td th:text="${result.userNm}"></td>
 				<td th:text="${#dates.format(result.frstRegrDt, 'yyyy-MM-dd')}"></td>
-				<td th:text="${result.useYn}"></td>
+				<td th:text="${result.useYn eq 'Y' ? '승인' : '제한'}"></td>
 			</tr>
 		</th:block>
 		<th:block th:unless="${#lists.size(resultList.toList()) eq 0}">

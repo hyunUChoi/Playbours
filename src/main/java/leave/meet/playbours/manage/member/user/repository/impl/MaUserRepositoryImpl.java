@@ -2,7 +2,6 @@ package leave.meet.playbours.manage.member.user.repository.impl;
 
 import leave.meet.playbours.manage.member.user.service.MaUserDto;
 import leave.meet.playbours.manage.member.user.repository.MaUserRepository;
-import leave.meet.playbours.manage.support.board.service.MaBoardDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +12,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -46,27 +46,29 @@ public class MaUserRepositoryImpl implements MaUserRepository {
     /* 검색 조건문 */
     public Query searchCondition(Query query, MaUserDto dto) {
 
-        /* 날짜 조건 */
-        if(dto.getSearchStrDt() != null) {
-            query.addCriteria(Criteria.where("notiStrDt").gte(dto.getSearchStrDt()));
-        }
-        if(dto.getSearchEndDt() != null) {
-            query.addCriteria(Criteria.where("notiEndDt").lte(dto.getSearchEndDt()));
+        /* 구분 */
+        if(dto.getUserClCd() != null) {
+            query.addCriteria(Criteria.where("userClCd").gte(dto.getUserClCd()));
         }
 
+        if(dto.getUseYn() != null) {
+            query.addCriteria(Criteria.where("useYn").gte(dto.getUseYn()));
+        }
+
+        /* 검색조건 */
         if(dto.getSearchKeyword() != null && !"".equals(dto.getSearchKeyword())) {
             if(dto.getSearchOption() != null && !"".equals(dto.getSearchOption())) {
                 switch (dto.getSearchOption()) {
                     case "0" -> {
                         Criteria criteria = new Criteria();
-                        criteria = criteria.orOperator(Criteria.where("title").is(dto.getSearchKeyword()), Criteria.where("cont").is(dto.getSearchKeyword()));
+                        criteria = criteria.orOperator(Criteria.where("userNm").regex(dto.getSearchKeyword()), Criteria.where("userId").regex( dto.getSearchKeyword()));
                         query.addCriteria(criteria);
                     }
                     case "1" -> {
-                        query.addCriteria(Criteria.where("title").is(dto.getSearchKeyword()));
+                        query.addCriteria(Criteria.where("userId").regex(dto.getSearchKeyword()));
                     }
                     case "2" -> {
-                        query.addCriteria(Criteria.where("cont").is(dto.getSearchKeyword()));
+                        query.addCriteria(Criteria.where("userNm").regex(dto.getSearchKeyword()));
                     }
                 }
             }
@@ -93,7 +95,23 @@ public class MaUserRepositoryImpl implements MaUserRepository {
 
     @Override
     public void insert(MaUserDto dto) {
-
+        MaUserDto userDto = new MaUserDto();
+        userDto.setUserClCd(dto.getUserClCd());
+        userDto.setUseYn(dto.getUseYn());
+        userDto.setUserId(dto.getUserId());
+        userDto.setUserPwd(dto.getUserPwd());
+        userDto.setPwdFailCnt("O");
+        userDto.setUserNm(dto.getUserNm());
+        userDto.setUserAge(dto.getUserAge());
+        userDto.setUserSex(dto.getUserSex());
+        userDto.setUserPhone(dto.getUserPhone());
+        userDto.setUserEmail(dto.getUserEmail());
+        userDto.setInterest(dto.getInterest());
+        userDto.setActiveArea(dto.getActiveArea());
+        userDto.setUserCmt(dto.getUserCmt());
+        userDto.setFrstRegrDt(new Date());
+        userDto.setDelYn("N");
+        mongoTemplate.insert(userDto);
     }
 
     @Override
@@ -114,5 +132,13 @@ public class MaUserRepositoryImpl implements MaUserRepository {
     @Override
     public void deleteReply(MaUserDto dto) {
 
+    }
+
+    @Override
+    public int countById(String id) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("userId").is(id));
+        query.addCriteria(Criteria.where("delYn").is("N"));
+        return (int)mongoTemplate.count(query, MaUserDto.class);
     }
 }

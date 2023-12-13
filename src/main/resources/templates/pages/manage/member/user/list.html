@@ -38,23 +38,27 @@
 					<label class="form-label" for="selectRole">구분</label>
 					<select id="selectRole" th:field="*{userClCd}" class="form-select color-dropdown">
 						<option value="">선택</option>
-						<option value="Admin">관리자</option>
-						<option value="Subscriber">일반회원</option>
+						<option value="ma">관리자</option>
+						<option value="ft">사용자</option>
 					</select>
 				</div>
 				<div class="col-md-4">
 					<label class="form-label" for="selectStatus">상태</label>
-					<select id="selectStatus" th:field="*{search2}" class="form-select color-dropdown">
+					<select id="selectStatus" th:field="*{useYn}" class="form-select color-dropdown">
 						<option value="">선택</option>
-						<option value="Approval" class="text-capitalize">승인</option>
-						<option value="Wait" class="text-capitalize">승인대기</option>
-						<option value="Refuse" class="text-capitalize">승인거부</option>
-						<option value="Reapply" class="text-capitalize">재신청</option>
+						<option value="Y" class="text-capitalize">승인</option>
+						<option value="N" class="text-capitalize">제한</option>
 					</select>
 				</div>
 			</div>
 			<div class="input-group">
-				<span class="input-group-text" id="basic-addon11"><i class="bx bx-search"></i></span>
+				<div class="col-md-1">
+					<select class="form-select" th:field="*{searchOption}" style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
+						<option value="0" selected>전체</option>
+						<option value="1">아이디</option>
+						<option value="2">이름</option>
+					</select>
+				</div>
 				<input type="text" class="form-control" th:field="*{searchKeyword}"/>
 				<a class="btn btn-outline-primary" onclick="fnSearch();">Search</a>
 			</div>

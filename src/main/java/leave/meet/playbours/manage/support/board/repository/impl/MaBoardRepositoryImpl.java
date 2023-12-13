@@ -90,14 +90,14 @@ public class MaBoardRepositoryImpl implements MaBoardRepository {
                 switch (dto.getSearchOption()) {
                     case "0" -> {
                         Criteria criteria = new Criteria();
-                        criteria = criteria.orOperator(Criteria.where("title").is(dto.getSearchKeyword()), Criteria.where("cont").is(dto.getSearchKeyword()));
+                        criteria = criteria.orOperator(Criteria.where("title").regex(dto.getSearchKeyword()), Criteria.where("cont").regex(dto.getSearchKeyword()));
                         query.addCriteria(criteria);
                     }
                     case "1" -> {
-                        query.addCriteria(Criteria.where("title").is(dto.getSearchKeyword()));
+                        query.addCriteria(Criteria.where("title").regex(dto.getSearchKeyword()));
                     }
                     case "2" -> {
-                        query.addCriteria(Criteria.where("cont").is(dto.getSearchKeyword()));
+                        query.addCriteria(Criteria.where("cont").regex(dto.getSearchKeyword()));
                     }
                 }
             }

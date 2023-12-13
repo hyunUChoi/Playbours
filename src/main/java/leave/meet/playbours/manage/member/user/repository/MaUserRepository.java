@@ -20,4 +20,6 @@ public interface MaUserRepository {
     void delete(MaUserDto dto);
 
     void deleteReply(MaUserDto dto);
+
+    int countById(String id);
 }

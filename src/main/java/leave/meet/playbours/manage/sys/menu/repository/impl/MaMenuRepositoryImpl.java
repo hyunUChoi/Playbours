@@ -46,14 +46,14 @@ public class MaMenuRepositoryImpl implements MaMenuRepository {
                     switch (dto.getSearchOption()) {
                         case "0" -> {
                             Criteria criteria = new Criteria();
-                            criteria.orOperator(Criteria.where("menuCd").is(dto.getSearchKeyword()), Criteria.where("menuNm").is(dto.getSearchKeyword()));
+                            criteria.orOperator(Criteria.where("menuCd").regex(dto.getSearchKeyword()), Criteria.where("menuNm").regex(dto.getSearchKeyword()));
                             query.addCriteria(criteria);
                         }
                         case "1" -> {
-                            query.addCriteria(Criteria.where("menuNm").is(dto.getSearchKeyword()));
+                            query.addCriteria(Criteria.where("menuNm").regex(dto.getSearchKeyword()));
                         }
                         case "2" -> {
-                            query.addCriteria(Criteria.where("menuCd").is(dto.getSearchKeyword()));
+                            query.addCriteria(Criteria.where("menuCd").regex(dto.getSearchKeyword()));
                         }
                     }
                 }
