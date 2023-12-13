@@ -10,7 +10,7 @@ import java.util.List;
 
 @SuppressWarnings("unused")
 @TypeAlias("MaCodeDto")
-@Document(collection = "CLT_ADDR")
+@Document(collection = "CLT_CODE")
 public class MaCodeDto extends CmmnDto {
     // 일련번호
     @Id

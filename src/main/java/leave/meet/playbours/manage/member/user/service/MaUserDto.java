@@ -37,7 +37,9 @@ public class MaUserDto extends CmmnDto {
     private String userAge;
 
     // 활동지역
-    private String activeArea;
+    private String areaSido;
+
+    private String areaGungu;
 
     // 관심사
     private String interest;
@@ -128,14 +130,6 @@ public class MaUserDto extends CmmnDto {
         this.userAge = userAge;
     }
 
-    public String getActiveArea() {
-        return activeArea;
-    }
-
-    public void setActiveArea(String activeArea) {
-        this.activeArea = activeArea;
-    }
-
     public String getInterest() {
         return interest;
     }
@@ -198,5 +192,21 @@ public class MaUserDto extends CmmnDto {
 
     public void setLstChgDt(Date lstChgDt) {
         this.lstChgDt = lstChgDt;
+    }
+
+    public String getAreaSido() {
+        return areaSido;
+    }
+
+    public void setAreaSido(String areaSido) {
+        this.areaSido = areaSido;
+    }
+
+    public String getAreaGungu() {
+        return areaGungu;
+    }
+
+    public void setAreaGungu(String areaGungu) {
+        this.areaGungu = areaGungu;
     }
 }

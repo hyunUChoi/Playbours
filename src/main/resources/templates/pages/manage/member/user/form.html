@@ -27,7 +27,16 @@
 		})
 				.then(res => res.json())
 				.then(data => {
-					alert(data.codeList);
+					let content = '<option value="" th:selected="${userDto.areaSido} eq \'\'">시/군/구</option>';
+					data.codeList.forEach((value, index)=> {
+						console.log(value);
+						console.log(value.code);
+						console.log(value.name);
+						content += '<option value="value.code" th:selected="value.code eq ${maUserDto.areaSido}">value.name</option>';
+						console.log(content);
+					});
+					const target =document.getElementById('areaSido')
+					target.html(content);
 				})
 				.catch(error => alert('fetch 에러'));
 	}
@@ -156,16 +165,20 @@
 							<label class="form-label" >관심사</label>
 							<select class="form-select" id="interest" name="interest" th:value="${userDto.interest}" title="주요 관심사" required>
 								<option value="" th:selected="${userDto.interest} eq ''">선택</option>
-								<option value="M" th:selected="${userDto.interest} eq '1'">독서</option>
-								<option value="F" th:selected="${userDto.interest} eq '2'">영화</option>
+								<option value="01" th:selected="${userDto.interest} eq '1'">독서</option>
+								<option value="02" th:selected="${userDto.interest} eq '2'">영화</option>
 							</select>
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="activeArea">주요 활동지역</label>
-							<select class="form-select" id="activeArea" name="activeArea" th:value="${userDto.activeArea}" title="주요 활동지역" required>
-								<option value="" th:selected="${userDto.activeArea} eq ''">선택</option>
-								<option value="M" th:selected="${userDto.activeArea} eq '1100'">서울</option>
-								<option value="F" th:selected="${userDto.activeArea} eq '1200'">광주</option>
+							<select class="form-select" id="areaSido" name="areaSido"  title="시/도" required>
+								<option value="" th:selected="${userDto.areaSido} eq ''">시/도</option>
+							</select>
+						</div>
+						<div class="mb-3 col-md-4">
+							<label class="form-label" for="areaGungu">&nbsp;</label>
+							<select class="form-select" id="areaGungu" name="areaGungu"  title="시/군/구" required>
+								<option value="" th:selected="${userDto.areaGungu} eq ''">시군구</option>
 							</select>
 						</div>
 						<div class="mb-3 col-md-4">

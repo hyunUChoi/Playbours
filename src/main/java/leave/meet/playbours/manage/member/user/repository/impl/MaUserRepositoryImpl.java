@@ -107,7 +107,8 @@ public class MaUserRepositoryImpl implements MaUserRepository {
         userDto.setUserPhone(dto.getUserPhone());
         userDto.setUserEmail(dto.getUserEmail());
         userDto.setInterest(dto.getInterest());
-        userDto.setActiveArea(dto.getActiveArea());
+        userDto.setAreaSido(dto.getAreaSido());
+        userDto.setAreaGungu(dto.getAreaGungu());
         userDto.setUserCmt(dto.getUserCmt());
         userDto.setFrstRegrDt(new Date());
         userDto.setDelYn("N");

@@ -66,6 +66,6 @@ public class MaCodeRepositoryImpl implements MaCodeRepository {
         Query query = new Query();
         query.addCriteria(Criteria.where("groupSeq").is(code));
         query.addCriteria(Criteria.where("delYn").is("N"));
-        return mongoTemplate.findAll(MaCodeDto.class);
+        return mongoTemplate.find(query,MaCodeDto.class);
     }
 }

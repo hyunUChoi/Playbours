@@ -28,7 +28,12 @@ public class MaCodeController {
     public HashMap<String, Object> chkOverlap(@RequestBody HashMap<String, Object> body) {
 
         HashMap<String, Object> returnMap = new HashMap<>();
-        List<MaCodeDto> codeList = codeRepository.findCodeList((String) body.get("groupCode"));
+        System.out.println(body.get("code"));
+        System.out.println(body.get("code"));
+        System.out.println(body.get("code"));
+        System.out.println(body.get("code"));
+        System.out.println(body.get("code"));
+        List<MaCodeDto> codeList = codeRepository.findCodeList((String) body.get("code"));
         returnMap.put("codeList",codeList);
         return returnMap;
     }
