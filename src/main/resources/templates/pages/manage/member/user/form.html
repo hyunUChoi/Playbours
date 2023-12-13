@@ -27,13 +27,11 @@
 		})
 				.then(res => res.json())
 				.then(data => {
-                    // selected 할거면 이런식으로 [[${userDto.areaSido}]] === ''
-					let content = '<option value="" th:selected="">시/군/구</option>';
+					let content = '<option value="" th:selected="[[${userDto.areaSido}]] === \'\'">시/군/구</option>';
 					data.codeList.forEach((value, index)=> {
-						content += '<option value=' + value.code + ' th:selected=' + value.code + '>' + value.name + '</option>';
+						content += '<option value=' + value.code + ' th:selected=' + (value.code === [[${userDto.areaSido}]]) + '>' + value.name + '</option>';
 					});
-					const target = document.getElementById('areaSido');
-					target.innerHTML = content;
+					document.getElementById('areaSido').innerHTML = content;
 				})
 				.catch(error => alert('fetch 에러'));
 	}
