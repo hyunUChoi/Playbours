@@ -15,11 +15,7 @@ public interface MaUserRepository {
 
     void update(MaUserDto dto);
 
-    void updateReply(MaUserDto dto);
-
     void delete(MaUserDto dto);
-
-    void deleteReply(MaUserDto dto);
 
     int countById(String id);
 }

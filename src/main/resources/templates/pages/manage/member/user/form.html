@@ -12,26 +12,47 @@
 >
 <script th:inline="javascript">
 	document.addEventListener("DOMContentLoaded", () => {
-		fnGetCodeList("CD000001");
+		fnGetCodeList("CD000001", '1');
     });
 
-	function fnGetCodeList(code){
+	function fnGetCodeList(groupCode,divn){
 		fetch('/ma/sys/code/getCodeList', {
 			method: "POST",
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				code: code
+				groupCode: groupCode
 			})
 		})
 				.then(res => res.json())
 				.then(data => {
-					let content = '<option value="" th:selected="[[${userDto.areaSido}]] === \'\'">시/군/구</option>';
-					data.codeList.forEach((value, index)=> {
-						content += '<option value=' + value.code + ' th:selected=' + (value.code === [[${userDto.areaSido}]]) + '>' + value.name + '</option>';
-					});
-					document.getElementById('areaSido').innerHTML = content;
+					if(divn === '1'){
+						let content = '<option value=\"\">시/도</option>';
+						let selected = '';
+						data.codeList.forEach((value, index)=> {
+							if([[${userDto.areaSido}]] === value.code){
+								selected = 'th:selected=\"selected\"';
+							}
+							content += '<option value=\"'+ value.code + '\"'+selected +'>'+ value.name + '</option>';
+							selected = '';
+						});
+						document.getElementById('areaSido').innerHTML = content;
+						fnGetCodeList([[${userDto.areaSido}]],'2');
+
+					}else if(divn === '2'){
+						let content = '<option value=\"\">시/군/구</option>';
+						let selected = '';
+						data.codeList.forEach((value, index)=> {
+							if([[${userDto.areaGungu}]] === value.code){
+								selected = 'th:selected=\"selected\"';
+							}
+							content += '<option value=\"'+ value.code + '\"'+selected +'>'+ value.name + '</option>';
+							selected = '';
+						});
+						document.getElementById('areaGungu').innerHTML = content;
+					}
+
 				})
 				.catch(error => alert('fetch 에러'));
 	}
@@ -88,11 +109,11 @@
 	<div class="col-xl">
 		<div class="card mb-4">
 			<div class="card-header d-flex justify-content-between align-items-center">
-				<h5 class="mb-0">유저<th:block th:text="${userDto.procType eq 'insert' or userDto.procType eq 'lowerInsert' ? '등록' : '수정'}"></th:block></h5>
+				<h5 class="mb-0">유저<th:block th:text="${userDto.procType eq 'insert' ? '등록' : '수정'}"></th:block></h5>
 			</div>
 			<div class="card-body">
 				<form id="defaultFrm" th:object="${userDto}" method="post" onsubmit="return false;">
-					<input type="hidden" id="seq" name="seq" th:value="${userDto.seq}">
+					<input type="hidden" th:field="*{seq}">
 					<input type="hidden" th:field="*{pageNo}">
 					<input type="hidden" th:field="*{search1}">
 					<input type="hidden" th:field="*{searchOption}">
@@ -118,25 +139,21 @@
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="userId">아이디</label>
 							<div class="input-group">
-								<input type="text" class="form-control idOnly" id="userId" name="userId" th:value="${userDto.userId}" title="아이디" required oninput="fnOnInput();"/>
+								<input type="text" class="form-control idOnly" id="userId" name="userId" th:value="${userDto.userId}" title="아이디" th:maxlength="20" required oninput="fnOnInput();"/>
 								<button class="btn btn-outline-primary" type="button" onclick="fnChkOverlap();">중복확인</button>
 							</div>
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="userPwd">비밀번호</label>
-							<input type="text" class="form-control" id="userPwd" name="userPwd" th:value="${userDto.userPwd}" title="비밀번호" required/>
+							<input type="password" class="form-control" id="userPwd" name="userPwd" th:value="${userDto.userPwd}" title="비밀번호" required th:maxlength="30"/>
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="userPwdChk">비밀번호 확인</label>
-							<input type="text" class="form-control" id="userPwdChk" title="비밀번호확인" required/>
+							<input type="password" class="form-control" id="userPwdChk" title="비밀번호확인" required th:maxlength="30"/>
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="userNm">이름</label>
-							<input type="text" class="form-control" id="userNm" name="userNm" th:value="${userDto.userNm}" title="유저명" required/>
-						</div>
-						<div class="mb-3 col-md-4">
-							<label class="form-label" for="userAge">나이</label>
-							<input type="text" class="form-control" id="userAge" name="userAge" th:value="${userDto.userAge}" title="나이" required/>
+							<input type="text" class="form-control" id="userNm" name="userNm" th:value="${userDto.userNm}" title="유저명" required th:maxlength="8"/>
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="userSex">성별</label>
@@ -147,12 +164,26 @@
 							</select>
 						</div>
 						<div class="mb-3 col-md-4">
+							<label class="form-label" for="userYmd">생년월일</label>
+							<div>
+								<select style="width:33.5% !important; display: inline-block !important;" class="form-select" id="userYmd" name="userYmd" th:value="${userDto.userYmd}" title="성별" required>
+									<option value="" th:selected="${userDto.userYmd} eq ''">년도</option>
+								</select>
+								<select style="width:32% !important;display: inline-block !important;" class="form-select" id="userYmd" name="userYmd" th:value="${userDto.userYmd}" title="성별" required>
+									<option value="" th:selected="${userDto.userYmd} eq ''">월</option>
+								</select>
+								<select style="width:32% !important;display: inline-block !important;" class="form-select" id="userYmd" name="userYmd" th:value="${userDto.userYmd}" title="성별" required>
+									<option value="" th:selected="${userDto.userYmd} eq ''">일</option>
+								</select>
+							</div>
+						</div>
+						<div class="mb-3 col-md-4">
 							<label class="form-label" for="userPhone">전화번호</label>
-							<input type="text" class="form-control" id="userPhone" name="userPhone" th:value="${userDto.userPhone}" title="전화번호" required/>
+							<input type="text" class="form-control" id="userPhone" name="userPhone" th:value="${userDto.userPhone}" title="전화번호" th:maxlength="13" required/>
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="userEmail">이메일</label>
-							<input type="text" class="form-control" id="userEmail" name="userEmail" th:value="${userDto.userEmail}" title="이메일" required/>
+							<input type="text" class="form-control" id="userEmail" name="userEmail" th:value="${userDto.userEmail}" title="이메일" th:maxlength="30" required/>
 						</div>
 						<div class="mb-3 col-md-4">
 						</div>
@@ -166,15 +197,14 @@
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="areaSido">주요 활동지역</label>
-							<select class="form-select" id="areaSido" name="areaSido"  title="시/도" required>
-								<option value="" th:selected="${userDto.areaSido} eq ''">시/도</option>
-							</select>
-						</div>
-						<div class="mb-3 col-md-4">
-							<label class="form-label" for="areaGungu">&nbsp;</label>
-							<select class="form-select" id="areaGungu" name="areaGungu"  title="시/군/구" required>
-								<option value="" th:selected="${userDto.areaGungu} eq ''">시군구</option>
-							</select>
+							<div>
+								<select style="width:50% !important;display: inline-block !important;" class="form-select" id="areaSido" name="areaSido"  title="시/도" th:onchange="fnGetCodeList(this.value, '2')" required>
+									<option value="" th:selected="${userDto.areaSido} eq ''">시/도</option>
+								</select>
+								<select style="width:48.5% !important;display: inline-block !important;" class="form-select" id="areaGungu" name="areaGungu"  title="시/군/구" required>
+									<option value="" th:selected="${userDto.areaGungu} eq ''">시군구</option>
+								</select>
+							</div>
 						</div>
 						<div class="mb-3 col-md-4">
 						</div>

@@ -61,11 +61,12 @@ public class MaCodeRepositoryImpl implements MaCodeRepository {
     }
 
     @Override
-    public List<MaCodeDto> findCodeList(String code) {
+    public List<MaCodeDto> findCodeList(String groupCode) {
 
         Query query = new Query();
-        query.addCriteria(Criteria.where("groupSeq").is(code));
+        query.addCriteria(Criteria.where("groupCode").is(groupCode));
         query.addCriteria(Criteria.where("delYn").is("N"));
+        query.with(Sort.by(Sort.Direction.ASC, "code"));
         return mongoTemplate.find(query,MaCodeDto.class);
     }
 }

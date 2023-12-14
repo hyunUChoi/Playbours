@@ -26,9 +26,8 @@ public class MaCodeController {
     @ResponseBody
     @RequestMapping(FOLDER_PATH + "getCodeList")
     public HashMap<String, Object> chkOverlap(@RequestBody HashMap<String, Object> body) {
-
         HashMap<String, Object> returnMap = new HashMap<>();
-        List<MaCodeDto> codeList = codeRepository.findCodeList((String) body.get("code"));
+        List<MaCodeDto> codeList = codeRepository.findCodeList((String) body.get("groupCode"));
         returnMap.put("codeList",codeList);
         return returnMap;
     }

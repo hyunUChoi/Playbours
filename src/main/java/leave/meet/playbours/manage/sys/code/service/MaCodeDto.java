@@ -17,10 +17,10 @@ public class MaCodeDto extends CmmnDto {
     private String seq;
 
     // 그룹
-    private String groupSeq;
+    private String groupCode;
 
     //부모의 id
-    private String parentSeq;
+    private String parentCode;
 
     // code
     private String code;
@@ -39,20 +39,20 @@ public class MaCodeDto extends CmmnDto {
         this.seq = seq;
     }
 
-    public String getGroupSeq() {
-        return groupSeq;
+    public String getGroupCode() {
+        return groupCode;
     }
 
-    public void setGroupSeq(String groupSeq) {
-        this.groupSeq = groupSeq;
+    public void setGroupCode(String groupCode) {
+        this.groupCode = groupCode;
     }
 
-    public String getParentSeq() {
-        return parentSeq;
+    public String getParentCode() {
+        return parentCode;
     }
 
-    public void setParentSeq(String parentSeq) {
-        this.parentSeq = parentSeq;
+    public void setParentCode(String parentCode) {
+        this.parentCode = parentCode;
     }
 
     public String getCode() {

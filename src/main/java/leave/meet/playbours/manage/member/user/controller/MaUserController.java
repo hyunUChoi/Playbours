@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
 
@@ -32,12 +33,11 @@ public class MaUserController {
     }
 
     private final static String FOLDER_PATH = "/ma/member/user/";
-    private final static String HTML_PATH = "/pages/manage/member/user/";
 
     @RequestMapping(FOLDER_PATH + "list")
     public String list(@ModelAttribute("maUserDto") MaUserDto maUserDto) {
 
-        return HTML_PATH + "list";
+        return "/pages/manage/member/user/list";
     }
 
     @RequestMapping(FOLDER_PATH + "addList")
@@ -53,7 +53,7 @@ public class MaUserController {
         model.addAttribute("resultList", resultList);
         model.addAttribute("paging", paging);
 
-        return HTML_PATH + "addList";
+        return "/pages/manage/member/user/addList";
     }
 
     @RequestMapping(FOLDER_PATH + "{procType}Form")
@@ -66,7 +66,7 @@ public class MaUserController {
         userDto.setProcType(procType);
         model.addAttribute("userDto", userDto);
 
-        return HTML_PATH + "form";
+        return "/pages/manage/member/user/form";
     }
 
     @ResponseBody
@@ -88,22 +88,28 @@ public class MaUserController {
     @RequestMapping(FOLDER_PATH + "view")
     public String view(@ModelAttribute("maUserDto") MaUserDto maUserDto,Model model) {
 
+        System.out.println(maUserDto.getSeq());
         maUserDto = userRepository.findOne(maUserDto);
         model.addAttribute("maUserDto", maUserDto);
-        return HTML_PATH + "view";
+        return "/pages/manage/member/user/view";
     }
 
     @RequestMapping(FOLDER_PATH + "{procType}Proc")
-    public String proc(@ModelAttribute("maUserDto") MaUserDto maUserDto,@PathVariable String procType,Model model) {
+    public String proc(@ModelAttribute("maUserDto") MaUserDto maUserDto, @PathVariable String procType, RedirectAttributes attributes) {
 
         if("insert".equals(procType)){
             userRepository.insert(maUserDto);
-            return "redirect:" + HTML_PATH + "list";
+            return "redirect:/ma/member/user/list";
         }else if("update".equals(procType)){
+            System.out.println(procType);
             userRepository.update(maUserDto);
-            return "redirect:" + HTML_PATH + "view";
+            attributes.addFlashAttribute("maUserDto", maUserDto);
+            return "redirect:/ma/member/user/view";
+        }else if ("delete".equals(procType)){
+            userRepository.delete(maUserDto);
+            return "redirect:/ma/member/user/list";
         }
-        return HTML_PATH + "form";
+        return "redirect:/ma/member/user/form";
     }
 
 

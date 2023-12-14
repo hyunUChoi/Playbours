@@ -2,6 +2,7 @@ package leave.meet.playbours.manage.member.user.repository.impl;
 
 import leave.meet.playbours.manage.member.user.service.MaUserDto;
 import leave.meet.playbours.manage.member.user.repository.MaUserRepository;
+import leave.meet.playbours.manage.support.board.service.MaBoardDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
@@ -102,7 +104,7 @@ public class MaUserRepositoryImpl implements MaUserRepository {
         userDto.setUserPwd(dto.getUserPwd());
         userDto.setPwdFailCnt("O");
         userDto.setUserNm(dto.getUserNm());
-        userDto.setUserAge(dto.getUserAge());
+        userDto.setUserYmd(dto.getUserYmd());
         userDto.setUserSex(dto.getUserSex());
         userDto.setUserPhone(dto.getUserPhone());
         userDto.setUserEmail(dto.getUserEmail());
@@ -110,6 +112,8 @@ public class MaUserRepositoryImpl implements MaUserRepository {
         userDto.setAreaSido(dto.getAreaSido());
         userDto.setAreaGungu(dto.getAreaGungu());
         userDto.setUserCmt(dto.getUserCmt());
+        // TODO 로그인한 아이디로 변경
+        userDto.setFrstRegrId("admin");
         userDto.setFrstRegrDt(new Date());
         userDto.setDelYn("N");
         mongoTemplate.insert(userDto);
@@ -118,21 +122,40 @@ public class MaUserRepositoryImpl implements MaUserRepository {
     @Override
     public void update(MaUserDto dto) {
 
-    }
+        Query query = new Query();
+        Update update = new Update();
 
-    @Override
-    public void updateReply(MaUserDto dto) {
+        query.addCriteria(Criteria.where("seq").is(dto.getSeq()));
+        update.set("userClCd", dto.getUserClCd());
+        update.set("useYn", dto.getUseYn());
+        update.set("userId", dto.getUserId());
+        update.set("userPwd", dto.getUserPwd());
+        update.set("userNm", dto.getUserNm());
+        update.set("userYmd", dto.getUserYmd());
+        update.set("userSex", dto.getUserSex());
+        update.set("userPhone", dto.getUserPhone());
+        update.set("userEmail", dto.getUserPhone());
+        update.set("interest", dto.getInterest());
+        update.set("areaSido", dto.getAreaSido());
+        update.set("areaGungu", dto.getAreaGungu());
+        update.set("userCmt", dto.getUserCmt());
+        // TODO 로그인한 아이디로 변경
+        update.set("lstChgId", "admin");
+        update.set("lstChgDt", new Date());
+        mongoTemplate.upsert(query, update, MaUserDto.class);
 
     }
 
     @Override
     public void delete(MaUserDto dto) {
-
-    }
-
-    @Override
-    public void deleteReply(MaUserDto dto) {
-
+        Query query = new Query();
+        Update update = new Update();
+        query.addCriteria(Criteria.where("seq").is(dto.getSeq()));
+        // TODO 로그인한 아이디로 변경
+        update.set("lstChgId", "admin");
+        update.set("lstChgDt", new Date());
+        update.set("delYn", "Y");
+        mongoTemplate.upsert(query, update, MaUserDto.class);
     }
 
     @Override

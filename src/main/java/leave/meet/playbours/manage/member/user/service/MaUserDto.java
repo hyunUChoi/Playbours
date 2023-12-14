@@ -33,6 +33,8 @@ public class MaUserDto extends CmmnDto {
     // 유저 성별
     private String userSex;
 
+    private String userYmd;
+
     // 유저 나이
     private String userAge;
 
@@ -62,9 +64,13 @@ public class MaUserDto extends CmmnDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date frstRegrDt;
 
+    private String frstRegrId;
+
     // 최종수정일
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date lstChgDt;
+
+    private String lstChgId;
 
     public String getSeq() {
         return seq;
@@ -208,5 +214,29 @@ public class MaUserDto extends CmmnDto {
 
     public void setAreaGungu(String areaGungu) {
         this.areaGungu = areaGungu;
+    }
+
+    public String getFrstRegrId() {
+        return frstRegrId;
+    }
+
+    public void setFrstRegrId(String frstRegrId) {
+        this.frstRegrId = frstRegrId;
+    }
+
+    public String getLstChgId() {
+        return lstChgId;
+    }
+
+    public void setLstChgId(String lstChgId) {
+        this.lstChgId = lstChgId;
+    }
+
+    public String getUserYmd() {
+        return userYmd;
+    }
+
+    public void setUserYmd(String userYmd) {
+        this.userYmd = userYmd;
     }
 }
