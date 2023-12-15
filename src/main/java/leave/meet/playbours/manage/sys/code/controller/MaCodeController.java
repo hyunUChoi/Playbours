@@ -1,12 +1,8 @@
 package leave.meet.playbours.manage.sys.code.controller;
 
-import leave.meet.playbours.common.service.PagingService;
-import leave.meet.playbours.manage.member.user.repository.MaUserRepository;
-import leave.meet.playbours.manage.member.user.service.MaUserDto;
 import leave.meet.playbours.manage.sys.code.repository.MaCodeRepository;
-import leave.meet.playbours.manage.sys.code.service.MaCodeDto;
+import leave.meet.playbours.manage.sys.code.dto.MaCodeDto;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;

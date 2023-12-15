@@ -34,6 +34,7 @@
 			<div class="card-body">
 				<form id="defaultFrm" th:object="${maBoardDto}" method="post" onsubmit="return false;">
 					<input type="hidden" id="seq" name="seq" th:value="${boardDto.seq}">
+					<input type="hidden" th:field="${boardDto.atchFile}">
 					<input type="hidden" th:field="*{search1}">
 					<input type="hidden" th:field="*{searchStrDt}">
 					<input type="hidden" th:field="*{searchEndDt}">

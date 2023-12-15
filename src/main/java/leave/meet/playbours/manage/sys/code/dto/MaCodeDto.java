@@ -1,12 +1,9 @@
-package leave.meet.playbours.manage.sys.code.service;
+package leave.meet.playbours.manage.sys.code.dto;
 
 import leave.meet.playbours.common.dto.CmmnDto;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.Date;
-import java.util.List;
 
 @SuppressWarnings("unused")
 @TypeAlias("MaCodeDto")

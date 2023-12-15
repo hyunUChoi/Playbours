@@ -4,7 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import leave.meet.playbours.manage.sys.menu.repository.MaMenuRepository;
-import leave.meet.playbours.manage.sys.menu.service.MaMenuDto;
+import leave.meet.playbours.manage.sys.menu.dto.MaMenuDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

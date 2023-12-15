@@ -24,6 +24,7 @@
 			</div>
 			<form id="defaultFrm" th:object="${maBoardDto}" method="post" onsubmit="return false;">
 				<input type="hidden" th:field="*{seq}">
+				<input type="hidden" th:field="*{atchFile}">
 				<input type="hidden" th:field="*{pageNo}">
 				<input type="hidden" th:field="*{search1}">
 				<input type="hidden" th:field="*{searchStrDt}">

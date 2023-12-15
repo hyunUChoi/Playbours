@@ -1,7 +1,6 @@
-package leave.meet.playbours.common.service;
+package leave.meet.playbours.common.paging.service;
 
-import leave.meet.playbours.common.dto.CmmnDto;
-import leave.meet.playbours.common.dto.PagingDto;
+import leave.meet.playbours.common.paging.dto.PagingDto;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
 package leave.meet.playbours.manage.sys.code.repository;
 
-import leave.meet.playbours.manage.sys.code.service.MaCodeDto;
+import leave.meet.playbours.manage.sys.code.dto.MaCodeDto;
 import org.springframework.data.domain.Page;
 
 import java.util.List;

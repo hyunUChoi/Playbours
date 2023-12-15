@@ -1,4 +1,4 @@
-package leave.meet.playbours.manage.support.board.service;
+package leave.meet.playbours.manage.support.board.dto;
 
 import leave.meet.playbours.common.dto.CmmnDto;
 import org.springframework.data.annotation.Id;

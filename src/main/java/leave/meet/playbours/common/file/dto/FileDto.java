@@ -1,4 +1,4 @@
-package leave.meet.playbours.common.dto;
+package leave.meet.playbours.common.file.dto;
 
 import org.springframework.data.annotation.TypeAlias;
 

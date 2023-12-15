@@ -1,17 +1,15 @@
 package leave.meet.playbours.manage.member.user.controller;
 
 import jakarta.annotation.Resource;
-import leave.meet.playbours.common.dto.PagingDto;
-import leave.meet.playbours.common.service.PagingService;
-import leave.meet.playbours.manage.member.user.service.MaUserDto;
+import leave.meet.playbours.common.paging.dto.PagingDto;
+import leave.meet.playbours.common.paging.service.PagingService;
+import leave.meet.playbours.manage.member.user.dto.MaUserDto;
 import leave.meet.playbours.manage.member.user.repository.MaUserRepository;
 import leave.meet.playbours.manage.sys.code.repository.MaCodeRepository;
-import leave.meet.playbours.manage.sys.code.service.MaCodeDto;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;

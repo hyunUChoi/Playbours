@@ -1,6 +1,6 @@
 package leave.meet.playbours.manage.support.board.repository;
 
-import leave.meet.playbours.manage.support.board.service.MaBoardDto;
+import leave.meet.playbours.manage.support.board.dto.MaBoardDto;
 import org.springframework.data.domain.Page;
 
 public interface MaBoardRepository {

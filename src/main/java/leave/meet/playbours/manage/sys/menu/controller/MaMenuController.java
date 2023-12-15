@@ -1,10 +1,10 @@
 package leave.meet.playbours.manage.sys.menu.controller;
 
 import jakarta.annotation.Resource;
-import leave.meet.playbours.common.dto.PagingDto;
-import leave.meet.playbours.common.service.PagingService;
+import leave.meet.playbours.common.paging.dto.PagingDto;
+import leave.meet.playbours.common.paging.service.PagingService;
 import leave.meet.playbours.manage.sys.menu.repository.MaMenuRepository;
-import leave.meet.playbours.manage.sys.menu.service.MaMenuDto;
+import leave.meet.playbours.manage.sys.menu.dto.MaMenuDto;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

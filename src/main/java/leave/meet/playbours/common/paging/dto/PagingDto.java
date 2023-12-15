@@ -1,4 +1,4 @@
-package leave.meet.playbours.common.dto;
+package leave.meet.playbours.common.paging.dto;
 
 public class PagingDto {
     // 현재 페이지

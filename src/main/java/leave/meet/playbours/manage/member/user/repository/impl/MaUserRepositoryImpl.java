@@ -1,8 +1,7 @@
 package leave.meet.playbours.manage.member.user.repository.impl;
 
-import leave.meet.playbours.manage.member.user.service.MaUserDto;
+import leave.meet.playbours.manage.member.user.dto.MaUserDto;
 import leave.meet.playbours.manage.member.user.repository.MaUserRepository;
-import leave.meet.playbours.manage.support.board.service.MaBoardDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

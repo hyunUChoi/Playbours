@@ -1,6 +1,6 @@
 package leave.meet.playbours.manage.sys.menu.repository;
 
-import leave.meet.playbours.manage.sys.menu.service.MaMenuDto;
+import leave.meet.playbours.manage.sys.menu.dto.MaMenuDto;
 import org.springframework.data.domain.Page;
 
 import java.util.List;

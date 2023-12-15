@@ -1,7 +1,7 @@
 package leave.meet.playbours.manage.support.board.repository.impl;
 
 import leave.meet.playbours.manage.support.board.repository.MaBoardRepository;
-import leave.meet.playbours.manage.support.board.service.MaBoardDto;
+import leave.meet.playbours.manage.support.board.dto.MaBoardDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +13,6 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 

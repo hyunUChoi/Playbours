@@ -1,19 +1,14 @@
 package leave.meet.playbours.manage.sys.code.repository.impl;
 
 import leave.meet.playbours.manage.sys.code.repository.MaCodeRepository;
-import leave.meet.playbours.manage.sys.code.service.MaCodeDto;
+import leave.meet.playbours.manage.sys.code.dto.MaCodeDto;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
-import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
 import java.util.List;
 
 @Repository
