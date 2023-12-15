@@ -29,26 +29,16 @@
 				.then(data => {
 					if(divn === '1'){
 						let content = '<option value=\"\">시/도</option>';
-						let selected = '';
 						data.codeList.forEach((value, index)=> {
-							if([[${userDto.areaSido}]] === value.code){
-								selected = 'th:selected=\"selected\"';
-							}
-							content += '<option value=\"'+ value.code + '\"'+selected +'>'+ value.name + '</option>';
-							selected = '';
+							content += '<option value=\"'+ value.code + '\"' + ([[${userDto.areaSido}]] === value.code ? "selected" : "") + '>'+ value.name + '</option>';
 						});
 						document.getElementById('areaSido').innerHTML = content;
 						fnGetCodeList([[${userDto.areaSido}]],'2');
 
 					}else if(divn === '2'){
 						let content = '<option value=\"\">시/군/구</option>';
-						let selected = '';
 						data.codeList.forEach((value, index)=> {
-							if([[${userDto.areaGungu}]] === value.code){
-								selected = 'th:selected=\"selected\"';
-							}
-							content += '<option value=\"'+ value.code + '\"'+selected +'>'+ value.name + '</option>';
-							selected = '';
+							content += '<option value=\"'+ value.code + '\"' + ([[${userDto.areaGungu}]] === value.code ? "selected" : "") + '>'+ value.name + '</option>';
 						});
 						document.getElementById('areaGungu').innerHTML = content;
 					}
