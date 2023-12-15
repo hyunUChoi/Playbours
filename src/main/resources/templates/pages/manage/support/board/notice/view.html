@@ -12,7 +12,7 @@
 >
 <script th:inline="javascript">
     document.addEventListener("DOMContentLoaded", () => {
-
+        gfnPageProcess('file', '/file/form');
     });
 </script>
 <h4 class="fw-bold py-3 mb-4">공지사항</h4>
@@ -65,10 +65,7 @@
 							<label class="form-label" for="cont">내용</label>
 							<textarea class="form-control-plaintext" id="cont" th:field="*{cont}" readonly></textarea>
 						</div>
-						<div class="mb-3">
-							<label class="form-label" for="atchFile">첨부파일</label>
-							<input type="text" class="form-control-plaintext" id="atchFile" th:field="*{atchFile}" readonly/>
-						</div>
+						<div id="fileTbl"></div>
 					</div>
 					<div class="text-end">
 						<button type="button" class="btn btn-outline-info" onclick="gfnPageProcess('insert', 'updateForm')">수정</button>

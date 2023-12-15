@@ -1,20 +1,19 @@
 package leave.meet.playbours.common.file.dto;
 
 import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @SuppressWarnings("unused")
 @TypeAlias("FileDto")
+@Document(collection = "CLT_FILE")
 public class FileDto {
     private String fileName;
 
+    private String originalFileNm;
+
     private String fileType;
 
-    private String fileSize;
-
-    private byte[] file;
-
-    public FileDto() {
-    }
+    private long fileSize;
 
     public String getFileName() {
         return fileName;
@@ -22,6 +21,14 @@ public class FileDto {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    public String getOriginalFileNm() {
+        return originalFileNm;
+    }
+
+    public void setOriginalFileNm(String originalFileNm) {
+        this.originalFileNm = originalFileNm;
     }
 
     public String getFileType() {
@@ -32,19 +39,11 @@ public class FileDto {
         this.fileType = fileType;
     }
 
-    public String getFileSize() {
+    public long getFileSize() {
         return fileSize;
     }
 
-    public void setFileSize(String fileSize) {
+    public void setFileSize(long fileSize) {
         this.fileSize = fileSize;
-    }
-
-    public byte[] getFile() {
-        return file;
-    }
-
-    public void setFile(byte[] file) {
-        this.file = file;
     }
 }

@@ -9,7 +9,20 @@
 >
 <div class="mb-3">
 	<label for="atchFileForm" class="form-label">첨부파일</label>
-	<input class="form-control" type="file" id="atchFileForm" onchange="fnFileUpload(this.files);"/>
+	<th:block th:if="${#strings.contains(session.requestURI, 'insert')}">
+		<input class="form-control" type="file" id="atchFileForm" onchange="fnFileUpload(this.files);"/>
+	</th:block>
+	<th:block th:if="${#strings.contains(session.requestURI, 'update')}">
+
+	</th:block>
+	<th:block th:if="${#strings.contains(session.requestURI, 'view')}">
+		<th:block th:if="${#lists.size(resultList) gt 0}">
+			<span class="form-control-plaintext" th:each="file : ${resultList}" th:text="${file.getOriginalFileNm()}"></span>
+		</th:block>
+		<th:block th:unless="${#lists.size(resultList) gt 0}">
+			<span class="form-control-plaintext">첨부된 파일이 없습니다.</span>
+		</th:block>
+	</th:block>
 </div>
 <script th:inline="javascript">
 	// 파일 하나당 최대 용량 10MB
