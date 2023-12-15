@@ -40,6 +40,7 @@
 						data.codeList.forEach((value, index)=> {
 							content += '<option value=\"'+ value.code + '\"' + ([[${userDto.areaGungu}]] === value.code ? "selected" : "") + '>'+ value.name + '</option>';
 						});
+
 						document.getElementById('areaGungu').innerHTML = content;
 					}
 
@@ -85,9 +86,25 @@
 			.catch(error => alert('fetch 에러'));
     }
 
+	function  fnValCheck(){
+
+		const userPwd1 = document.getElementById('userPwd').value;
+		const userPwd2 = document.getElementById('userPwdChk').value;
+		if(userPwd1 !== userPwd2){
+			alert("비밀번호가 일치하지 않습니다.")
+			return false;
+		}else{
+			return true;
+		}
+
+	}
+
     function fnSubmit(type) {
 
             if(idChk) {
+				if(!fnValCheck()){
+					return false;
+				}
                 gfnPageProcess(type, [[${userDto.procType}]] + 'Proc');
             } else {
                 alert("아이디 중복검사를 실시해주세요.");
@@ -135,15 +152,15 @@
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="userPwd">비밀번호</label>
-							<input type="password" class="form-control" id="userPwd" name="userPwd" th:value="${userDto.userPwd}" title="비밀번호" required th:maxlength="30"/>
+							<input type="password" class="form-control passOnly" id="userPwd" name="userPwd" th:value="${userDto.userPwd}" title="비밀번호" required th:maxlength="30"/>
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="userPwdChk">비밀번호 확인</label>
-							<input type="password" class="form-control" id="userPwdChk" title="비밀번호확인" required th:maxlength="30"/>
+							<input type="password" class="form-control passOnly" id="userPwdChk" title="비밀번호확인" th:value="${userDto.userPwd}" required th:maxlength="30"/>
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="userNm">이름</label>
-							<input type="text" class="form-control" id="userNm" name="userNm" th:value="${userDto.userNm}" title="유저명" required th:maxlength="8"/>
+							<input type="text" class="form-control koreanOnly" id="userNm" name="userNm" th:value="${userDto.userNm}" title="유저명" required th:maxlength="8"/>
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="userSex">성별</label>
@@ -155,25 +172,15 @@
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="userYmd">생년월일</label>
-							<div>
-								<select style="width:33.5% !important; display: inline-block !important;" class="form-select" id="userYmd" name="userYmd" th:value="${userDto.userYmd}" title="성별" required>
-									<option value="" th:selected="${userDto.userYmd} eq ''">년도</option>
-								</select>
-								<select style="width:32% !important;display: inline-block !important;" class="form-select" id="userYmd" name="userYmd" th:value="${userDto.userYmd}" title="성별" required>
-									<option value="" th:selected="${userDto.userYmd} eq ''">월</option>
-								</select>
-								<select style="width:32% !important;display: inline-block !important;" class="form-select" id="userYmd" name="userYmd" th:value="${userDto.userYmd}" title="성별" required>
-									<option value="" th:selected="${userDto.userYmd} eq ''">일</option>
-								</select>
-							</div>
+							<input type="date" class="form-control" id="userYmd" name="userYmd" th:value="${userDto.userYmd}" title="생년월일" th:maxlength="10" required/>
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="userPhone">전화번호</label>
-							<input type="text" class="form-control" id="userPhone" name="userPhone" th:value="${userDto.userPhone}" title="전화번호" th:maxlength="13" required/>
+							<input type="text" class="form-control phoneOnly" id="userPhone" name="userPhone" th:value="${userDto.userPhone}" title="전화번호" th:maxlength="13" required/>
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="userEmail">이메일</label>
-							<input type="text" class="form-control" id="userEmail" name="userEmail" th:value="${userDto.userEmail}" title="이메일" th:maxlength="30" required/>
+							<input type="text" class="form-control emailOnly" id="userEmail" name="userEmail" th:value="${userDto.userEmail}" title="이메일" th:maxlength="30" required/>
 						</div>
 						<div class="mb-3 col-md-4">
 						</div>

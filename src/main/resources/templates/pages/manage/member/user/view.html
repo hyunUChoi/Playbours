@@ -97,8 +97,8 @@
 							<input type="text" class="form-control" id="userNm" name="userNm" th:value="${maUserDto.userNm}" title="유저명" readOnly="readOnly"/>
 						</div>
 						<div class="mb-3 col-md-4">
-							<label class="form-label" for="userAge">나이</label>
-							<input type="text" class="form-control" id="userAge" name="userAge" th:value="${maUserDto.userAge}" title="나이" readOnly="readOnly"/>
+							<label class="form-label" for="userYmd">생년월일</label>
+							<input type="text" class="form-control" id="userYmd" name="userYmd" th:value="${maUserDto.userYmd}" title="나이" readOnly="readOnly"/>
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="userSex">성별</label>
@@ -120,13 +120,13 @@
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="areaSido">주요 활동지역</label>
-							<select class="form-select" id="areaSido" name="areaSido"  title="시/도"  readonly="readOnly">
+							<select class="form-select" id="areaSido" name="areaSido"  title="시/도"  readOnly="readOnly">
 								<option value="" th:selected="${maUserDto.areaSido} eq ''">시/도</option>
 							</select>
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="areaGungu">&nbsp;</label>
-							<select class="form-select" id="areaGungu" name="areaGungu"  title="시/군/구"  readonly="readOnly">
+							<select class="form-select" id="areaGungu" name="areaGungu"  title="시/군/구"  readOnly="readOnly">
 								<option value="" th:selected="${maUserDto.areaGungu} eq ''">시군구</option>
 
 							</select>

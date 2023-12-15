@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 public interface MaCodeRepository {
-    Page<MaCodeDto> findByPagingAndFiltering(int page, int size, MaCodeDto dto, String procType);
+    List<MaCodeDto> findAll(MaCodeDto dto);
 
 
     MaCodeDto findOne(MaCodeDto dto);

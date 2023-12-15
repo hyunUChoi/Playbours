@@ -2,7 +2,6 @@ package leave.meet.playbours.manage.sys.code.repository.impl;
 
 import leave.meet.playbours.manage.sys.code.repository.MaCodeRepository;
 import leave.meet.playbours.manage.sys.code.dto.MaCodeDto;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -21,8 +20,13 @@ public class MaCodeRepositoryImpl implements MaCodeRepository {
     }
 
     @Override
-    public Page<MaCodeDto> findByPagingAndFiltering(int page, int size, MaCodeDto dto, String procType) {
-        return null;
+    public List<MaCodeDto> findAll(MaCodeDto dto) {
+
+        Query query = new Query();
+        query.addCriteria(Criteria.where("code").regex("CD"));
+        query.addCriteria(Criteria.where("delYn").is("N"));
+        query.with(Sort.by(Sort.Direction.ASC, "code"));
+        return mongoTemplate.find(query,MaCodeDto.class);
     }
 
     @Override
