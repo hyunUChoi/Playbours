@@ -39,10 +39,6 @@ public class MaCodeRepositoryImpl implements MaCodeRepository {
         return null;
     }
 
-    @Override
-    public int countByCode(String menuCd) {
-        return 0;
-    }
 
     @Override
     public void insert(MaCodeDto dto) {
@@ -67,5 +63,14 @@ public class MaCodeRepositoryImpl implements MaCodeRepository {
         query.addCriteria(Criteria.where("delYn").is("N"));
         query.with(Sort.by(Sort.Direction.ASC, "code"));
         return mongoTemplate.find(query,MaCodeDto.class);
+    }
+
+    @Override
+    public MaCodeDto findCodeDetail(String code) {
+
+        Query query = new Query();
+        query.addCriteria(Criteria.where("code").is(code));
+        query.addCriteria(Criteria.where("delYn").is("N"));
+        return mongoTemplate.findOne(query,MaCodeDto.class);
     }
 }

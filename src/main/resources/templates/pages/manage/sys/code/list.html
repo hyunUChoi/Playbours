@@ -12,7 +12,26 @@
 >
 <script th:inline="javascript">
 
+	function fnGetCodeInfo(code){
+		fetch('/ma/sys/code/getCodeDetail', {
+			method: "POST",
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				code: code
+			})
+		})
+				.then(res => res.json())
+				.then(data => {
+					//console.log(data.codeDetail.code);
+				})
+				.catch(error => alert('fetch 에러'));
+	}
+
 	function fnGetCodeList(groupCode, id){
+
+		fnGetCodeInfo(groupCode);
 
 		const obj_size = document.getElementsByClassName(groupCode).length;
 		if(obj_size > 0){
@@ -35,17 +54,23 @@
 				.then(data => {
 					if(data.codeList.length > 0) {
 						data.codeList.forEach((value, index) => {
+
 							let content = '';
-							content += '<td colspan=\"2\" style=\"text-align: right\">\(' + (index + 1) + '\)</td>' +
-									'<td>' + value.name + '</td>' +
-									'<td onCLick="fnGetCodeList(\'' + value.code + '\', \'' + (groupCode + "_" + index) + '\')">+</td>';
-							const tr_box = document.createElement("tr");
-							tr_box.id = (groupCode + "_" + index);
-							tr_box.className = groupCode;
-							tr_box.innerHTML = content;
 							if (id !== '') {
+								content += '<td onCLick="fnGetCodeList(\'' + value.code + '\', \'' + (groupCode + "_" + index) + '\')" colspan=\"2\" style=\"text-align: right\">- ' + (index + 1) + '</td>' +
+										'<td onCLick="fnGetCodeList(\'' + value.code + '\', \'' + (groupCode + "_" + index) + '\')">' + value.name + '</td>';
+								const tr_box = document.createElement("tr");
+								tr_box.id = (groupCode + "_" + index);
+								tr_box.className = groupCode;
+								tr_box.innerHTML = content;
 								document.getElementById(id).after(tr_box);
 							} else {
+								content += '<td onCLick="fnGetCodeList(\'' + value.code + '\', \'' + (groupCode + "_" + index) + '\')" colspan=\"2\" style=\"text-align: right\">\(' + (index + 1) + '\)</td>' +
+										'<td onCLick="fnGetCodeList(\'' + value.code + '\', \'' + (groupCode + "_" + index) + '\')">' + value.name + '</td>';
+								const tr_box = document.createElement("tr");
+								tr_box.id = (groupCode + "_" + index);
+								tr_box.className = groupCode;
+								tr_box.innerHTML = content;
 								document.getElementById(groupCode).after(tr_box);
 							}
 
@@ -59,40 +84,82 @@
 	}
 </script>
 <h4 class="fw-bold py-3 mb-4">CODE</h4>
-<div class="card">
+<div>
 	<form id="defaultFrm" th:object="${maCodeDto}" method="post" onsubmit="return false;">
 		<input type="hidden" th:field="*{seq}"/>
-		<div class="card-header">
-			<table class="datatables-users table border-top dataTable no-footer dtr-column" style="width: 35%;">
-				<colgroup>
-					<col style="width:10%;">
-					<col style="width:5%;">
-					<col style="width:75%;">
-					<col style="width:10%;">
-				</colgroup>
-				<thead>
-				<tr>
-					<th>No.</th>
-					<th th:colspan="2">코드명</th>
-					<th></th>
-				</tr>
-				</thead>
-				<tbody id="tbody">
-				<th:block th:if="${#lists.size(resultList) gt 0}">
-					<tr th:id="${result.code}" varStatus="status" class="text-body" th:each="result, status : ${resultList}"  style="cursor: pointer;">
-						<td th:text="${status.count}"></td>
-						<td th:colspan="2" th:text="${result.name}"></td>
-						<td onclick="fnGetCodeList(this.getAttribute('parameter'),'')" th:parameter="${result.code}">+</td>
+		<div>
+			<div class="card" style="width:35%;display: inline-block;margin-right: 3%;">
+				<div class="card-header">
+				<table class="datatables-users table border-top dataTable no-footer dtr-column">
+					<colgroup>
+						<col style="width:15%;">
+						<col style="width:10%;">
+						<col style="width:75%;">
+					</colgroup>
+					<thead>
+					<tr>
+						<th>No.</th>
+						<th th:colspan="2">코드명</th>
 					</tr>
-				</th:block>
-				</tbody>
-			</table>
+					</thead>
+					<tbody id="tbody">
+					<th:block th:if="${#lists.size(resultList) gt 0}">
+						<tr th:id="${result.code}" varStatus="status" class="text-body" th:each="result, status : ${resultList}" onclick="fnGetCodeList(this.getAttribute('parameter'),'')" th:parameter="${result.code}"  style="cursor: pointer;">
+							<td th:text="${status.count}"></td>
+							<td th:colspan="2" th:text="${result.name}"></td>
+						</tr>
+					</th:block>
+					</tbody>
+				</table>
+				</div>
+			</div>
+			<div class="card" style="display: inline-block; position: absolute">
+				<div class="card-header">
+					<form id="defaultFrm" th:object="${maCodeDto}" method="post" onsubmit="return false;">
+						<input type="hidden" id="seq" name="seq" th:value="${maCodeDto.seq}">
+						<div class="row">
+							<div class="col-md-4 col-md-6">
+								<label for="title" class="form-label">그룹코드</label>
+								<input type="text" class="form-control" id="groupCode" name="groupCode" th:value="${maCodeDto.groupCode}" title="부모코드" required/>
+							</div>
+							<div class="col-md-4 col-md-6">
+								<label for="title" class="form-label">부모코드</label>
+								<input type="text" class="form-control" id="parentCode" name="parentCode" th:value="${maCodeDto.parentCode}" title="부모명" required/>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4 col-md-12">
+								<label for="title" class="form-label">코드</label>
+								<input type="text" class="form-control" id="code" name="code" th:value="${maCodeDto.code}" title="코드" required/>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4 col-md-12">
+								<label for="title" class="form-label">코드명</label>
+								<input type="text" class="form-control" id="name" name="name" th:value="${maCodeDto.name}" title="코드명" required/>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4 col-md-6">
+								<label for="title" class="form-label">순서</label>
+								<input type="text" class="form-control" id="order" name="order" th:value="${maCodeDto.order}" title="순서" required/>
+							</div>
+							<div class="col-md-4 col-md-6">
+								<label for="title" class="form-label">사용여부</label>
+								<select class="form-select" id="useYn" name="useYn" th:value="${maCodeDto.useYn}" title="공개여부" required>
+									<option value="Y" th:selected="${maCodeDto.useYn} eq 'Y'">사용</option>
+									<option value="N" th:selected="${maCodeDto.useYn} eq 'N'">미사용</option>
+								</select>
+							</div>
+						</div>
+						<div class="text-end" style="margin-top: 20px;">
+							<button type="button" class="btn btn-outline-primary" onclick="gfnPageProcess('submit', 'insertProc')">등록</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('list', 'list')">삭제</button>
+						</div>
+					</form>
+				</div>
+			</div>
 		</div>
 	</form>
-	<div class="card-datatable table-responsive">
-		<div class="dataTables_wrapper dt-bootstrap5 no-footer">
-			<div id="tbl"></div>
-		</div>
-	</div>
 </div>
 </html>

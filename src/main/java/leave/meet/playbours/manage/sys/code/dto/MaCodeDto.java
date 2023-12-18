@@ -25,8 +25,12 @@ public class MaCodeDto extends CmmnDto {
     // 명칭
     private String name;
 
+    private String order;
+
     //삭제여부
     private String delYn;
+
+    private String useYn;
 
     public String getSeq() {
         return seq;
@@ -74,5 +78,21 @@ public class MaCodeDto extends CmmnDto {
 
     public void setDelYn(String delYn) {
         this.delYn = delYn;
+    }
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
+    }
+
+    public String getUseYn() {
+        return useYn;
+    }
+
+    public void setUseYn(String useYn) {
+        this.useYn = useYn;
     }
 }

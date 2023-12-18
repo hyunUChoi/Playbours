@@ -13,7 +13,6 @@ public interface MaCodeRepository {
 
     MaCodeDto findOneByCode(MaCodeDto dto);
 
-    int countByCode(String menuCd);
 
     void insert(MaCodeDto dto);
 
@@ -22,4 +21,6 @@ public interface MaCodeRepository {
     void delete(MaCodeDto dto);
 
     List<MaCodeDto> findCodeList(String code);
+
+    MaCodeDto findCodeDetail(String code);
 }
