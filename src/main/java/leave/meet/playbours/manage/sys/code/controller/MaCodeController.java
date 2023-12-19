@@ -1,4 +1,5 @@
 package leave.meet.playbours.manage.sys.code.controller;
+import leave.meet.playbours.manage.support.board.dto.MaBoardDto;
 import leave.meet.playbours.manage.sys.code.repository.MaCodeRepository;
 
 import leave.meet.playbours.manage.sys.code.dto.MaCodeDto;
@@ -22,11 +23,12 @@ public class MaCodeController {
 
     private final static String FOLDER_PATH = "/ma/sys/code/";
 
+
     @ResponseBody
     @RequestMapping(FOLDER_PATH + "getCodeList")
     public HashMap<String, Object> getCodeList(@RequestBody HashMap<String, Object> body) {
         HashMap<String, Object> returnMap = new HashMap<>();
-        List<MaCodeDto> codeList = codeRepository.findCodeList((String) body.get("groupCode"));
+        List<MaCodeDto> codeList = codeRepository.findCodeList((String) body.get("parentCode"));
         returnMap.put("codeList",codeList);
         return returnMap;
     }
@@ -39,6 +41,7 @@ public class MaCodeController {
         return "/pages/manage/sys/code/list";
     }
 
+    @ResponseBody
     @RequestMapping(FOLDER_PATH + "getCodeDetail")
     public HashMap<String, Object> getCodeDetail(@RequestBody HashMap<String, Object> body) {
 
@@ -46,6 +49,23 @@ public class MaCodeController {
         MaCodeDto maCodeDto = codeRepository.findCodeDetail((String) body.get("code"));
         returnMap.put("codeDetail",maCodeDto);
         return returnMap;
+    }
+
+    @RequestMapping(FOLDER_PATH + "{procType}Proc")
+    public String proc(@ModelAttribute("maCodeDto") MaCodeDto maCodeDto, @PathVariable String procType, Model model) {
+
+        try{
+            if("insert".equals(procType)){
+                codeRepository.update(maCodeDto);
+            }else if("delete".equals(procType)){
+                codeRepository.delete(maCodeDto);
+            }
+            model.addAttribute("result", "success");
+        }catch (Exception e){
+            e.printStackTrace();
+            model.addAttribute("result", "fail");
+        }
+        return "redirect:/ma/sys/code/list";
     }
 
 }

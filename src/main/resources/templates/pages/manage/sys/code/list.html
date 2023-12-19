@@ -12,6 +12,7 @@
 >
 <script th:inline="javascript">
 
+	// code 상세정보 불러오기
 	function fnGetCodeInfo(code){
 		fetch('/ma/sys/code/getCodeDetail', {
 			method: "POST",
@@ -24,11 +25,18 @@
 		})
 				.then(res => res.json())
 				.then(data => {
-					//console.log(data.codeDetail.code);
+					document.getElementById("groupCode").value = data.codeDetail.groupCode;
+					document.getElementById("parentCode").value = data.codeDetail.parentCode;
+					document.getElementById("code").value = data.codeDetail.code;
+					document.getElementById("name").value = data.codeDetail.name;
+					document.getElementById("useYn").value = data.codeDetail.useYn;
+					document.getElementById("order").value = data.codeDetail.order;
+					console.log(data.codeDetail.useYn)
 				})
 				.catch(error => alert('fetch 에러'));
 	}
 
+	// 해당 code 하위리스트 불러오기
 	function fnGetCodeList(groupCode, id){
 
 		fnGetCodeInfo(groupCode);
@@ -52,9 +60,9 @@
 		})
 				.then(res => res.json())
 				.then(data => {
+					alert(data.codeList.length );
 					if(data.codeList.length > 0) {
 						data.codeList.forEach((value, index) => {
-
 							let content = '';
 							if (id !== '') {
 								content += '<td onCLick="fnGetCodeList(\'' + value.code + '\', \'' + (groupCode + "_" + index) + '\')" colspan=\"2\" style=\"text-align: right\">- ' + (index + 1) + '</td>' +
@@ -73,14 +81,19 @@
 								tr_box.innerHTML = content;
 								document.getElementById(groupCode).after(tr_box);
 							}
-
 						});
-					}else{
-						alert("불러올 데이터가 없습니다.")
 					}
-
 				})
 				.catch(error => alert('fetch 에러'));
+	}
+
+	function  fnReset(){
+		document.getElementById("groupCode").value = '';
+		document.getElementById("parentCode").value = '';
+		document.getElementById("code").value = '';
+		document.getElementById("name").value = '';
+		document.getElementById("useYn").value = 'Y';
+		document.getElementById("order").value = '';
 	}
 </script>
 <h4 class="fw-bold py-3 mb-4">CODE</h4>
@@ -88,7 +101,7 @@
 	<form id="defaultFrm" th:object="${maCodeDto}" method="post" onsubmit="return false;">
 		<input type="hidden" th:field="*{seq}"/>
 		<div>
-			<div class="card" style="width:35%;display: inline-block;margin-right: 3%;">
+			<div class="card" style="width:40%;display: inline-block;margin-right: 3%;">
 				<div class="card-header">
 				<table class="datatables-users table border-top dataTable no-footer dtr-column">
 					<colgroup>
@@ -120,11 +133,11 @@
 						<div class="row">
 							<div class="col-md-4 col-md-6">
 								<label for="title" class="form-label">그룹코드</label>
-								<input type="text" class="form-control" id="groupCode" name="groupCode" th:value="${maCodeDto.groupCode}" title="부모코드" required/>
+								<input type="text" class="form-control" id="groupCode" name="groupCode" th:value="${maCodeDto.groupCode}" title="부모코드"/>
 							</div>
 							<div class="col-md-4 col-md-6">
 								<label for="title" class="form-label">부모코드</label>
-								<input type="text" class="form-control" id="parentCode" name="parentCode" th:value="${maCodeDto.parentCode}" title="부모명" required/>
+								<input type="text" class="form-control" id="parentCode" name="parentCode" th:value="${maCodeDto.parentCode}" title="부모명"/>
 							</div>
 						</div>
 						<div class="row">
@@ -147,14 +160,15 @@
 							<div class="col-md-4 col-md-6">
 								<label for="title" class="form-label">사용여부</label>
 								<select class="form-select" id="useYn" name="useYn" th:value="${maCodeDto.useYn}" title="공개여부" required>
-									<option value="Y" th:selected="${maCodeDto.useYn} eq 'Y'">사용</option>
-									<option value="N" th:selected="${maCodeDto.useYn} eq 'N'">미사용</option>
+									<option value="Y" th:selected="${maCodeDto.useYn} == 'Y'">사용</option>
+									<option value="N" th:selected="${maCodeDto.useYn} == 'N'">미사용</option>
 								</select>
 							</div>
 						</div>
 						<div class="text-end" style="margin-top: 20px;">
-							<button type="button" class="btn btn-outline-primary" onclick="gfnPageProcess('submit', 'insertProc')">등록</button>
-							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('list', 'list')">삭제</button>
+							<button type="button" class="btn btn-outline-info" onclick="fnReset()">초기화</button>
+							<button id="btn_save" type="button" class="btn btn-outline-primary" onclick="gfnPageProcess('submit', 'insertProc')">등록</button>
+							<button type="button" class="btn btn-outline-danger" onclick="gfnPageProcess('submit', 'deleteProc')">삭제</button>
 						</div>
 					</form>
 				</div>

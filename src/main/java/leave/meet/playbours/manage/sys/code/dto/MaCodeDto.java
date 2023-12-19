@@ -4,6 +4,9 @@ import leave.meet.playbours.common.dto.CmmnDto;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 @SuppressWarnings("unused")
 @TypeAlias("MaCodeDto")
@@ -25,12 +28,25 @@ public class MaCodeDto extends CmmnDto {
     // 명칭
     private String name;
 
+    // 순서
     private String order;
 
-    //삭제여부
+    // 삭제여부
     private String delYn;
 
+    // 사용여부
     private String useYn;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date frstRegrDt;
+
+    private String frstRegrId;
+
+    // 최종수정일
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date lstChgDt;
+
+    private String lstChgId;
 
     public String getSeq() {
         return seq;
@@ -94,5 +110,37 @@ public class MaCodeDto extends CmmnDto {
 
     public void setUseYn(String useYn) {
         this.useYn = useYn;
+    }
+
+    public Date getFrstRegrDt() {
+        return frstRegrDt;
+    }
+
+    public void setFrstRegrDt(Date frstRegrDt) {
+        this.frstRegrDt = frstRegrDt;
+    }
+
+    public String getFrstRegrId() {
+        return frstRegrId;
+    }
+
+    public void setFrstRegrId(String frstRegrId) {
+        this.frstRegrId = frstRegrId;
+    }
+
+    public Date getLstChgDt() {
+        return lstChgDt;
+    }
+
+    public void setLstChgDt(Date lstChgDt) {
+        this.lstChgDt = lstChgDt;
+    }
+
+    public String getLstChgId() {
+        return lstChgId;
+    }
+
+    public void setLstChgId(String lstChgId) {
+        this.lstChgId = lstChgId;
     }
 }
