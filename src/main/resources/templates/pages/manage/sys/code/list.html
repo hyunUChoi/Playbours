@@ -31,20 +31,19 @@
 					document.getElementById("name").value = data.codeDetail.name;
 					document.getElementById("useYn").value = data.codeDetail.useYn;
 					document.getElementById("order").value = data.codeDetail.order;
-					console.log(data.codeDetail.useYn)
 				})
 				.catch(error => alert('fetch 에러'));
 	}
 
 	// 해당 code 하위리스트 불러오기
-	function fnGetCodeList(groupCode, id){
+	function fnGetCodeList(parentCode, id){
 
-		fnGetCodeInfo(groupCode);
+		fnGetCodeInfo(parentCode);
 
-		const obj_size = document.getElementsByClassName(groupCode).length;
+		const obj_size = document.getElementsByClassName(parentCode).length;
 		if(obj_size > 0){
-			for (i = 0; i < obj_size; i++) {
-				document.getElementById(groupCode+"_"+ i).remove();
+			for (i = 1; i < obj_size+1; i++) {
+				document.getElementById(parentCode+"_"+ i).remove();
 			}
 			return false;
 		}
@@ -55,31 +54,31 @@
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				groupCode: groupCode
+				parentCode: parentCode
+
 			})
 		})
 				.then(res => res.json())
 				.then(data => {
-					alert(data.codeList.length );
 					if(data.codeList.length > 0) {
 						data.codeList.forEach((value, index) => {
 							let content = '';
-							if (id !== '') {
-								content += '<td onCLick="fnGetCodeList(\'' + value.code + '\', \'' + (groupCode + "_" + index) + '\')" colspan=\"2\" style=\"text-align: right\">- ' + (index + 1) + '</td>' +
-										'<td onCLick="fnGetCodeList(\'' + value.code + '\', \'' + (groupCode + "_" + index) + '\')">' + value.name + '</td>';
+							if(id != ''){
+								content += '<td onCLick="fnGetCodeList(\'' + value.code + '\', \'' + (parentCode + "_" + value.order) + '\')" colspan=\"2\" style=\"text-align: right\"> - ' + value.order + ' - </td>' +
+										   '<td onCLick="fnGetCodeList(\'' + value.code + '\', \'' + (parentCode + "_" + value.order) + '\')">' + value.name + '</td>';
 								const tr_box = document.createElement("tr");
-								tr_box.id = (groupCode + "_" + index);
-								tr_box.className = groupCode;
+								tr_box.id = (parentCode + "_" + value.order);
+								tr_box.className = parentCode;
 								tr_box.innerHTML = content;
 								document.getElementById(id).after(tr_box);
-							} else {
-								content += '<td onCLick="fnGetCodeList(\'' + value.code + '\', \'' + (groupCode + "_" + index) + '\')" colspan=\"2\" style=\"text-align: right\">\(' + (index + 1) + '\)</td>' +
-										'<td onCLick="fnGetCodeList(\'' + value.code + '\', \'' + (groupCode + "_" + index) + '\')">' + value.name + '</td>';
+							}else{
+								content += '<td onCLick="fnGetCodeList(\'' + value.code + '\', \'' + (parentCode + "_" + value.order) + '\')" colspan=\"2\" style=\"text-align: right\">(' + value.order + ')</td>' +
+										'<td onCLick="fnGetCodeList(\'' + value.code + '\', \'' + (parentCode + "_" + value.order) + '\')">' + value.name + '</td>';
 								const tr_box = document.createElement("tr");
-								tr_box.id = (groupCode + "_" + index);
-								tr_box.className = groupCode;
+								tr_box.id = (parentCode + "_" + value.order);
+								tr_box.className = parentCode;
 								tr_box.innerHTML = content;
-								document.getElementById(groupCode).after(tr_box);
+								document.getElementById(parentCode).after(tr_box);
 							}
 						});
 					}

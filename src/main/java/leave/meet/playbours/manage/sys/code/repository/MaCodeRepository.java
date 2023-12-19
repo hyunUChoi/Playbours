@@ -20,7 +20,7 @@ public interface MaCodeRepository {
 
     void delete(MaCodeDto dto);
 
-    List<MaCodeDto> findCodeList(String code);
+    List<MaCodeDto> findCodeList(String code, String useYn);
 
     MaCodeDto findCodeDetail(String code);
 }

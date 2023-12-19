@@ -28,7 +28,8 @@ public class MaCodeController {
     @RequestMapping(FOLDER_PATH + "getCodeList")
     public HashMap<String, Object> getCodeList(@RequestBody HashMap<String, Object> body) {
         HashMap<String, Object> returnMap = new HashMap<>();
-        List<MaCodeDto> codeList = codeRepository.findCodeList((String) body.get("parentCode"));
+        String useYn = (String) body.get("useYn");
+        List<MaCodeDto> codeList = codeRepository.findCodeList((String) body.get("parentCode"), useYn);
         returnMap.put("codeList",codeList);
         return returnMap;
     }

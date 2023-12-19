@@ -29,7 +29,7 @@ public class MaCodeDto extends CmmnDto {
     private String name;
 
     // 순서
-    private String order;
+    private int order;
 
     // 삭제여부
     private String delYn;
@@ -96,11 +96,11 @@ public class MaCodeDto extends CmmnDto {
         this.delYn = delYn;
     }
 
-    public String getOrder() {
+    public int getOrder() {
         return order;
     }
 
-    public void setOrder(String order) {
+    public void setOrder(int order) {
         this.order = order;
     }
 
