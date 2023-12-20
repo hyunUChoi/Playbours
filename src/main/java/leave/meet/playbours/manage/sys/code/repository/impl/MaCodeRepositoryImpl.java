@@ -1,5 +1,6 @@
 package leave.meet.playbours.manage.sys.code.repository.impl;
 
+import leave.meet.playbours.manage.member.user.dto.MaUserDto;
 import leave.meet.playbours.manage.support.board.dto.MaBoardDto;
 import leave.meet.playbours.manage.sys.code.repository.MaCodeRepository;
 import leave.meet.playbours.manage.sys.code.dto.MaCodeDto;
@@ -38,8 +39,11 @@ public class MaCodeRepositoryImpl implements MaCodeRepository {
     }
 
     @Override
-    public MaCodeDto findOneByCode(MaCodeDto dto) {
-        return null;
+    public int countByCode(String code) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("code").is(code));
+        query.addCriteria(Criteria.where("delYn").is("N"));
+        return (int)mongoTemplate.count(query, MaCodeDto.class);
     }
 
 
@@ -93,15 +97,23 @@ public class MaCodeRepositoryImpl implements MaCodeRepository {
     }
 
     @Override
-    public List<MaCodeDto> findCodeList(String parentCode, String useYn) {
+    public List<MaCodeDto> findCodeList1(String parentCode) {
 
         Query query = new Query();
         query.addCriteria(Criteria.where("parentCode").is(parentCode));
         query.addCriteria(Criteria.where("delYn").is("N"));
-        if("Y".equals(useYn)){
-            query.addCriteria(Criteria.where("useYn").is("Y"));
-        }
         query.with(Sort.by(Sort.Direction.DESC, "order"));
+        return mongoTemplate.find(query,MaCodeDto.class);
+    }
+
+    @Override
+    public List<MaCodeDto> findCodeList2(String parentCode) {
+
+        Query query = new Query();
+        query.addCriteria(Criteria.where("parentCode").is(parentCode));
+        query.addCriteria(Criteria.where("delYn").is("N"));
+        query.addCriteria(Criteria.where("useYn").is("Y"));
+        query.with(Sort.by(Sort.Direction.ASC, "order"));
         return mongoTemplate.find(query,MaCodeDto.class);
     }
 

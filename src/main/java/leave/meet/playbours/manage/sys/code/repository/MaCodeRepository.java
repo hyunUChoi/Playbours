@@ -11,7 +11,7 @@ public interface MaCodeRepository {
 
     MaCodeDto findOne(MaCodeDto dto);
 
-    MaCodeDto findOneByCode(MaCodeDto dto);
+    int countByCode(String code);
 
 
     void insert(MaCodeDto dto);
@@ -20,7 +20,9 @@ public interface MaCodeRepository {
 
     void delete(MaCodeDto dto);
 
-    List<MaCodeDto> findCodeList(String code, String useYn);
+    List<MaCodeDto> findCodeList1(String code);
+
+    List<MaCodeDto> findCodeList2(String code);
 
     MaCodeDto findCodeDetail(String code);
 }

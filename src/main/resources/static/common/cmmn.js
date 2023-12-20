@@ -72,12 +72,14 @@ function gfnPageProcess(divn, url, val, valNm) {
             break;
 
         case 'update' :
-            if(val === undefined) {
-                alert("수정되었습니다.");
-            } else {
-                alert(val);
+            if(formValidation(frm)) {
+                if (val === undefined) {
+                    alert("수정되었습니다.");
+                } else {
+                    alert(val);
+                }
+                frm.submit();
             }
-            frm.submit();
             break;
 
         case 'submit' :

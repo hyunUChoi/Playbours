@@ -13,16 +13,18 @@
 <script th:inline="javascript">
 	document.addEventListener("DOMContentLoaded", () => {
 		fnGetCodeList("CD000001", '1');
+		fnGetCodeList("CD000002", '3');
     });
 
-	function fnGetCodeList(groupCode,divn){
-		fetch('/ma/sys/code/getCodeList', {
+	function fnGetCodeList(parentCode,divn){
+		console.log(parentCode);
+		fetch('/ma/sys/code/getAreaCodeList', {
 			method: "POST",
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				groupCode: groupCode
+				parentCode: parentCode
 			})
 		})
 				.then(res => res.json())
@@ -33,8 +35,9 @@
 							content += '<option value=\"'+ value.code + '\"' + ([[${userDto.areaSido}]] === value.code ? "selected" : "") + '>'+ value.name + '</option>';
 						});
 						document.getElementById('areaSido').innerHTML = content;
-						fnGetCodeList([[${userDto.areaSido}]],'2');
-
+						if([[${userDto.procType}]] == "update"){
+							fnGetCodeList([[${maUserDto.areaSido}]],'2');
+						}
 					}else if(divn === '2'){
 						let content = '<option value=\"\">시/군/구</option>';
 						data.codeList.forEach((value, index)=> {
@@ -42,6 +45,13 @@
 						});
 
 						document.getElementById('areaGungu').innerHTML = content;
+					}else if(divn === '3'){
+						let content = '<option value=\"\">선택</option>';
+						data.codeList.forEach((value, index)=> {
+							content += '<option value=\"'+ value.code + '\"' + ([[${userDto.interest}]] === value.code ? "selected" : "") + '>'+ value.name + '</option>';
+						});
+
+						document.getElementById('interest').innerHTML = content;
 					}
 
 				})
@@ -86,12 +96,15 @@
 			.catch(error => alert('fetch 에러'));
     }
 
-	function  fnValCheck(){
+	function  fnPassCheck(){
 
 		const userPwd1 = document.getElementById('userPwd').value;
 		const userPwd2 = document.getElementById('userPwdChk').value;
 		if(userPwd1 !== userPwd2){
-			alert("비밀번호가 일치하지 않습니다.")
+			document.getElementById('userPwd').value = "";
+			document.getElementById('userPwdChk').value = "";
+			document.getElementById('userPwd').focus();
+			alert("비밀번호가 일치하지 않습니다.");
 			return false;
 		}else{
 			return true;
@@ -100,15 +113,21 @@
 	}
 
     function fnSubmit(type) {
-
-            if(idChk) {
-				if(!fnValCheck()){
+		if([[${maUserDto.procType}]] == "insert"){
+			if(idChk) {
+				if(!fnPassCheck()){
 					return false;
 				}
-                gfnPageProcess(type, [[${userDto.procType}]] + 'Proc');
-            } else {
-                alert("아이디 중복검사를 실시해주세요.");
+			} else {
+				alert("아이디 중복검사를 실시해주세요.");
+				return false;
 			}
+		}else{
+			if(!fnPassCheck()){
+				return false;
+			}
+		}
+		gfnPageProcess(type, [[${userDto.procType}]] + 'Proc');
     }
 </script>
 <h4 class="fw-bold py-3 mb-4">MEMBER > User</h4>
@@ -145,10 +164,15 @@
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="userId">아이디</label>
-							<div class="input-group">
-								<input type="text" class="form-control idOnly" id="userId" name="userId" th:value="${userDto.userId}" title="아이디" th:maxlength="20" required oninput="fnOnInput();"/>
-								<button class="btn btn-outline-primary" type="button" onclick="fnChkOverlap();">중복확인</button>
-							</div>
+							<th:block th:if="${maUserDto.procType eq 'insert'}">
+								<div class="input-group">
+									<input type="text" class="form-control idOnly" id="userId" name="userId" th:value="${userDto.userId}" title="아이디" th:maxlength="20" required oninput="fnOnInput();"/>
+									<button class="btn btn-outline-primary" type="button" onclick="fnChkOverlap();">중복확인</button>
+								</div>
+							</th:block>
+							<th:block th:unless="${maUserDto.procType eq 'insert'}">
+								<input type="text" class="form-control" id="userId" name="userId" th:value="${userDto.userId}"  readonly/>
+							</th:block>
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="userPwd">비밀번호</label>
@@ -188,18 +212,16 @@
 							<label class="form-label" >관심사</label>
 							<select class="form-select" id="interest" name="interest" th:value="${userDto.interest}" title="주요 관심사" required>
 								<option value="" th:selected="${userDto.interest} eq ''">선택</option>
-								<option value="01" th:selected="${userDto.interest} eq '1'">독서</option>
-								<option value="02" th:selected="${userDto.interest} eq '2'">영화</option>
 							</select>
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="areaSido">주요 활동지역</label>
 							<div>
-								<select style="width:50% !important;display: inline-block !important;" class="form-select" id="areaSido" name="areaSido"  title="시/도" th:onchange="fnGetCodeList(this.value, '2')" required>
+								<select style="width:50% !important;display: inline-block !important;" class="form-select" id="areaSido" name="areaSido"  title="시/도" onchange="fnGetCodeList(this.value, '2')" required>
 									<option value="" th:selected="${userDto.areaSido} eq ''">시/도</option>
 								</select>
 								<select style="width:48.5% !important;display: inline-block !important;" class="form-select" id="areaGungu" name="areaGungu"  title="시/군/구" required>
-									<option value="" th:selected="${userDto.areaGungu} eq ''">시군구</option>
+									<option value="" th:selected="${userDto.areaGungu} eq ''">시/군/구</option>
 								</select>
 							</div>
 						</div>

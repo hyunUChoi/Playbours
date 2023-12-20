@@ -12,23 +12,26 @@
 >
 <script th:inline="javascript">
 	document.addEventListener("DOMContentLoaded", () => {
+		//지역 코드
 		fnGetCodeList("CD000001", '1');
+		//관심사 코드
+		fnGetCodeList("CD000002", '3');
 	});
 
-	function fnGetCodeList(groupCode,divn){
-		fetch('/ma/sys/code/getCodeList', {
+	function fnGetCodeList(parentCode,divn){
+		fetch('/ma/sys/code/getAreaCodeList', {
 			method: "POST",
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				groupCode: groupCode
+				parentCode: parentCode
 			})
 		})
 				.then(res => res.json())
 				.then(data => {
+					let content = '';
 					if(divn === '1'){
-						let content = '';
 						data.codeList.forEach((value, index)=> {
 							if(value.code === [[${maUserDto.areaSido}]]){
 								content += '<option value="' + value.code + '">' + value.name + '</option>';
@@ -39,15 +42,23 @@
 							fnGetCodeList([[${maUserDto.areaSido}]],'2');
 						};
 					}else if(divn === '2'){
-						let content = '';
 						data.codeList.forEach((value, index)=> {
 							if(value.code === [[${maUserDto.areaGungu}]]){
 								content += '<option value="' + value.code + '">' + value.name + '</option>';
 							}
-
 						});
 						if(content !== '') {
 							document.getElementById('areaGungu').innerHTML = content;
+						}
+					}
+					else if(divn === '3'){
+						data.codeList.forEach((value, index)=> {
+							if(value.code === [[${maUserDto.interest}]]){
+								content += '<option value="' + value.code + '">' + value.name + '</option>';
+							}
+						});
+						if(content !== '') {
+							document.getElementById('interest').innerHTML = content;
 						}
 					}
 
@@ -116,20 +127,20 @@
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" >관심사</label>
-							<input type="text" class="form-control" id="interest" name="interest" th:value="${maUserDto.interest}" title="주요 관심사" readOnly="readOnly"/>
+							<select class="form-select" id="interest" name="interest"  title="관심사"  readOnly="readOnly">
+								<option value="" th:selected="${maUserDto.interest} eq ''">관심사</option>
+							</select>
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="areaSido">주요 활동지역</label>
-							<select class="form-select" id="areaSido" name="areaSido"  title="시/도"  readOnly="readOnly">
-								<option value="" th:selected="${maUserDto.areaSido} eq ''">시/도</option>
-							</select>
-						</div>
-						<div class="mb-3 col-md-4">
-							<label class="form-label" for="areaGungu">&nbsp;</label>
-							<select class="form-select" id="areaGungu" name="areaGungu"  title="시/군/구"  readOnly="readOnly">
-								<option value="" th:selected="${maUserDto.areaGungu} eq ''">시군구</option>
-
-							</select>
+							<div>
+								<select style="width:50% !important;display: inline-block !important;" class="form-select" id="areaSido" name="areaSido"  title="시/도"  readOnly="readOnly">
+									<option value="" th:selected="${maUserDto.areaSido} eq ''">시/도</option>
+								</select>
+								<select style="width:48.5% !important;display: inline-block !important;" class="form-select" id="areaGungu" name="areaGungu"  title="시/군/구"  readOnly="readOnly">
+									<option value="" th:selected="${maUserDto.areaGungu} eq ''">시군구</option>
+								</select>
+							</div>
 						</div>
 						<div class="mb-3 col-md-4">
 						</div>

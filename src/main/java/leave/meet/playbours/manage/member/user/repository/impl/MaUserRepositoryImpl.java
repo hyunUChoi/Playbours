@@ -133,7 +133,7 @@ public class MaUserRepositoryImpl implements MaUserRepository {
         update.set("userYmd", dto.getUserYmd());
         update.set("userSex", dto.getUserSex());
         update.set("userPhone", dto.getUserPhone());
-        update.set("userEmail", dto.getUserPhone());
+        update.set("userEmail", dto.getUserEmail());
         update.set("interest", dto.getInterest());
         update.set("areaSido", dto.getAreaSido());
         update.set("areaGungu", dto.getAreaGungu());
