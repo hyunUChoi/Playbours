@@ -11,6 +11,8 @@ public class FileDto {
 
     private String originalFileNm;
 
+    private String fileStorePath;
+
     private String fileType;
 
     private long fileSize;
@@ -29,6 +31,14 @@ public class FileDto {
 
     public void setOriginalFileNm(String originalFileNm) {
         this.originalFileNm = originalFileNm;
+    }
+
+    public String getFileStorePath() {
+        return fileStorePath;
+    }
+
+    public void setFileStorePath(String fileStorePath) {
+        this.fileStorePath = fileStorePath;
     }
 
     public String getFileType() {

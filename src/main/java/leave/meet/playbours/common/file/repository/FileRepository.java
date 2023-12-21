@@ -8,5 +8,9 @@ public interface FileRepository {
 
     void insert(FileDto dto);
 
-    List<FileDto> findByFileName(String file);
+    void delete(String fileName);
+
+    List<FileDto> findFilesByFileName(String fileName);
+
+    FileDto findFile(String fileName);
 }

@@ -9,20 +9,58 @@
 >
 <div class="mb-3">
 	<label for="atchFileForm" class="form-label">첨부파일</label>
+	<!-- insert -->
 	<th:block th:if="${#strings.contains(session.requestURI, 'insert')}">
-		<input class="form-control" type="file" id="atchFileForm" onchange="fnFileUpload(this.files);"/>
-	</th:block>
-	<th:block th:if="${#strings.contains(session.requestURI, 'update')}">
-
-	</th:block>
-	<th:block th:if="${#strings.contains(session.requestURI, 'view')}">
+		&ensp;<button type="button" class="btn btn-sm btn-outline-primary" onclick="document.getElementById('atchFileForm').click();"><i class="bx bx-upload"></i>&nbsp;파일업로드</button>
+		<input type="file" id="atchFileForm" onchange="fnFileUpload(this.files);" style="display: none;"/>
 		<th:block th:if="${#lists.size(resultList) gt 0}">
-			<span class="form-control-plaintext" th:each="file : ${resultList}" th:text="${file.getOriginalFileNm()}"></span>
+			<div class="form-control-plaintext mt-2">
+				<th:block th:each="file, status : ${resultList}">
+					<i class="bx bx-download"></i>&nbsp;<a th:text="${file.getOriginalFileNm()}" th:href="@{/file/download(fileName=${file.getFileName()})}" target="_self"></a>
+					<th:block th:if="${!status.last}"><br></th:block>
+				</th:block>
+			</div>
 		</th:block>
 		<th:block th:unless="${#lists.size(resultList) gt 0}">
 			<span class="form-control-plaintext">첨부된 파일이 없습니다.</span>
 		</th:block>
 	</th:block>
+	<!-- /insert -->
+
+	<!-- update -->
+	<th:block th:if="${#strings.contains(session.requestURI, 'update')}">
+		<th:block th:if="${#lists.size(resultList) gt 0}">
+			<input class="form-control" type="file" id="atchFileForm" onchange="fnFileUpload(this.files);"/>
+			<div class="form-control-plaintext mt-2">
+				<th:block th:each="file : ${resultList}">
+					<i class="bx bx-download"></i>&nbsp;<a th:text="${file.getOriginalFileNm()}" th:href="@{/file/download(fileName=${file.getFileName()})}" target="_self"></a>
+				</th:block>
+			</div>
+		</th:block>
+		<th:block th:unless="${#lists.size(resultList) gt 0}">
+			<div class="input-group">
+				<input type="file" class="form-control" id="atchFileForm" onchange="fnFileUpload(this.files);"/>
+				<button class="btn btn-outline-danger" type="button" onclick="fnFileDelete();">삭제</button>
+			</div>
+		</th:block>
+	</th:block>
+	<!-- /update -->
+
+	<!-- view -->
+	<th:block th:if="${#strings.contains(session.requestURI, 'view')}">
+		<th:block th:if="${#lists.size(resultList) gt 0}">
+			<div class="form-control-plaintext">
+				<th:block th:each="file, status : ${resultList}">
+					<i class="bx bx-download"></i>&nbsp;<a th:text="${file.getOriginalFileNm()}" th:href="@{/file/download(fileName=${file.getFileName()})}" target="_self"></a>
+					<th:block th:if="${!status.last}"><br></th:block>
+				</th:block>
+			</div>
+		</th:block>
+		<th:block th:unless="${#lists.size(resultList) gt 0}">
+			<span class="form-control-plaintext">첨부된 파일이 없습니다.</span>
+		</th:block>
+	</th:block>
+	<!-- /view -->
 </div>
 <script th:inline="javascript">
 	// 파일 하나당 최대 용량 10MB
@@ -39,14 +77,32 @@
             formData.append("file", files[0]);
 
             fetch('/file/upload', {
-				method: "POST",
-				body: formData
-			})
-				.then(res => res.text())
-				.then(data => {
-					document.getElementById("atchFile").value = data;
-				})
+                method: "POST",
+                body: formData
+            })
+                .then(res => res.text())
+                .then(data => {
+                    document.getElementById("atchFile").value = data;
+                    document.getElementById('fileTbl').innerHTML = '';
+                    gfnPageProcess('file', '/file/form');
+                })
         }
 	}
+
+    function fnFileDelete() {
+        let formData = new FormData();
+        formData.append("fileName", document.getElementById("atchFile").value);
+
+        fetch('/file/delete', {
+            method: 'POST',
+	        body: formData
+        })
+	        .then(res => {
+                document.getElementById("atchFileForm").value = '';
+	        })
+	        .catch(error => {
+                alert("fetch 오류 발생");
+	        })
+    }
 </script>
 </html>
