@@ -37,7 +37,7 @@
 				<td th:text="${result.useYn eq 'Y' ? '승인' : '제한'}"></td>
 			</tr>
 		</th:block>
-		<th:block th:unless="${#lists.size(resultList.toList()) eq 0}">
+		<th:block th:unless="${#lists.size(resultList.toList()) gt 0}">
 			<tr class="text-body">
 				<td th:colspan="6" style="text-align: center; height: 5rem;">등록된 데이터가 없습니다.</td>
 			</tr>

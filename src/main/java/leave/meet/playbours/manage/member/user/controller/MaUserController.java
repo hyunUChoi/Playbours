@@ -41,6 +41,11 @@ public class MaUserController {
     @RequestMapping(FOLDER_PATH + "addList")
     public String addList(@ModelAttribute("maUserDto") MaUserDto maUserDto, Model model) {
 
+        System.out.println("::::::::::::::");
+        System.out.println(maUserDto.getUserClCd());
+        System.out.println("::::::::::::::");
+        System.out.println(maUserDto.getUseYn());
+        System.out.println("::::::::::::::");
         int pageNo = maUserDto.getPageNo();
         int pageSize = 10;
         Page<MaUserDto> resultList = userRepository.findByPagingAndFiltering(pageNo, pageSize, maUserDto);

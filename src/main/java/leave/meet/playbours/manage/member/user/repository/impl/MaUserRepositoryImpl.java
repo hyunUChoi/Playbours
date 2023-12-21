@@ -48,12 +48,20 @@ public class MaUserRepositoryImpl implements MaUserRepository {
     public Query searchCondition(Query query, MaUserDto dto) {
 
         /* 구분 */
-        if(dto.getUserClCd() != null) {
-            query.addCriteria(Criteria.where("userClCd").gte(dto.getUserClCd()));
+        if(dto.getUserClCd() != null && !"".equals(dto.getUserClCd())) {
+            if("ma".equals(dto.getUserClCd())) {
+                query.addCriteria(Criteria.where("userClCd").gte("ma"));
+            }else if("ft".equals(dto.getUserClCd())) {
+                query.addCriteria(Criteria.where("userClCd").gte("ft"));
+            }
         }
 
-        if(dto.getUseYn() != null) {
-            query.addCriteria(Criteria.where("useYn").gte(dto.getUseYn()));
+        if(dto.getUseYn() != null && !"".equals(dto.getUseYn())) {
+            if("Y".equals(dto.getUseYn())) {
+                query.addCriteria(Criteria.where("useYn").is("Y"));
+            } else if("N".equals(dto.getUseYn())) {
+                query.addCriteria(Criteria.where("useYn").is("N"));
+            }
         }
 
         /* 검색조건 */
