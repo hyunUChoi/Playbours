@@ -50,9 +50,9 @@ public class MaUserRepositoryImpl implements MaUserRepository {
         /* 구분 */
         if(dto.getUserClCd() != null && !"".equals(dto.getUserClCd())) {
             if("ma".equals(dto.getUserClCd())) {
-                query.addCriteria(Criteria.where("userClCd").gte("ma"));
+                query.addCriteria(Criteria.where("userClCd").is("ma"));
             }else if("ft".equals(dto.getUserClCd())) {
-                query.addCriteria(Criteria.where("userClCd").gte("ft"));
+                query.addCriteria(Criteria.where("userClCd").is("ft"));
             }
         }
 
