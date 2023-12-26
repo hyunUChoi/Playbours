@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en"
+	  class="light-style layout-menu-fixed"
+	  dir="ltr"
+	  data-theme="theme-default"
+	  data-assets-path="/manage/assets/"
+	  data-template="vertical-menu-template-free"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{common/manage/layout/layout}"
+	  layout:fragment="content"
+>
+<style>
+	.center{
+		text-align: center;
+	}
+</style>
+<script th:inline="javascript">
+
+	document.addEventListener("DOMContentLoaded", () => {
+		gfnPageProcess('addList', 'addList', document.getElementById('pageNo').value);
+	});
+	// 검색
+	function fnSearch() {
+		document.getElementById('tbl').innerHTML = '';
+		gfnPageProcess('addList', 'addList', '1');
+		console.log(":::::::")
+	};
+
+	// form박스 초기화
+	function  fnReset(){
+		document.getElementById("name").value = '';
+		document.getElementById("name").focus();
+	}
+
+
+</script>
+<h4 class="fw-bold py-3 mb-4">WORD</h4>
+<div>
+	<form id="defaultFrm" th:object="${maWordDto}" method="post" onsubmit="return false;">
+		<input type="hidden" th:field="*{seq}"/>
+		<input type="hidden" th:field="*{pageNo}"/>
+		<div>
+			<div class="card" style="width:70%;display: inline-block;margin-right: 3%;">
+				<div class="card-header">
+					<div class="d-flex justify-content-start align-items-center row py-3 gap-3 gap-md-0">
+						<div class="col-md-3">
+							<select id="selectStatus" th:field="*{useYn}" class="form-select color-dropdown">
+								<option value="">선택</option>
+								<option value="Y" class="text-capitalize">사용</option>
+								<option value="N" class="text-capitalize">미사용</option>
+							</select>
+						</div>
+						<div class="col-md-9">
+							<div class="input-group">
+								<input type="text" class="form-control" th:field="*{searchKeyword}"/>
+								<a class="btn btn-outline-primary" onclick="fnSearch();">Search</a>
+							</div>
+						</div>
+					</div>
+				<div id="tbl">
+				</div>
+				</div>
+			</div>
+			<div class="card" style="display: inline-block; position: absolute">
+				<div class="card-header">
+						<input type="hidden" id="seq" name="seq" th:value="${maWordDto.seq}">
+						<div class="row">
+							<div class="col-md-4 col-md-12">
+								<label for="name" class="form-label">금칙어</label>
+								<input type="text" class="form-control" id="name" name="name" th:maxlength="20" title="금칙어" required="required"/>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4 col-md-12">
+								<label for="useYn" class="form-label">사용여부</label>
+								<select class="form-select" id="useYn" name="useYn"  title="사용여부" required="required">
+									<option value="Y">사용</option>
+									<option value="N">미사용</option>
+								</select>
+							</div>
+						</div>
+						<div class="text-end" style="margin-top: 20px;">
+							<button type="button" class="btn btn-outline-info" onclick="fnReset()">초기화</button>
+							<button id="btn_save" type="button" class="btn btn-outline-primary" onclick="gfnPageProcess('submit', 'insertProc')">등록</button>
+							<button type="button" class="btn btn-outline-danger" onclick="gfnPageProcess('delete', 'deleteProc')">삭제</button>
+						</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+</html>
