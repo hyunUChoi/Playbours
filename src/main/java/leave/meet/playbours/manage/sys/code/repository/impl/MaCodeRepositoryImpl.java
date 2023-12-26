@@ -34,11 +34,6 @@ public class MaCodeRepositoryImpl implements MaCodeRepository {
     }
 
     @Override
-    public MaCodeDto findOne(MaCodeDto dto) {
-        return null;
-    }
-
-    @Override
     public int countByCode(String code) {
         Query query = new Query();
         query.addCriteria(Criteria.where("code").is(code));

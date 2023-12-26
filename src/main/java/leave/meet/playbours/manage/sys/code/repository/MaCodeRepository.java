@@ -8,9 +8,6 @@ import java.util.List;
 public interface MaCodeRepository {
     List<MaCodeDto> findAll(MaCodeDto dto);
 
-
-    MaCodeDto findOne(MaCodeDto dto);
-
     int countByCode(String code);
 
 

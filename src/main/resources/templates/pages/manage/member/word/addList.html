@@ -22,7 +22,7 @@
 	<th:block th:if="${#lists.size(resultList.toList()) gt 0}">
 		<tr varStatus="status" class="text-body" th:each="result, status : ${resultList}" style="cursor: pointer;">
 			<td th:text="${status.count}"></td>
-			<td th:text="${result.name}"></td>
+			<td th:text="${result.word}"></td>
 		</tr>
 	</th:block>
 	<th:block th:unless="${#lists.size(resultList.toList()) gt 0}">
