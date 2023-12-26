@@ -23,6 +23,17 @@ public class MaWordDto extends CmmnDto {
 
     private String delYn;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date frstRegrDt;
+
+    private String frstRegrId;
+
+    // 최종수정일
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date lstChgDt;
+
+    private String lstChgId;
+
     public String getSeq() {
         return seq;
     }
@@ -53,5 +64,37 @@ public class MaWordDto extends CmmnDto {
 
     public void setDelYn(String delYn) {
         this.delYn = delYn;
+    }
+
+    public Date getFrstRegrDt() {
+        return frstRegrDt;
+    }
+
+    public void setFrstRegrDt(Date frstRegrDt) {
+        this.frstRegrDt = frstRegrDt;
+    }
+
+    public String getFrstRegrId() {
+        return frstRegrId;
+    }
+
+    public void setFrstRegrId(String frstRegrId) {
+        this.frstRegrId = frstRegrId;
+    }
+
+    public Date getLstChgDt() {
+        return lstChgDt;
+    }
+
+    public void setLstChgDt(Date lstChgDt) {
+        this.lstChgDt = lstChgDt;
+    }
+
+    public String getLstChgId() {
+        return lstChgId;
+    }
+
+    public void setLstChgId(String lstChgId) {
+        this.lstChgId = lstChgId;
     }
 }

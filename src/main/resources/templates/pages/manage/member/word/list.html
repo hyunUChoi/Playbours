@@ -24,13 +24,30 @@
 	function fnSearch() {
 		document.getElementById('tbl').innerHTML = '';
 		gfnPageProcess('addList', 'addList', '1');
-		console.log(":::::::")
 	};
 
+	let checkType = "submit";
+	let checkProc = "insert";
 	// form박스 초기화
 	function  fnReset(){
-		document.getElementById("name").value = '';
-		document.getElementById("name").focus();
+		document.getElementById("word").value = '';
+		document.getElementById("word").focus();
+		document.getElementById("btn_save").innerText = "등록";
+		checkType = "submit";
+		checkProc = "insert";
+	}
+
+	function fnSelect(seq, word, useYn){
+		document.getElementById("seq").value = seq;
+		document.getElementById("word").value = word;
+		document.getElementById("useYn").value = useYn;
+		document.getElementById("btn_save").innerText = "수정";
+		checkType = "update";
+		checkProc = "update";
+	}
+
+	function fnSubmit(){
+		gfnPageProcess(checkType, checkProc+'Proc');
 	}
 
 
@@ -41,11 +58,11 @@
 		<input type="hidden" th:field="*{seq}"/>
 		<input type="hidden" th:field="*{pageNo}"/>
 		<div>
-			<div class="card" style="width:70%;display: inline-block;margin-right: 3%;">
+			<div class="card" style="width:60%;display: inline-block;margin-right: 3%;">
 				<div class="card-header">
 					<div class="d-flex justify-content-start align-items-center row py-3 gap-3 gap-md-0">
 						<div class="col-md-3">
-							<select id="selectStatus" th:field="*{useYn}" class="form-select color-dropdown">
+							<select id="selectStatus" th:field="*{search1}" class="form-select color-dropdown">
 								<option value="">선택</option>
 								<option value="Y" class="text-capitalize">사용</option>
 								<option value="N" class="text-capitalize">미사용</option>
@@ -62,13 +79,12 @@
 				</div>
 				</div>
 			</div>
-			<div class="card" style="display: inline-block; position: absolute">
+			<div class="card" style="width:25%;display: inline-block; position: absolute">
 				<div class="card-header">
-						<input type="hidden" id="seq" name="seq" th:value="${maWordDto.seq}">
 						<div class="row">
 							<div class="col-md-4 col-md-12">
-								<label for="name" class="form-label">금칙어</label>
-								<input type="text" class="form-control" id="name" name="name" th:maxlength="20" title="금칙어" required="required"/>
+								<label for="word" class="form-label">금칙어</label>
+								<input type="text" class="form-control" id="word" name="word" th:maxlength="20" title="금칙어" required="required"/>
 							</div>
 						</div>
 						<div class="row">
@@ -82,7 +98,7 @@
 						</div>
 						<div class="text-end" style="margin-top: 20px;">
 							<button type="button" class="btn btn-outline-info" onclick="fnReset()">초기화</button>
-							<button id="btn_save" type="button" class="btn btn-outline-primary" onclick="gfnPageProcess('submit', 'insertProc')">등록</button>
+							<button id="btn_save" type="button" class="btn btn-outline-primary" onclick="fnSubmit()">등록</button>
 							<button type="button" class="btn btn-outline-danger" onclick="gfnPageProcess('delete', 'deleteProc')">삭제</button>
 						</div>
 				</div>

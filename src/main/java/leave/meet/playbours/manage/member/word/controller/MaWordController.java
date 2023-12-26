@@ -49,4 +49,23 @@ public class MaWordController {
 
         return "/pages/manage/member/word/addList";
     }
+
+    @RequestMapping(FOLDER_PATH + "{procType}Proc")
+    public String proc(@ModelAttribute("maWordDto") MaWordDto maWordDto, Model model, @PathVariable String procType, RedirectAttributes attributes) {
+
+        try{
+            if("insert".equals(procType)){
+                wordRepository.insert(maWordDto);
+            }else if("update".equals(procType)){
+                wordRepository.update(maWordDto);
+            }else if ("delete".equals(procType)){
+                wordRepository.delete(maWordDto);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return "redirect:/ma/member/word/list";
+    }
+
 }

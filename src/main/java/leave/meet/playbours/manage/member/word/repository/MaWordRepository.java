@@ -17,6 +17,4 @@ public interface MaWordRepository {
     void update(MaWordDto dto);
 
     void delete(MaWordDto dto);
-
-    int countById(String id);
 }

@@ -9,25 +9,28 @@
 >
 <table class="datatables-users table border-top dataTable no-footer dtr-column">
 	<colgroup>
+		<col style="width:10%;">
+		<col style="width:75%;">
 		<col style="width:15%;">
-		<col style="width:85%;">
 	</colgroup>
 	<thead>
 	<tr>
 		<th class="center">No.</th>
 		<th class="center">금칙어</th>
+		<th class="center">사용여부</th>
 	</tr>
 	</thead>
 	<tbody id="tbody">
 	<th:block th:if="${#lists.size(resultList.toList()) gt 0}">
-		<tr varStatus="status" class="text-body" th:each="result, status : ${resultList}" style="cursor: pointer;">
-			<td th:text="${status.count}"></td>
+		<tr varStatus="status" class="text-body" th:each="result, status : ${resultList}" style="cursor: pointer;" onclick="fnSelect(this.getAttribute('paraSeq'),this.getAttribute('paraWord'),this.getAttribute('paraUseYn'))" th:paraSeq="${result.seq}" th:paraWord="${result.word}" th:paraUseYn="${result.useYn}">
+			<td class="center" th:text="${status.count}"></td>
 			<td th:text="${result.word}"></td>
+			<td class="center" th:text="${result.useYn} eq 'Y' ? '사용' : '미사용'"></td>
 		</tr>
 	</th:block>
 	<th:block th:unless="${#lists.size(resultList.toList()) gt 0}">
 		<tr>
-			<td class="center" colspan="2">등록된 데이터가 없습니다.</td>
+			<td class="center" colspan="3">등록된 데이터가 없습니다.</td>
 		</tr>
 	</th:block>
 	</tbody>

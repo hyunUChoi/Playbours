@@ -3,6 +3,7 @@ package leave.meet.playbours.manage.member.word.repository.impl;
 import leave.meet.playbours.manage.member.user.dto.MaUserDto;
 import leave.meet.playbours.manage.member.word.dto.MaWordDto;
 import leave.meet.playbours.manage.member.word.repository.MaWordRepository;
+import leave.meet.playbours.manage.sys.code.dto.MaCodeDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -56,13 +57,13 @@ public class MaWordRepositoryImpl implements MaWordRepository {
 
     public Query searchCondition(Query query, MaWordDto dto) {
 
-        /* 검색조건 */
+        /* 사용여부 */
+        if(dto.getSearch1() != null && !"".equals(dto.getSearch1())){
+            query.addCriteria(Criteria.where("useYn").is(dto.getSearch1()));
+        }
+        /* 금칙어 검색 */
         if(dto.getSearchKeyword() != null && !"".equals(dto.getSearchKeyword())) {
-            if(dto.getSearchOption() != null && !"".equals(dto.getSearchOption())) {
-                Criteria criteria = new Criteria();
-                criteria = criteria.orOperator(Criteria.where("name").regex(dto.getSearchKeyword()), Criteria.where("userId").regex( dto.getSearchKeyword()));
-                query.addCriteria(criteria);
-            }
+            query.addCriteria(Criteria.where("word").regex(dto.getSearchKeyword()));
         }
         return query;
     }
@@ -75,21 +76,39 @@ public class MaWordRepositoryImpl implements MaWordRepository {
 
     @Override
     public void insert(MaWordDto dto) {
-
+        MaWordDto maWordDto = new MaWordDto();
+        maWordDto.setWord(dto.getWord());
+        maWordDto.setUseYn(dto.getUseYn());
+        maWordDto.setDelYn("N");
+        // TODO 로그인한 아이디로 변경
+        maWordDto.setFrstRegrId("admin");
+        maWordDto.setFrstRegrDt(new Date());
+        mongoTemplate.insert(maWordDto);
     }
 
     @Override
     public void update(MaWordDto dto) {
+        Query query = new Query();
+        Update update = new Update();
+        query.addCriteria(Criteria.where("seq").is(dto.getSeq()));
+        update.set("word", dto.getWord());
+        update.set("useYn", dto.getUseYn());
+        // TODO 로그인한 아이디로 변경
+        update.set("lstChgId", "admin");
+        update.set("lstChgDt", new Date());
+        mongoTemplate.upsert(query, update, MaWordDto.class);
 
     }
 
     @Override
     public void delete(MaWordDto dto) {
-
-    }
-
-    @Override
-    public int countById(String id) {
-        return 0;
+        Query query = new Query();
+        Update update = new Update();
+        query.addCriteria(Criteria.where("seq").is(dto.getSeq()));
+        update.set("delYn", dto.getDelYn());
+        // TODO 로그인한 아이디로 변경
+        update.set("lstChgId", "admin");
+        update.set("lstChgDt", new Date());
+        mongoTemplate.upsert(query, update, MaWordDto.class);
     }
 }

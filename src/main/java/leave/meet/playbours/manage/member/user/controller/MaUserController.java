@@ -99,7 +99,6 @@ public class MaUserController {
             userRepository.insert(maUserDto);
             return "redirect:/ma/member/user/list";
         }else if("update".equals(procType)){
-            System.out.println(procType);
             userRepository.update(maUserDto);
             attributes.addFlashAttribute("maUserDto", maUserDto);
             return "redirect:/ma/member/user/view";
