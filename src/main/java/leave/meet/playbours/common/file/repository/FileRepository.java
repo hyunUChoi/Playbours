@@ -8,9 +8,11 @@ public interface FileRepository {
 
     void insert(FileDto dto);
 
-    void delete(String fileName);
+    void delete(String saveFileNm);
+
+    int countByFileName(String fileName);
 
     List<FileDto> findFilesByFileName(String fileName);
 
-    FileDto findFile(String fileName);
+    FileDto findFile(String saveFileNm);
 }

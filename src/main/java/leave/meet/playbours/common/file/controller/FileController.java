@@ -21,14 +21,12 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
 
 @Controller
 public class FileController {
-
-    @Value("${file.upload.path}")
-    private String PATH;
 
     private final FileRepository fileRepository;
 
@@ -38,49 +36,58 @@ public class FileController {
 
     @RequestMapping("/file/form")
     public String form(@RequestParam String atchFile, Model model) {
-        model.addAttribute("resultList", fileRepository.findFilesByFileName(atchFile));
+        String file = (atchFile != null && !"".equals(atchFile)) ? atchFile : String.valueOf(UUID.randomUUID());
+        model.addAttribute("atchFile", file);
+        model.addAttribute("resultList", fileRepository.findFilesByFileName(file));
         return "pages/common/fileUpload";
     }
 
     @ResponseBody
     @RequestMapping("/file/upload")
-    public String upload(@RequestParam MultipartFile file) throws IOException {
+    public String upload(@RequestParam MultipartFile file, @RequestParam String atchFile, HttpServletRequest request) throws IOException {
 
         LocalDateTime now = LocalDateTime.now();
-        String fileNm = now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + UUID.randomUUID();
+        String saveFileNm = now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + atchFile;
         String folderPath = now.getYear() + File.separator + now.getMonthValue()  + File.separator + now.getDayOfMonth() + File.separator;
-        String filepath = PATH + folderPath + fileNm;
 
-        if(!"".equals(filepath)) {
-            File saveFolder = new File(filepath);
-            if(!saveFolder.exists() || saveFolder.isFile()) {
-                saveFolder.mkdirs();
-            }
-            file.transferTo(saveFolder);
+        // TODO 서버컴 경로로 변경
+        /* window | mac 파일 상대경로 지정 */
+        String path = File.separator + "Playbours" + File.separator + "attach" + File.separator + "upload" + File.separator;
+        if(request.getHeader("USER-AGENT").toLowerCase().contains("mac")) {
+            path = File.separator + "Users" + path;
+        } else if(request.getHeader("USER-AGENT").toLowerCase().contains("window")) {
+            /* 사용자의 컴퓨터의 드라이버가 유동적일 것을 감안하여 현재 java가 깔려있는 드라이버에 저장 */
+            path = System.getProperty("user.dir").split(":")[0] + ":" + path;
         }
 
+        String filepath = path + folderPath + saveFileNm;
+        File saveFolder = new File(filepath);
+        if(!saveFolder.exists() || saveFolder.isFile()) {
+            saveFolder.mkdirs();
+        }
+        file.transferTo(saveFolder);
+
         FileDto fileDto = new FileDto();
-        fileDto.setFileName(fileNm);
+        fileDto.setFileName(atchFile);
+        fileDto.setSaveFileNm(saveFileNm);
         fileDto.setOriginalFileNm(file.getOriginalFilename());
-        fileDto.setFileStorePath(PATH + folderPath);
+        fileDto.setFileStorePath(path + folderPath);
         fileDto.setFileType(file.getContentType());
         fileDto.setFileSize(file.getSize());
         fileRepository.insert(fileDto);
 
-        return fileNm;
+        return atchFile;
     }
 
     @RequestMapping("/file/download")
     public void download(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        FileDto fileDto = fileRepository.findFile(request.getParameter("fileName"));
-        String storePath = fileDto.getFileStorePath() + fileDto.getFileName();
-
+        String storePath = request.getParameter("fileStorePath") + request.getParameter("saveFileNm");
         File file = new File(storePath);
         FileInputStream in = new FileInputStream(storePath);
 
         response.setContentType("application/octet-stream");
-        response.setHeader("Content-Disposition", "attachment; filename*=UTF-8''" + URLEncoder.encode(fileDto.getOriginalFileNm(), StandardCharsets.UTF_8).replaceAll("\\+", "%20"));
+        response.setHeader("Content-Disposition", "attachment; filename*=UTF-8''" + URLEncoder.encode(request.getParameter("originalFileNm"), StandardCharsets.UTF_8).replaceAll("\\+", "%20"));
         OutputStream os = response.getOutputStream();
 
         int length;
@@ -96,16 +103,17 @@ public class FileController {
 
     @ResponseBody
     @RequestMapping("/file/delete")
-    public void delete(@RequestParam String fileName) throws IOException {
-        if(!"".equals(fileName)) {
-            FileDto fileDto = fileRepository.findFile(fileName);
-            File file = new File(fileDto.getFileStorePath(), fileDto.getFileName());
-            File directory = new File(fileDto.getFileStorePath());
+    public int delete(@RequestParam String saveFileNm, @RequestParam String atchFile) {
 
-            file.delete();
-            directory.delete();
-            fileRepository.delete(fileName);
-        }
+        /* 물리파일 삭제 및 폴더 삭제 - 보류 */
+        /*FileDto fileDto = fileRepository.findFile(saveFileNm);
+        File file = new File(fileDto.getFileStorePath(), fileDto.getSaveFileNm());
+        File directory = new File(fileDto.getFileStorePath());
+
+        file.delete();
+        directory.delete();*/
+        fileRepository.delete(saveFileNm);
+        return fileRepository.countByFileName(atchFile);
     }
 
 }
