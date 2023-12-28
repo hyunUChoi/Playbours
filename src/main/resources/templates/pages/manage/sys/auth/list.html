@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"
+      class="light-style layout-auth-fixed"
+      dir="ltr"
+      data-theme="theme-default"
+      data-assets-path="/manage/assets/"
+      data-template="vertical-auth-template-free"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/manage/layout/layout}"
+      layout:fragment="content"
+>
+<script th:inline="javascript">
+	document.addEventListener("DOMContentLoaded", () => {
+        gfnPageProcess('addList', 'addList', document.getElementById('pageNo').value);
+	});
+
+    function fnSearch() {
+        document.getElementById('tbl').innerHTML = '';
+        gfnPageProcess('addList', 'addList', '1');
+    }
+
+    document.addEventListener('keydown', function(event) {
+        if(event.key === 'Enter') {
+            event.preventDefault();
+            fnSearch();
+        }
+    })
+</script>
+<h4 class="fw-bold py-3 mb-4">MENU</h4>
+<div class="card">
+	<form id="defaultFrm" th:object="${maAuthDto}" method="post" onsubmit="return false;">
+		<input type="hidden" th:field="*{seq}"/>
+		<input type="hidden" th:field="*{pageNo}"/>
+		<div class="card-header">
+			<div class="d-flex justify-content-between align-items-center row py-3 gap-3 gap-md-0">
+				<div class="col-md-4">
+					<label class="form-label" for="search1">구분</label>
+					<select id="search1" th:field="*{search1}" class="form-select color-dropdown">
+						<option value="">전체</option>
+						<option value="ma">관리자</option>
+						<option value="ft">사용자</option>
+					</select>
+				</div>
+			</div>
+			<div class="input-group">
+				<div class="col-md-1">
+					<select class="form-select border_bottom_right_radius_0 border_top_right_radius_0" th:field="*{searchOption}">
+						<option value="0" selected>전체</option>
+						<option value="1">권한명</option>
+						<option value="2">권한내용</option>
+					</select>
+				</div>
+				<input type="text" class="form-control" th:field="*{searchKeyword}"/>
+				<a class="btn btn-outline-primary" onclick="fnSearch();">Search</a>
+			</div>
+		</div>
+	</form>
+	<div class="card-datatable table-responsive">
+		<div class="dataTables_wrapper dt-bootstrap5 no-footer">
+			<div id="tbl"></div>
+		</div>
+	</div>
+</div>
+</html>

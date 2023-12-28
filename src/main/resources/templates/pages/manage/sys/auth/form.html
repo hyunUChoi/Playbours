@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en"
+      class="light-style layout-auth-fixed"
+      dir="ltr"
+      data-theme="theme-default"
+      data-assets-path="/manage/assets/"
+      data-template="vertical-auth-template-free"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/manage/layout/layout}"
+      layout:fragment="content"
+>
+<script th:inline="javascript">
+    document.addEventListener("DOMContentLoaded", () => {
+
+    });
+
+    function fnSubmit(type) {
+        if([[${maAuthDto.procType}]].indexOf('date') > -1) {
+            gfnPageProcess(type, [[${maAuthDto.procType}]] + 'Proc');
+        } else {
+            if(chk) {
+                gfnPageProcess(type, [[${maAuthDto.procType}]] + 'Proc');
+            } else {
+                alert("중복검사를 실시해주세요.");
+            }
+        }
+    }
+</script>
+<h4 class="fw-bold py-3 mb-4">AUTHORITY</h4>
+<div class="row">
+	<div class="col-xl">
+		<div class="card mb-4">
+			<div class="card-header d-flex justify-content-between align-items-center">
+				<h5 class="mb-0">메뉴<th:block th:text="${maAuthDto.procType eq 'insert'? '등록' : '수정'}"></th:block></h5>
+			</div>
+			<div class="card-body">
+				<form id="defaultFrm" th:object="${maAuthDto}" method="post" onsubmit="return false;">
+					<input type="hidden" id="seq" name="seq" th:value="${authDto.seq}">
+					<input type="hidden" th:field="*{pageNo}">
+					<input type="hidden" th:field="*{search1}">
+					<input type="hidden" th:field="*{searchOption}">
+					<input type="hidden" th:field="*{searchKeyword}">
+					<div class="row">
+						<div class="mb-3 col-md-4">
+							<label for="authClCd" class="form-label">구분</label>
+							<select class="form-select" id="authClCd" name="authClCd" th:value="${authDto.authClCd}" title="구분" required>
+								<option value="" th:selected="${authDto.authClCd} eq ''">선택</option>
+								<option value="ma" th:selected="${authDto.authClCd} eq 'ma'">관리자</option>
+								<option value="ft" th:selected="${authDto.authClCd} eq 'ft'">사용자</option>
+							</select>
+						</div>
+						<div class="mb-3 col-md-4">
+							<label class="form-label" for="authOrd">순서</label>
+							<input type="text" class="form-control numOnly" id="authOrd" name="authOrd" th:value="${authDto.authOrd}" title="순서" required/>
+						</div>
+						<div class="mb-3 col-md-4">
+							<label class="form-label" for="useYn">사용여부</label>
+							<select class="form-select" id="useYn" name="useYn" th:value="${authDto.useYn}" title="사용여부" required>
+								<option value="" th:selected="${authDto.useYn} eq ''">선택</option>
+								<option value="Y" th:selected="${authDto.useYn} eq 'Y'">사용</option>
+								<option value="N" th:selected="${authDto.useYn} eq 'N'">미사용</option>
+							</select>
+						</div>
+						<div class="mb-3 col-md-6">
+							<label class="form-label" for="authNm">권한명</label>
+							<input type="text" class="form-control" id="authNm" name="authNm" th:value="${authDto.authNm}" title="메뉴명" required/>
+						</div>
+						<div class="mb-3 col-md-6">
+							<label class="form-label" for="authCd">권한코드</label>
+							<th:block th:if="${maAuthDto.procType eq 'insert'}">
+								<div class="input-group">
+									<input type="text" class="form-control alphaOnly" id="authCode" name="authCode" th:value="${authDto.authCode}" title="메뉴코드" required oninput="fnOnInput();"/>
+									<button class="btn btn-outline-primary" type="button" onclick="fnChkOverlap();">중복확인</button>
+								</div>
+							</th:block>
+							<th:block th:unless="${maAuthDto.procType eq 'insert'}">
+								<input type="text" class="form-control-plaintext" th:field="*{authCode}" readonly/>
+							</th:block>
+						</div>
+					</div>
+					<div class="text-end">
+						<th:block th:if="${maAuthDto.procType eq 'insert'}">
+							<button type="button" class="btn btn-outline-primary" onclick="fnSubmit('submit')">등록</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('list', 'list')">취소</button>
+						</th:block>
+						<th:block th:if="${maAuthDto.procType eq 'update'}">
+							<button type="button" class="btn btn-outline-primary" onclick="fnSubmit('update')">수정</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('view', 'listView', this.getAttribute('parameter'), 'seq')" th:parameter="${authDto.seq}">취소</button>
+						</th:block>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+</html>

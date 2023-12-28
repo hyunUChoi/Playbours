@@ -10,11 +10,6 @@
 	  layout:decorate="~{common/manage/layout/layout}"
 	  layout:fragment="content"
 >
-<style>
-	.center{
-		text-align: center;
-	}
-</style>
 <script th:inline="javascript">
 
 	document.addEventListener("DOMContentLoaded", () => {
@@ -58,7 +53,7 @@
 		<input type="hidden" th:field="*{seq}"/>
 		<input type="hidden" th:field="*{pageNo}"/>
 		<div>
-			<div class="card" style="width:60%;display: inline-block;margin-right: 3%;">
+			<div class="card display_inline_block width_60p margin_right_3p">
 				<div class="card-header">
 					<div class="d-flex justify-content-start align-items-center row py-3 gap-3 gap-md-0">
 						<div class="col-md-3">
@@ -79,7 +74,7 @@
 				</div>
 				</div>
 			</div>
-			<div class="card" style="width:25%;display: inline-block; position: absolute">
+			<div class="card width_25p display_inline_block position_absolute" >
 				<div class="card-header">
 						<div class="row">
 							<div class="col-md-4 col-md-12">
@@ -96,7 +91,7 @@
 								</select>
 							</div>
 						</div>
-						<div class="text-end" style="margin-top: 20px;">
+						<div class="text-end margin_top_20px">
 							<button type="button" class="btn btn-outline-info" onclick="fnReset()">초기화</button>
 							<button id="btn_save" type="button" class="btn btn-outline-primary" onclick="fnSubmit()">등록</button>
 							<button type="button" class="btn btn-outline-danger" onclick="gfnPageProcess('delete', 'deleteProc')">삭제</button>
