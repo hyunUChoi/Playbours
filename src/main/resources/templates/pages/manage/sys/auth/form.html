@@ -26,6 +26,13 @@
             }
         }
     }
+
+	function fnAllCheckSwitch(obj){
+		const checkBoxs = document.querySelectorAll(".chk");
+		for(const checkBox of checkBoxs){
+			checkBox.checked = obj.checked
+		}
+	}
 </script>
 <h4 class="fw-bold py-3 mb-4">AUTHORITY</h4>
 <div class="row">
@@ -36,7 +43,7 @@
 			</div>
 			<div class="card-body">
 				<form id="defaultFrm" th:object="${maAuthDto}" method="post" onsubmit="return false;">
-					<input type="hidden" id="seq" name="seq" th:value="${authDto.seq}">
+					<input type="hidden" id="seq" name="seq" th:value="${maAuthDto.seq}">
 					<input type="hidden" th:field="*{pageNo}">
 					<input type="hidden" th:field="*{search1}">
 					<input type="hidden" th:field="*{searchOption}">
@@ -44,39 +51,82 @@
 					<div class="row">
 						<div class="mb-3 col-md-4">
 							<label for="authClCd" class="form-label">구분</label>
-							<select class="form-select" id="authClCd" name="authClCd" th:value="${authDto.authClCd}" title="구분" required>
-								<option value="" th:selected="${authDto.authClCd} eq ''">선택</option>
-								<option value="ma" th:selected="${authDto.authClCd} eq 'ma'">관리자</option>
-								<option value="ft" th:selected="${authDto.authClCd} eq 'ft'">사용자</option>
+							<select class="form-select" id="authClCd" name="authClCd" th:value="${maAuthDto.authClCd}" title="구분" required>
+								<option value="" th:selected="${maAuthDto.authClCd} eq ''">선택</option>
+								<option value="ma" th:selected="${maAuthDto.authClCd} eq 'ma'">관리자</option>
+								<option value="ft" th:selected="${maAuthDto.authClCd} eq 'ft'">사용자</option>
 							</select>
-						</div>
-						<div class="mb-3 col-md-4">
-							<label class="form-label" for="authOrd">순서</label>
-							<input type="text" class="form-control numOnly" id="authOrd" name="authOrd" th:value="${authDto.authOrd}" title="순서" required/>
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="useYn">사용여부</label>
-							<select class="form-select" id="useYn" name="useYn" th:value="${authDto.useYn}" title="사용여부" required>
-								<option value="" th:selected="${authDto.useYn} eq ''">선택</option>
-								<option value="Y" th:selected="${authDto.useYn} eq 'Y'">사용</option>
-								<option value="N" th:selected="${authDto.useYn} eq 'N'">미사용</option>
+							<select class="form-select" id="useYn" name="useYn" th:value="${maAuthDto.useYn}" title="사용여부" required>
+								<option value="" th:selected="${maAuthDto.useYn} eq ''">선택</option>
+								<option value="Y" th:selected="${maAuthDto.useYn} eq 'Y'">사용</option>
+								<option value="N" th:selected="${maAuthDto.useYn} eq 'N'">미사용</option>
 							</select>
 						</div>
-						<div class="mb-3 col-md-6">
-							<label class="form-label" for="authNm">권한명</label>
-							<input type="text" class="form-control" id="authNm" name="authNm" th:value="${authDto.authNm}" title="메뉴명" required/>
+						<div class="mb-3 col-md-4">
+							<label class="form-label" for="authRank">등급</label>
+							<input type="text" class="form-control numOnly" id="authRank" name="authRank" th:value="${maAuthDto.authRank}" title="순서" required/>
 						</div>
-						<div class="mb-3 col-md-6">
-							<label class="form-label" for="authCd">권한코드</label>
-							<th:block th:if="${maAuthDto.procType eq 'insert'}">
-								<div class="input-group">
-									<input type="text" class="form-control alphaOnly" id="authCode" name="authCode" th:value="${authDto.authCode}" title="메뉴코드" required oninput="fnOnInput();"/>
-									<button class="btn btn-outline-primary" type="button" onclick="fnChkOverlap();">중복확인</button>
-								</div>
-							</th:block>
-							<th:block th:unless="${maAuthDto.procType eq 'insert'}">
-								<input type="text" class="form-control-plaintext" th:field="*{authCode}" readonly/>
-							</th:block>
+						<div class="mb-3 col-md-12">
+							<label class="form-label" for="authNm">권한명</label>
+							<input type="text" class="form-control" id="authNm" name="authNm" th:value="${maAuthDto.authNm}" title="메뉴명" required/>
+						</div>
+						<div class="mb-3 col-md-12">
+							<label class="form-label" for="authNm">허용목록</label>
+							<table class="datatables-users table border-top dataTable no-footer dtr-column">
+								<colgroup>
+									<col class="width_5p">
+									<col class="width_2p">
+									<col class="width_2p">
+									<col>
+								</colgroup>
+								<thead>
+									<tr>
+										<th>
+											<label>
+												<input type="checkBox" onclick="fnAllCheckSwitch(this)">
+											</label>
+										</th>
+										<th colspan="3">메뉴명</th>
+									</tr>
+								</thead>
+								<tbody id="tbody">
+								<th:block th:each="depth1 : ${menuList}">
+									<tr>
+										<td class="text_align_right">
+											<label>
+												<input type="checkBox" class="chk">
+											</label>
+										</td>
+										<td colspan="3" th:text="${depth1.menuNm}"></td>
+									</tr>
+										<th:block th:each="depth2 : ${depth1.menuList}">
+											<tr>
+												<td class="text_align_right" colspan="2">
+													<label>
+														<input type="checkBox" class="chk">
+													</label>
+												</td>
+												<td colspan="2" th:text="${depth2.menuNm}"></td>
+											</tr>
+											<th:block th:each="depth3 : ${depth2.menuList}">
+												<tr>
+													<td class="text_align_right" colspan="3">
+														<label>
+															<input type="checkBox" class="chk">
+														</label>
+													</td>
+													<td th:text="${depth3.menuNm}"></td>
+												</tr>
+											</th:block>
+										</th:block>
+
+								</th:block>
+								</tbody>
+							</table>
+
 						</div>
 					</div>
 					<div class="text-end">
@@ -86,7 +136,7 @@
 						</th:block>
 						<th:block th:if="${maAuthDto.procType eq 'update'}">
 							<button type="button" class="btn btn-outline-primary" onclick="fnSubmit('update')">수정</button>
-							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('view', 'listView', this.getAttribute('parameter'), 'seq')" th:parameter="${authDto.seq}">취소</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('view', 'listView', this.getAttribute('parameter'), 'seq')" th:parameter="${maAuthDto.seq}">취소</button>
 						</th:block>
 					</div>
 				</form>

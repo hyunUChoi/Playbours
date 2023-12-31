@@ -9,7 +9,7 @@ import java.util.List;
 public interface MaAuthRepository {
 
     Page<MaAuthDto> findByPagingAndFiltering(int page, int size, MaAuthDto dto);
-    List<MaAuthDto> findAll(MaAuthDto dto);
+    public MaAuthDto findOne(MaAuthDto dto);
 
     void insert(MaAuthDto dto);
 

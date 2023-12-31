@@ -34,26 +34,28 @@
 		<input type="hidden" th:field="*{pageNo}"/>
 		<div class="card-header">
 			<div class="d-flex justify-content-between align-items-center row py-3 gap-3 gap-md-0">
-				<div class="col-md-4">
-					<label class="form-label" for="search1">구분</label>
+				<div class="col-md-3">
 					<select id="search1" th:field="*{search1}" class="form-select color-dropdown">
 						<option value="">전체</option>
 						<option value="ma">관리자</option>
 						<option value="ft">사용자</option>
 					</select>
 				</div>
-			</div>
-			<div class="input-group">
-				<div class="col-md-1">
-					<select class="form-select border_bottom_right_radius_0 border_top_right_radius_0" th:field="*{searchOption}">
-						<option value="0" selected>전체</option>
-						<option value="1">권한명</option>
-						<option value="2">권한내용</option>
-					</select>
+				<div class="col-md-9">
+					<div class="input-group">
+						<div class="col-md-2">
+							<select class="form-select border_bottom_right_radius_0 border_top_right_radius_0" th:field="*{searchOption}">
+								<option value="0" selected>전체</option>
+								<option value="1">권한명</option>
+								<option value="2">권한내용</option>
+							</select>
+						</div>
+						<input type="text" class="form-control" th:field="*{searchKeyword}"/>
+						<a class="btn btn-outline-primary" onclick="fnSearch();">Search</a>
+					</div>
 				</div>
-				<input type="text" class="form-control" th:field="*{searchKeyword}"/>
-				<a class="btn btn-outline-primary" onclick="fnSearch();">Search</a>
 			</div>
+
 		</div>
 	</form>
 	<div class="card-datatable table-responsive">

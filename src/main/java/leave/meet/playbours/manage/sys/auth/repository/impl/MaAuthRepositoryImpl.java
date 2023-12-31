@@ -71,13 +71,13 @@ public class MaAuthRepositoryImpl implements MaAuthRepository {
     }
 
     @Override
-    public List<MaAuthDto> findAll(MaAuthDto dto) {
+    public MaAuthDto findOne(MaAuthDto dto) {
 
         Query query = new Query();
         query.addCriteria(Criteria.where("code").regex("CD"));
         query.addCriteria(Criteria.where("delYn").is("N"));
         query.with(Sort.by(Sort.Direction.ASC, "code"));
-        return mongoTemplate.find(query, MaAuthDto.class);
+        return mongoTemplate.findOne(query, MaAuthDto.class);
     }
 
 

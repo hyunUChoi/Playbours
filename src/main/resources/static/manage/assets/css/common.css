@@ -3,9 +3,11 @@
     color: white !important;
 }
 .text_align_center{text-align: center;}
+.text_align_right{text-align: right;}
 .cursor_pointer{cursor: pointer}
 .display_inline_block{display: inline-block;}
 
+.width_2p{width: 2%;}
 .width_5p{width: 5%;}
 .width_10p{width: 10%;}
 .width_15p{width: 15%;}

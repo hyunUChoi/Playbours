@@ -134,4 +134,20 @@ public class MaAuthDto extends CmmnDto {
     public void setLstChgId(String lstChgId) {
         this.lstChgId = lstChgId;
     }
+
+    public String getAuthClCd() {
+        return authClCd;
+    }
+
+    public void setAuthClCd(String authClCd) {
+        this.authClCd = authClCd;
+    }
+
+    public String getAuthCode() {
+        return authCode;
+    }
+
+    public void setAuthCode(String authCode) {
+        this.authCode = authCode;
+    }
 }
