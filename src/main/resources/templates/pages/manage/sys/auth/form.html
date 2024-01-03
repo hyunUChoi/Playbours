@@ -27,21 +27,38 @@
         }
     }
 
-	function fnAllCheckSwitch(obj){
-		const checkBoxs = document.querySelectorAll("input");
-		for(const checkBox of checkBoxs){
-			checkBox.checked = obj.checked
+
+	function fnCheckSwitch(obj, divn){
+		let checkBoxs;
+		if(divn === 1){
+			checkBoxs = document.querySelectorAll("input");
+		}else if(divn === 2){
+			checkBoxs = document.querySelectorAll("."+obj.id);
+		}
+		if(checkBoxs.length >= 1){
+			for(const checkBox of checkBoxs){
+				checkBox.checked = obj.checked;
+				if(divn === 2) {
+					fnCheckSwitch(checkBox, 2);
+				}
+			}
 		}
 	}
 
-	function fnCheckSwitch(obj){
-		const checkBoxs = document.querySelectorAll("."+obj.id);
-		if(checkBoxs.length != 0){
-			for(const checkBox of checkBoxs){
-				checkBox.checked = obj.checked
-				console.log(checkBox.id)
-				fnCheckSwitch(checkBox);
+	function fnCheckParent(obj){
+		const parentId = document.getElementById(obj.className);
+		const checkBoxs = document.querySelectorAll("."+obj.className);
+		let checkCnt = 0;
+		for(const checkBox of checkBoxs){
+			if(checkBox.checked){
+				checkCnt++;
 			}
+		}
+		if(parentId.checked){
+			parentId.checked = false;
+		}
+		if(checkBoxs.length === checkCnt){
+			parentId.checked = true;
 		}
 	}
 </script>
@@ -97,7 +114,7 @@
 									<tr>
 										<th>
 											<label>
-												<input type="checkBox" onclick="fnAllCheckSwitch(this)">
+												<input type="checkBox" onclick="fnCheckSwitch(this, 1)">
 											</label>
 										</th>
 										<th colspan="3">메뉴명</th>
@@ -108,7 +125,7 @@
 									<tr>
 										<td class="text_align_right">
 											<label>
-												<input th:id="${depth1.menuCd}" type="checkBox" onclick="fnCheckSwitch(this)">
+												<input th:id="${depth1.menuCd + depth1.menuCd}" type="checkBox" onclick="fnCheckSwitch(this, 2)">
 											</label>
 										</td>
 										<td colspan="3" th:text="${depth1.menuNm}"></td>
@@ -117,7 +134,7 @@
 											<tr>
 												<td class="text_align_right" colspan="2">
 													<label>
-														<input th:id="${depth2.menuCd}" type="checkBox" th:class="${depth1.menuCd}" onclick="fnCheckSwitch(this)">
+														<input th:id="${depth2.menuCd + depth2.menuCd}" type="checkBox" th:class="${depth1.menuCd + depth1.menuCd}" onclick="fnCheckSwitch(this, 2)">
 													</label>
 												</td>
 												<td colspan="2" th:text="${depth2.menuNm}"></td>
@@ -126,7 +143,7 @@
 												<tr>
 													<td class="text_align_right" colspan="3">
 														<label>
-															<input type="checkBox" th:class="${depth2.menuCd}">
+															<input th:id="${depth3.menuCd + depth3.menuCd}"  type="checkBox" th:class="${depth2.menuCd + depth2.menuCd}" onclick="fnCheckParent(this)">
 														</label>
 													</td>
 													<td th:text="${depth3.menuNm}"></td>
