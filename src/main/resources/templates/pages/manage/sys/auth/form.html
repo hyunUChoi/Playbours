@@ -28,9 +28,20 @@
     }
 
 	function fnAllCheckSwitch(obj){
-		const checkBoxs = document.querySelectorAll(".chk");
+		const checkBoxs = document.querySelectorAll("input");
 		for(const checkBox of checkBoxs){
 			checkBox.checked = obj.checked
+		}
+	}
+
+	function fnCheckSwitch(obj){
+		const checkBoxs = document.querySelectorAll("."+obj.id);
+		if(checkBoxs.length != 0){
+			for(const checkBox of checkBoxs){
+				checkBox.checked = obj.checked
+				console.log(checkBox.id)
+				fnCheckSwitch(checkBox);
+			}
 		}
 	}
 </script>
@@ -39,7 +50,7 @@
 	<div class="col-xl">
 		<div class="card mb-4">
 			<div class="card-header d-flex justify-content-between align-items-center">
-				<h5 class="mb-0">메뉴<th:block th:text="${maAuthDto.procType eq 'insert'? '등록' : '수정'}"></th:block></h5>
+				<h5 class="mb-0">권한<th:block th:text="${maAuthDto.procType eq 'insert'? '등록' : '수정'}"></th:block></h5>
 			</div>
 			<div class="card-body">
 				<form id="defaultFrm" th:object="${maAuthDto}" method="post" onsubmit="return false;">
@@ -97,7 +108,7 @@
 									<tr>
 										<td class="text_align_right">
 											<label>
-												<input type="checkBox" class="chk">
+												<input th:id="${depth1.menuCd}" type="checkBox" onclick="fnCheckSwitch(this)">
 											</label>
 										</td>
 										<td colspan="3" th:text="${depth1.menuNm}"></td>
@@ -106,7 +117,7 @@
 											<tr>
 												<td class="text_align_right" colspan="2">
 													<label>
-														<input type="checkBox" class="chk">
+														<input th:id="${depth2.menuCd}" type="checkBox" th:class="${depth1.menuCd}" onclick="fnCheckSwitch(this)">
 													</label>
 												</td>
 												<td colspan="2" th:text="${depth2.menuNm}"></td>
@@ -115,7 +126,7 @@
 												<tr>
 													<td class="text_align_right" colspan="3">
 														<label>
-															<input type="checkBox" class="chk">
+															<input type="checkBox" th:class="${depth2.menuCd}">
 														</label>
 													</td>
 													<td th:text="${depth3.menuNm}"></td>
