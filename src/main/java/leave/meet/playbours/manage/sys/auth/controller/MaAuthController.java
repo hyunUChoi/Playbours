@@ -95,6 +95,13 @@ public class MaAuthController {
     @RequestMapping(FOLDER_PATH + "{procType}Proc")
     public String proc(@ModelAttribute("maAuthDto") MaAuthDto maAuthDto, @PathVariable String procType, Model model) {
 
+        System.out.println(":::::::::::::");
+        System.out.println(maAuthDto.getArrCheckList());
+        System.out.println(":::::::::::::");
+        System.out.println(":::::::::::::");
+        System.out.println(":::::::::::::");
+        System.out.println(":::::::::::::");
+
         try{
             if("insert".equals(procType)){
                 authRepository.insert(maAuthDto);

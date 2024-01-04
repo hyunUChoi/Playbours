@@ -36,6 +36,8 @@ public class MaAuthDto extends CmmnDto {
     // 사용여부
     private String useYn;
 
+    private String arrCheckList;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date frstRegrDt;
 
@@ -149,5 +151,13 @@ public class MaAuthDto extends CmmnDto {
 
     public void setAuthCode(String authCode) {
         this.authCode = authCode;
+    }
+
+    public String getArrCheckList() {
+        return arrCheckList;
+    }
+
+    public void setArrCheckList(String arrCheckList) {
+        this.arrCheckList = arrCheckList;
     }
 }
