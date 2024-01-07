@@ -89,8 +89,10 @@ public class MaAuthRepositoryImpl implements MaAuthRepository {
         maCodeDto.setAuthRank(dto.getAuthRank());
         maCodeDto.setAuthCont(dto.getAuthCont());
         maCodeDto.setAuthOrder(dto.getAuthOrder());
+        maCodeDto.setCheckList(dto.getCheckList());
         maCodeDto.setUseYn(dto.getUseYn());
         maCodeDto.setDelYn("N");
+
         // TODO 로그인한 아이디로 변경
         maCodeDto.setFrstRegrId("admin");
         maCodeDto.setFrstRegrDt(new Date());
