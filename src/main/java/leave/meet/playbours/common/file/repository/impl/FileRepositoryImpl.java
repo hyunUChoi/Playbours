@@ -33,6 +33,7 @@ public class FileRepositoryImpl implements FileRepository {
         fileDto.setFrstRegrId("admin");
         fileDto.setFrstRegrDt(new Date());
         fileDto.setDelYn(dto.getDelYn());
+        fileDto.setTempYn(dto.getTempYn());
         mongoTemplate.insert(fileDto);
     }
 
@@ -61,6 +62,8 @@ public class FileRepositoryImpl implements FileRepository {
     public List<FileDto> findFilesByFileName(String fileName) {
         Query query = new Query();
         query.addCriteria(Criteria.where("fileName").is(fileName));
+        query.addCriteria(Criteria.where("delYn").is("N"));
+        //query.addCriteria(Criteria.where("tempYn").is("N"));
         return mongoTemplate.find(query, FileDto.class);
     }
 

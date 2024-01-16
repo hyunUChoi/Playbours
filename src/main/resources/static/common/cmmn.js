@@ -45,6 +45,7 @@ function fixScriptsSoTheyAreExecuted(frag) {
 
 function gfnPageProcess(divn, url, val, valNm) {
     let frm = document.getElementById("defaultFrm");
+    let atchFile = document.getElementById("atchFile");
     let path = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
     frm.setAttribute("action", path + url);
 
@@ -83,6 +84,8 @@ function gfnPageProcess(divn, url, val, valNm) {
             break;
 
         case 'submit' :
+            // 파일처리
+
             if(formValidation(frm)) {
                 if(val === undefined) {
                     alert("등록되었습니다.");
@@ -102,4 +105,11 @@ function gfnPageProcess(divn, url, val, valNm) {
             }
             break;
     }
+}
+
+function fnFileProcess(fileNm) {
+    // 1. 저장 혹은 수정 시 삭제여부와 임시여부가 모두 'Y'인 경우 해당 데이터는 삭제
+
+    // 2. 삭제된 후 등록된 파일들의 임시저장 여부를 모두 'N(정상 저장)' 으로 업데이트
+
 }

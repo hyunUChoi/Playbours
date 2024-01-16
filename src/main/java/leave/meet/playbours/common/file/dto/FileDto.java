@@ -37,6 +37,9 @@ public class FileDto {
 
     private String delYn = "N";
 
+    // 게시글 등록/수정 시 실제 수정여부를 확인하기 위함 (Y : 임시상태 / N : 저장성공)
+    private String tempYn = "Y";
+
     public String getFileName() {
         return fileName;
     }
@@ -123,5 +126,13 @@ public class FileDto {
 
     public void setDelYn(String delYn) {
         this.delYn = delYn;
+    }
+
+    public String getTempYn() {
+        return tempYn;
+    }
+
+    public void setTempYn(String tempYn) {
+        this.tempYn = tempYn;
     }
 }

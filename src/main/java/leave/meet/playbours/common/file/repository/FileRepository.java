@@ -14,5 +14,9 @@ public interface FileRepository {
 
     List<FileDto> findFilesByFileName(String fileName);
 
+    //void removeUnusedFile(String fileName);
+    //void updateToNewFileTempYn(String fileName);
+    //void updateToDeleteFileTempYn(String fileName);
+
     FileDto findFile(String saveFileNm);
 }
