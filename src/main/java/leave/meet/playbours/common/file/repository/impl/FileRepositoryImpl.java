@@ -63,15 +63,41 @@ public class FileRepositoryImpl implements FileRepository {
         Query query = new Query();
         query.addCriteria(Criteria.where("fileName").is(fileName));
         query.addCriteria(Criteria.where("delYn").is("N"));
-        //query.addCriteria(Criteria.where("tempYn").is("N"));
         return mongoTemplate.find(query, FileDto.class);
     }
 
-    // TODO 사용 안하면 삭제
     @Override
-    public FileDto findFile(String saveFileNm) {
+    public void deleteDelY(Object fileName) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("saveFileNm").is(saveFileNm));
-        return mongoTemplate.findOne(query, FileDto.class);
+        query.addCriteria(Criteria.where("fileName").is(fileName));
+        query.addCriteria(Criteria.where("delYn").is("Y"));
+        mongoTemplate.remove(query, FileDto.class);
     }
+
+    @Override
+    public void updateTempN(Object fileName) {
+        Query query = new Query();
+        Update update = new Update();
+        query.addCriteria(Criteria.where("fileName").is(fileName));
+        update.set("tempYn", "N");
+        mongoTemplate.updateMulti(query, update, FileDto.class);
+    }
+
+    @Override
+    public void deleteTempY(Object fileName) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("fileName").is(fileName));
+        query.addCriteria(Criteria.where("tempYn").is("Y"));
+        mongoTemplate.remove(query, FileDto.class);
+    }
+
+    @Override
+    public void updateDelN(Object fileName) {
+        Query query = new Query();
+        Update update = new Update();
+        query.addCriteria(Criteria.where("fileName").is(fileName));
+        update.set("delYn", "N");
+        mongoTemplate.updateMulti(query, update, FileDto.class);
+    }
+
 }

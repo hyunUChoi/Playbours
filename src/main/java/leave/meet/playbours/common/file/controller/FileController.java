@@ -5,9 +5,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import leave.meet.playbours.common.file.dto.FileDto;
 import leave.meet.playbours.common.file.repository.FileRepository;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,7 +21,6 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -116,9 +115,20 @@ public class FileController {
         return fileRepository.countByFileName(atchFile);
     }
 
-    /*@RequestMapping("/")
-    public void removeUnusedFile() {
+    @ResponseBody
+    @RequestMapping("/file/tmpFile")
+    public void tmpFile(@RequestBody HashMap<String, Object> param) {
+        /* parameter String casting 시 bootstrap 3.X.X version error 발생 */
+        Object atchFile = param.get("atchFile");
+        Object type = param.get("type");
 
-    }*/
+        if(type.equals("submit")) {
+            fileRepository.deleteDelY(atchFile);
+            fileRepository.updateTempN(atchFile);
+        } else if(type.equals("cancel")) {
+            fileRepository.deleteTempY(atchFile);
+            fileRepository.updateDelN(atchFile);
+        }
+    }
 
 }

@@ -51,6 +51,7 @@ function gfnPageProcess(divn, url, val, valNm) {
 
     switch (divn) {
         case 'list' :
+            fnTmpFile(atchFile, 'cancel');
             frm.submit();
             break;
 
@@ -64,6 +65,7 @@ function gfnPageProcess(divn, url, val, valNm) {
             break;
 
         case 'view' :
+            fnTmpFile(atchFile, 'cancel');
             document.getElementById(valNm).value = val;
             frm.submit();
             break;
@@ -79,19 +81,19 @@ function gfnPageProcess(divn, url, val, valNm) {
                 } else {
                     alert(val);
                 }
+                fnTmpFile(atchFile, 'submit');
                 frm.submit();
             }
             break;
 
         case 'submit' :
-            // 파일처리
-
             if(formValidation(frm)) {
                 if(val === undefined) {
                     alert("등록되었습니다.");
                 } else {
                     alert(val);
                 }
+                fnTmpFile(atchFile, 'submit');
                 frm.submit();
             }
             break;
@@ -107,9 +109,18 @@ function gfnPageProcess(divn, url, val, valNm) {
     }
 }
 
-function fnFileProcess(fileNm) {
-    // 1. 저장 혹은 수정 시 삭제여부와 임시여부가 모두 'Y'인 경우 해당 데이터는 삭제
-
-    // 2. 삭제된 후 등록된 파일들의 임시저장 여부를 모두 'N(정상 저장)' 으로 업데이트
-
+/* 파일 처리 메소드 */
+function fnTmpFile(fileNm, type) {
+    if(fileNm !== null && fileNm !== '') {
+        fetch('/file/tmpFile', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                atchFile: fileNm.value,
+                type: type
+            })
+        }).then(res => res);
+    }
 }
