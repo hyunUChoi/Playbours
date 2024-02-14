@@ -38,8 +38,9 @@
 					<label class="form-label" for="search1">구분</label>
 					<select id="search1" th:field="*{search1}" class="form-select color-dropdown">
 						<option value="">전체</option>
-						<option value="ma">관리자</option>
-						<option value="ft">사용자</option>
+						<th:block th:each="qst : ${qstList}">
+							<option th:value="${qst.code}" th:text="${qst.name}"/>
+						</th:block>
 					</select>
 				</div>
 			</div>

@@ -33,8 +33,6 @@ public class MaBoardRepositoryImpl implements MaBoardRepository {
                 .skip((long) pageable.getPageSize() * pageable.getPageNumber())
                 .limit(pageable.getPageSize());
 
-        query.addCriteria(Criteria.where("boardDivn").is(boardDivn));
-        query.addCriteria(Criteria.where("delYn").is("N"));
         searchCondition(query, dto, boardDivn);
         query.with(Sort.by(Sort.Direction.DESC, "seq"));
 
@@ -48,14 +46,15 @@ public class MaBoardRepositoryImpl implements MaBoardRepository {
     @Override
     public int countTotalRecords(MaBoardDto dto, String boardDivn) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("boardDivn").is(boardDivn));
-        query.addCriteria(Criteria.where("delYn").is("N"));
         searchCondition(query, dto, boardDivn);
         return (int) mongoTemplate.count(query, MaBoardDto.class);
     }
 
     /* 검색 조건문 */
     public Query searchCondition(Query query, MaBoardDto dto, String boardDivn) {
+
+        query.addCriteria(Criteria.where("boardDivn").is(boardDivn));
+        query.addCriteria(Criteria.where("delYn").is("N"));
 
         if(dto.getSearch1() != null && !"".equals(dto.getSearch1() )) {
             switch (boardDivn) {
@@ -66,12 +65,15 @@ public class MaBoardRepositoryImpl implements MaBoardRepository {
                         query.addCriteria(Criteria.where("reply").ne(null));
                     }
                 }
-                case "notice", "faq" -> {
+                case "notice" -> {
                     if("Y".equals(dto.getSearch1())) {
                         query.addCriteria(Criteria.where("useYn").is("Y"));
                     } else {
                         query.addCriteria(Criteria.where("useYn").is("N"));
                     }
+                }
+                case "faq" -> {
+                    query.addCriteria(Criteria.where("qstType").regex(dto.getSearch1()));
                 }
             }
         }
@@ -122,6 +124,8 @@ public class MaBoardRepositoryImpl implements MaBoardRepository {
         if("notice".equals(boardDivn)) {
             boardDto.setNotiStrDt(dto.getNotiStrDt());
             boardDto.setNotiEndDt(dto.getNotiEndDt());
+        } else if("faq".equals(boardDivn)) {
+            boardDto.setQstType(dto.getQstType());
         }
         boardDto.setCont(dto.getCont());
         boardDto.setAtchFile(dto.getAtchFile());
@@ -145,6 +149,8 @@ public class MaBoardRepositoryImpl implements MaBoardRepository {
         if("notice".equals(boardDivn)) {
             update.set("notiStrDt", dto.getNotiStrDt());
             update.set("notiEndDt", dto.getNotiEndDt());
+        } else if("faq".equals(boardDivn)) {
+            update.set("qstType", dto.getQstType());
         }
         update.set("atchFile", dto.getAtchFile());
         // TODO 로그인한 아이디로 변경

@@ -26,6 +26,7 @@
 			<div class="card-body">
 				<form id="defaultFrm" th:object="${maBoardDto}" method="post" onsubmit="return false;">
 					<input type="hidden" th:field="*{seq}">
+					<input type="hidden" th:field="${boardDto.atchFile}">
 					<input type="hidden" id="boardDivn" name="boardDivn"/>
 					<div class="row">
 						<div class="mb-3">

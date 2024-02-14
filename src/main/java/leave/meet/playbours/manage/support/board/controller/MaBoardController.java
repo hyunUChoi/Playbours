@@ -5,6 +5,7 @@ import leave.meet.playbours.common.paging.dto.PagingDto;
 import leave.meet.playbours.common.paging.service.PagingService;
 import leave.meet.playbours.manage.support.board.repository.MaBoardRepository;
 import leave.meet.playbours.manage.support.board.dto.MaBoardDto;
+import leave.meet.playbours.manage.sys.code.repository.MaCodeRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,18 +19,26 @@ public class MaBoardController {
 
     private final MaBoardRepository boardRepository;
 
+    private final MaCodeRepository codeRepository;
+
     @Resource(name= "pagingService")
     private PagingService pagingService;
 
     private final static String FOLDER_PATH = "/ma/support/board/";
 
-    public MaBoardController(MaBoardRepository boardRepository, PagingService pagingService) {
+    public MaBoardController(MaBoardRepository boardRepository, MaCodeRepository codeRepository, PagingService pagingService) {
         this.boardRepository = boardRepository;
+        this.codeRepository = codeRepository;
         this.pagingService = pagingService;
     }
 
     @RequestMapping(FOLDER_PATH + "{boardDivn:faq|notice|qna|sgs}/list")
-    public String list(@ModelAttribute("maBoardDto") MaBoardDto maBoardDto, @PathVariable String boardDivn) {
+    public String list(@ModelAttribute("maBoardDto") MaBoardDto maBoardDto, @PathVariable String boardDivn, Model model) {
+
+        if(boardDivn.equals("faq")) {
+            model.addAttribute("qstList",codeRepository.findCodeList2("CD000003"));
+        }
+
         // thymeleaf rendering error
         switch (boardDivn) {
             case "faq" :
@@ -75,6 +84,10 @@ public class MaBoardController {
 
         if("update".equals(procType)) {
             boardDto = boardRepository.findOne(maBoardDto);
+        }
+
+        if(boardDivn.equals("faq")) {
+            model.addAttribute("qstList",codeRepository.findCodeList2("CD000003"));
         }
 
         model.addAttribute("boardDto", boardDto);

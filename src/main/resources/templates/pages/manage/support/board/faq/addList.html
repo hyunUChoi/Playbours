@@ -9,41 +9,34 @@
 >
 <table class="datatables-users table border-top dataTable no-footer dtr-column" style="width: 100%;">
 	<colgroup>
-		<col style="width: 10%;">
-		<col style="width: 15%;">
+		<col style="width: 5%;">
 		<col style="width: 15%;">
 		<col>
-		<col style="width: 5%;">
 		<col style="width: 15%;">
 		<col style="width: 15%;">
 	</colgroup>
 	<thead>
 		<tr>
+			<th>번호</th>
 			<th>구분</th>
-			<th>메뉴명</th>
-			<th>메뉴코드</th>
-			<th>URL</th>
-			<th>순서</th>
-			<th>등록자</th>
-			<th>등록일</th>
+			<th>제목</th>
+			<th>작성자</th>
+			<th>작성일</th>
 		</tr>
 	</thead>
 	<tbody>
 		<th:block th:if="${#lists.size(resultList.toList()) gt 0}">
-			<tr class="text-body" th:each="result : ${resultList.content}" onclick="gfnPageProcess('view', 'view', this.getAttribute('parameter'), 'seq')" th:parameter="${result.seq}" style="cursor: pointer;">
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
+			<tr class="text-body" th:each="result, status : ${resultList.content}" onclick="gfnPageProcess('view', 'view', this.getAttribute('parameter'), 'seq')" th:parameter="${result.seq}" style="cursor: pointer;">
+				<td th:text="${paging.totalRecord + 1 - ((maBoardDto.pageNo - 1) * paging.pageSize +  status.count)}"></td>
+				<td th:text="${result.qstType}"></td>
+				<td><span class="text-truncate" th:text="${result.title}"></span></td>
+				<td th:text="${result.frstRegrId}"></td>
+				<td th:text="${#dates.format(result.frstRegrDt, 'yyyy-MM-dd')}"></td>
 			</tr>
 		</th:block>
 		<th:block th:unless="${#lists.size(resultList.toList()) gt 0}">
 			<tr class="text-body">
-				<td th:colspan="7" style="text-align: center; height: 5rem;">등록된 데이터가 없습니다.</td>
+				<td th:colspan="5" style="text-align: center; height: 5rem;">등록된 데이터가 없습니다.</td>
 			</tr>
 		</th:block>
 	</tbody>
