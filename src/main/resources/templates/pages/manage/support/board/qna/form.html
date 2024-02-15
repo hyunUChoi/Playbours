@@ -29,13 +29,13 @@
 					<input type="hidden" th:field="${boardDto.atchFile}">
 					<input type="hidden" id="boardDivn" name="boardDivn"/>
 					<div class="row">
-						<div class="mb-3">
+						<div class="mb-3 col-md-9">
 							<label for="title" class="form-label">제목</label>
-							<input type="text" class="form-control" id="title" th:field="*{title}" title="순서" required/>
+							<input type="text" class="form-control" id="title" th:field="*{title}" title="제목" th:maxlength="50" required/>
 						</div>
-						<div class="mb-3">
+						<div class="mb-3 col-md-3">
 							<label class="form-label" for="useYn">공개여부</label>
-							<select class="form-select" id="useYn" th:field="*{useYn}" title="사용여부" required>
+							<select class="form-select" id="useYn" th:field="*{useYn}" title="공개여부" required>
 								<option value="">선택</option>
 								<option value="Y">공개</option>
 								<option value="N">비공개(작성자만 내용 열람 가능)</option>
@@ -43,7 +43,7 @@
 						</div>
 						<div class="mb-3">
 							<label class="form-label" for="cont">내용</label>
-							<textarea class="form-control" id="cont" th:field="*{cont}" title="사용여부" required></textarea>
+							<textarea class="form-control" id="cont" th:field="*{cont}" title="내용" th:maxlength="1500" required></textarea>
 						</div>
 						<div id="fileTbl"></div>
 					</div>

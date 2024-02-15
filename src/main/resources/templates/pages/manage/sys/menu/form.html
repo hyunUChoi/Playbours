@@ -85,7 +85,7 @@
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="menuOrd">순서</label>
-							<input type="text" class="form-control numOnly" id="menuOrd" name="menuOrd" th:value="${menuDto.menuOrd}" title="순서" required/>
+							<input type="text" class="form-control numOnly" id="menuOrd" name="menuOrd" th:value="${menuDto.menuOrd}" title="순서" th:maxlength="2" required/>
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="useYn">사용여부</label>
@@ -97,13 +97,13 @@
 						</div>
 						<div class="mb-3 col-md-6">
 							<label class="form-label" for="menuNm">메뉴명</label>
-							<input type="text" class="form-control" id="menuNm" name="menuNm" th:value="${menuDto.menuNm}" title="메뉴명" required/>
+							<input type="text" class="form-control" id="menuNm" name="menuNm" th:value="${menuDto.menuNm}" title="메뉴명" th:maxlength="10" required/>
 						</div>
 						<div class="mb-3 col-md-6">
 							<label class="form-label" for="menuCd">메뉴코드</label>
 							<th:block th:if="${maMenuDto.procType eq 'insert' or maMenuDto.procType eq 'lowerInsert'}">
 								<div class="input-group">
-									<input type="text" class="form-control alphaOnly" id="menuCd" name="menuCd" th:value="${menuDto.menuCd}" title="메뉴코드" required oninput="fnOnInput();"/>
+									<input type="text" class="form-control alphaOnly" id="menuCd" name="menuCd" th:value="${menuDto.menuCd}" title="메뉴코드" th:maxlength="10" required oninput="fnOnInput();"/>
 									<button class="btn btn-outline-primary" type="button" onclick="fnChkOverlap();">중복확인</button>
 								</div>
 							</th:block>
@@ -113,11 +113,11 @@
 						</div>
 						<div class="mb-3">
 							<label class="form-label" for="menuUrl">URL</label>
-							<input type="text" class="form-control" id="menuUrl" name="menuUrl" th:value="${menuDto.menuUrl}" title="URL" required/>
+							<input type="text" class="form-control" id="menuUrl" name="menuUrl" th:value="${menuDto.menuUrl}" title="URL" th:maxlength="100" required/>
 						</div>
 						<div class="mb-3">
 							<label class="form-label" for="menuCmt">설명</label>
-							<textarea class="form-control" id="menuCmt" th:field="${menuDto.menuCmt}"></textarea>
+							<textarea class="form-control" id="menuCmt" th:field="${menuDto.menuCmt}" th:maxlength="100"></textarea>
 						</div>
 					</div>
 					<div class="text-end">

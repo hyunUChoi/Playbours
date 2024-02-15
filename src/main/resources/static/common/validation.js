@@ -2,7 +2,6 @@
  * !!!!!!!!!!!!!!!!!!사용전 필독!!!!!!!!!!!!!!!!!!!!!
  * 유효성 적용 tag에 required, title 속성 필요
 */
-let spacePatten = /\s/g;
 let valChk = 0;
 
 function formValidation(form) {
@@ -25,7 +24,7 @@ function formValidation(form) {
                     case 'alphaOnly'    : validAlpha(elm); break;
                     case 'koreanOnly'   : validKorean(elm); break;
                     case 'idOnly'       : validId(elm); break;
-                    case 'passOnly'       : validPass(elm); break;
+                    case 'passOnly'     : validPass(elm); break;
                     case 'phoneOnly'    : validPhone(elm); break;
                     case 'emailOnly'    : validEmail(elm); break;
                 }
@@ -34,9 +33,18 @@ function formValidation(form) {
 
         /* 필수 값 */
         if(elm.getAttribute('required') != null) {
-            if(elm.value.trim() === '') {
-                validationMsg('trim', elm);
-                valChk += 1;
+            if(elm.type === 'radio' || elm.type === 'checkbox') {
+                /* radio, checkbox label color rollback */
+                elm.nextElementSibling.style.color = '#697a8d';
+                if(document.querySelector('[name=\"' + elm.getAttribute('name') +'\"]:checked') === null) {
+                    validationMsg('trim', elm);
+                    valChk += 1;
+                }
+            } else {
+                if(elm.value.trim() === '') {
+                    validationMsg('trim', elm);
+                    valChk += 1;
+                }
             }
         }
     }
@@ -146,11 +154,14 @@ function validationMsg(divn, elm) {
     }
     alert_el.innerText = elm.getAttribute('title') + msg;
 
-    /* 경고문구 붙이는 위치 */
-    if(elm.parentNode.getAttribute('class') === 'input-group') {
-        elm.parentNode.parentNode.appendChild(alert_el);
+    if(elm.type === 'radio' || elm.type === 'checkbox') {
+        elm.nextElementSibling.style.color = '#ff3e1d';
     } else {
-        elm.parentNode.appendChild(alert_el);
+        /* 경고문구 붙이는 위치 */
+        if(elm.parentNode.getAttribute('class') === 'input-group') {
+            elm.parentNode.parentNode.appendChild(alert_el);
+        } else {
+            elm.parentNode.appendChild(alert_el);
+        }
     }
-
 }

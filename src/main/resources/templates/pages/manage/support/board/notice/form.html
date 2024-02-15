@@ -44,7 +44,7 @@
 					<div class="row">
 						<div class="mb-3">
 							<label for="title" class="form-label">제목</label>
-							<input type="text" class="form-control" id="title" name="title" th:value="${boardDto.title}" title="제목" required/>
+							<input type="text" class="form-control" id="title" name="title" th:value="${boardDto.title}" title="제목" th:maxlength="50" required/>
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="useYn">공개여부</label>
@@ -68,7 +68,7 @@
 						</div>
 						<div class="mb-3">
 							<label class="form-label" for="cont">내용</label>
-							<textarea class="form-control" id="cont" th:field="${boardDto.cont}" title="내용" required></textarea>
+							<textarea class="form-control" id="cont" th:field="${boardDto.cont}" title="내용" th:maxlength="1500" required></textarea>
 						</div>
 						<div id="fileTbl"></div>
 					</div>
