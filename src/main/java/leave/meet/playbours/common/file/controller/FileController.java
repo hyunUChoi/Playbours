@@ -1,5 +1,6 @@
 package leave.meet.playbours.common.file.controller;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -13,10 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -81,23 +79,34 @@ public class FileController {
     @RequestMapping("/file/download")
     public void download(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String storePath = request.getParameter("fileStorePath") + request.getParameter("saveFileNm");
-        File file = new File(storePath);
-        FileInputStream in = new FileInputStream(storePath);
+        try {
+            String storePath = request.getParameter("fileStorePath") + request.getParameter("saveFileNm");
+            File file = new File(storePath);
+            FileInputStream in = new FileInputStream(storePath);
 
-        response.setContentType("application/octet-stream");
-        response.setHeader("Content-Disposition", "attachment; filename*=UTF-8''" + URLEncoder.encode(request.getParameter("originalFileNm"), StandardCharsets.UTF_8).replaceAll("\\+", "%20"));
-        OutputStream os = response.getOutputStream();
+            response.setContentType("application/octet-stream");
+            response.setHeader("Content-Disposition", "attachment; filename*=UTF-8''" + URLEncoder.encode(request.getParameter("originalFileNm"), StandardCharsets.UTF_8).replaceAll("\\+", "%20"));
+            OutputStream os = response.getOutputStream();
 
-        int length;
-        byte[] bytes = new byte[(int) file.length()];
-        while ((length = in.read(bytes)) > 0) {
-            os.write(bytes, 0, length);
+            try {
+                int length;
+                byte[] bytes = new byte[(int) file.length()];
+                while ((length = in.read(bytes)) > 0) {
+                    os.write(bytes, 0, length);
+                }
+                os.flush();
+            } finally {
+                os.close();
+                in.close();
+            }
+        } catch(Exception e) {
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("text/html;charset=UTF-8");
+            PrintWriter writer = response.getWriter();
+            writer.println("<script type=\"text/javascript\">alert('파일을 찾을 수 없습니다.'); history.back();</script>");
+            writer.flush();
+            writer.close();
         }
-
-        os.flush();
-        os.close();
-        in.close();
     }
 
     @ResponseBody

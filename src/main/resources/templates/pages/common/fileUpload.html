@@ -14,7 +14,7 @@
 		<th:block th:if="${#lists.size(resultList) gt 0}">
 			<div class="form-control-plaintext">
 				<th:block th:each="file, status : ${resultList}">
-					<i class="bx bx-download"></i>&nbsp;<a th:text="${file.getOriginalFileNm()}" th:href="@{/file/download(saveFileNm=${file.getSaveFileNm()}, fileStorePath=${file.getFileStorePath()}, originalFileNm=${file.getOriginalFileNm()})}" target="_self"></a>
+					<i class="bx bx-download"></i>&nbsp;<a href="javascript:void(0);" th:text="${file.getOriginalFileNm()}" th:href="@{/file/download(saveFileNm=${file.getSaveFileNm()}, fileStorePath=${file.getFileStorePath()}, originalFileNm=${file.getOriginalFileNm()})}" target="_self"></a>
 					<th:block th:if="${!status.last}"><br></th:block>
 				</th:block>
 			</div>
@@ -33,7 +33,7 @@
 			<div class="form-control-plaintext mt-2">
 				<th:block th:each="file, status : ${resultList}">
 					<i class="bx bx-download"></i>&nbsp;<a th:text="${file.getOriginalFileNm()}" th:href="@{/file/download(saveFileNm=${file.getSaveFileNm()}, fileStorePath=${file.getFileStorePath()}, originalFileNm=${file.getOriginalFileNm()})}" target="_self"></a>
-					&emsp;<i class="bx bx-message-square-x" style="color: red;" onclick="fnFileDelete(this.getAttribute('saveFileNm'))" th:saveFileNm="${file.getSaveFileNm()}"></i>
+					&emsp;<i class="bx bx-message-square-x" style="color: red; cursor: pointer;" th:onclick="fnFileDelete([[${file.getSaveFileNm()}]])"></i>
 					<th:block th:if="${!status.last}"><br></th:block>
 				</th:block>
 			</div>
