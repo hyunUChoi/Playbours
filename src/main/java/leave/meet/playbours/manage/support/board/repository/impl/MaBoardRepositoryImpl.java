@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.*;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -37,6 +38,14 @@ public class MaBoardRepositoryImpl implements MaBoardRepository {
         query.with(Sort.by(Sort.Direction.DESC, "seq"));
 
         List<MaBoardDto> filterData = mongoTemplate.find(query, MaBoardDto.class);
+
+        if("faq".equalsIgnoreCase(boardDivn)) {
+            LookupOperation lookup = LookupOperation.newLookup()
+                    .from("CLT_BOARD").localField("qstType").foreignField("code").as("result");
+            UnwindOperation unwind = Aggregation.unwind("result", "qstNm");
+            AggregationResults<MaBoardDto> agg = mongoTemplate.aggregate(Aggregation.newAggregation(lookup, unwind), "CLT_CODE", MaBoardDto.class);
+            System.out.println();
+        }
 
         return PageableExecutionUtils.getPage(
                 filterData, pageable, () -> mongoTemplate.count(query.skip(-1).limit(-1), MaBoardDto.class)

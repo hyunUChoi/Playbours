@@ -2,6 +2,8 @@ package leave.meet.playbours.manage.support.board.repository;
 
 import leave.meet.playbours.manage.support.board.dto.MaBoardDto;
 import org.springframework.data.domain.Page;
+import org.springframework.data.mongodb.repository.Aggregation;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface MaBoardRepository {
     Page<MaBoardDto> findByPagingAndFiltering(int page, int size, MaBoardDto dto, String boardDivn);

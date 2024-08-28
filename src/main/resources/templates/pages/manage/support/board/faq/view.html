@@ -37,29 +37,17 @@
 							<label class="form-label" for="title">제목</label>
 							<input class="form-control-plaintext" id="title" th:value="*{title}" readonly>
 						</div>
-						<div class="mb-3 col-md-6">
+						<div class="mb-3 col-md-4">
 							<label class="form-label" for="frstRegrId">작성자</label>
 							<input type="text" class="form-control-plaintext" id="frstRegrId" th:value="*{frstRegrId}" readonly/>
 						</div>
-						<div class="mb-3 col-md-6">
+						<div class="mb-3 col-md-4">
 							<label class="form-label" for="frstRegrDt">작성일</label>
 							<span class="form-control-plaintext" id="frstRegrDt" th:text="*{#dates.format(frstRegrDt, 'yyyy-MM-dd')}" readonly></span>
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="useYn">공개여부</label>
 							<input class="form-control-plaintext" id="useYn" th:value="*{useYn} eq 'Y' ? '공개' : '비공개'" readonly/>
-						</div>
-						<div class="col-md-4 col-md-4">
-							<label for="notiStrDt" class="col-form-label">공지시작일</label>
-							<div>
-								<span class="form-control-plaintext" id="notiStrDt" th:text="*{#dates.format(notiStrDt, 'yyyy-MM-dd')}" readonly></span>
-							</div>
-						</div>
-						<div class="col-md-4 col-md-4">
-							<label for="notiEndDt" class="col-form-label">공지종료일</label>
-							<div>
-								<span class="form-control-plaintext" id="notiEndDt" th:text="*{#dates.format(notiEndDt, 'yyyy-MM-dd')}" readonly></span>
-							</div>
 						</div>
 						<div class="mb-3">
 							<label class="form-label" for="cont">내용</label>

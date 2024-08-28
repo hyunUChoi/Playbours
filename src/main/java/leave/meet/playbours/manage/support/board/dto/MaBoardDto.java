@@ -30,8 +30,11 @@ public class MaBoardDto extends CmmnDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date notiEndDt;
 
-    // 질문유형
+    // 질문코드
     private String qstType;
+
+    // 질문유형
+    private String qstNm;
 
     // 게시글 제목
     private String title;
@@ -109,6 +112,14 @@ public class MaBoardDto extends CmmnDto {
 
     public void setQstType(String qstType) {
         this.qstType = qstType;
+    }
+
+    public String getQstNm() {
+        return qstNm;
+    }
+
+    public void setQstNm(String qstNm) {
+        this.qstNm = qstNm;
     }
 
     public String getTitle() {
