@@ -2,6 +2,7 @@ package leave.meet.playbours.manage.support.board.repository.impl;
 
 import leave.meet.playbours.manage.support.board.repository.MaBoardRepository;
 import leave.meet.playbours.manage.support.board.dto.MaBoardDto;
+import org.bson.Document;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -9,11 +10,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.*;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.CriteriaDefinition;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -37,14 +40,14 @@ public class MaBoardRepositoryImpl implements MaBoardRepository {
         searchCondition(query, dto, boardDivn);
         query.with(Sort.by(Sort.Direction.DESC, "seq"));
 
-        List<MaBoardDto> filterData = mongoTemplate.find(query, MaBoardDto.class);
+        List<MaBoardDto> filterData;
 
         if("faq".equalsIgnoreCase(boardDivn)) {
             LookupOperation lookup = LookupOperation.newLookup()
-                    .from("CLT_BOARD").localField("qstType").foreignField("code").as("result");
-            UnwindOperation unwind = Aggregation.unwind("result", "qstNm");
-            AggregationResults<MaBoardDto> agg = mongoTemplate.aggregate(Aggregation.newAggregation(lookup, unwind), "CLT_CODE", MaBoardDto.class);
-            System.out.println();
+                    .from("CLT_CODE").localField("code").foreignField("qstType").as("result");
+            filterData = mongoTemplate.aggregate(Aggregation.newAggregation(lookup), "CLT_BOARD", MaBoardDto.class).getMappedResults();
+        } else {
+            filterData = mongoTemplate.find(query, MaBoardDto.class);
         }
 
         return PageableExecutionUtils.getPage(
