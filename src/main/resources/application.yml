@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8080
 
 spring:
   thymeleaf:
@@ -8,6 +8,12 @@ spring:
   data:
     mongodb:
       uri: mongodb+srv://admin:zzz1234@playcluster.a1hqkve.mongodb.net/Playbours?retryWrites=true&w=majority
+
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://svc.sel4.cloudtype.app:32586/Playbours?characterEncoding=UTF-8&serverTimezone=UTC
+    username: test
+    password: zxcv1234
 
   # 파일업로드 관련
   servlet:
