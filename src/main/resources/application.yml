@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 1111
 
 spring:
   thymeleaf:
@@ -11,7 +11,7 @@ spring:
 
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://svc.sel4.cloudtype.app:32586/Playbours?characterEncoding=UTF-8&serverTimezone=UTC
+    javaUrl: jdbc:mariadb://svc.sel4.cloudtype.app:32586/Playbours?characterEncoding=UTF-8&serverTimezone=UTC
     username: test
     password: zxcv1234
 

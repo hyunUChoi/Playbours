@@ -5,7 +5,8 @@ import leave.meet.playbours.common.paging.dto.PagingDto;
 import leave.meet.playbours.common.paging.service.PagingService;
 import leave.meet.playbours.manage.member.user.dto.MaUserDto;
 import leave.meet.playbours.manage.sys.auth.dto.MaAuthDto;
-import leave.meet.playbours.manage.sys.auth.repository.MaAuthRepository;
+import leave.meet.playbours.manage.sys.auth.MaAuthRepository;
+import leave.meet.playbours.manage.sys.auth.service.MaAuthService;
 import leave.meet.playbours.manage.sys.menu.dto.MaMenuDto;
 import leave.meet.playbours.manage.sys.menu.repository.MaMenuRepository;
 import org.springframework.data.domain.Page;
@@ -19,13 +20,13 @@ import java.util.List;
 @Controller
 public class MaAuthController {
 
-    private final MaAuthRepository authRepository;
+    private final MaAuthService authService;
     private final MaMenuRepository menuRepository;
     @Resource(name= "pagingService")
     private PagingService pagingService;
 
-    public MaAuthController(MaAuthRepository authRepository, MaMenuRepository menuRepository, PagingService pagingService) {
-        this.authRepository = authRepository;
+    public MaAuthController(MaAuthService authService, MaMenuRepository menuRepository, PagingService pagingService) {
+        this.authService = authService;
         this.menuRepository = menuRepository;
         this.pagingService = pagingService;
     }
@@ -41,14 +42,14 @@ public class MaAuthController {
     @RequestMapping(FOLDER_PATH + "addList")
     public String addList(@ModelAttribute("maAuthDto") MaAuthDto maAuthDto, Model model) {
 
-        int pageNo = maAuthDto.getPageNo();
-        int pageSize = 10;
-        Page<MaAuthDto> resultList = authRepository.findByPagingAndFiltering(pageNo, pageSize, maAuthDto);
+        //int pageNo = maAuthDto.getPageNo();
+        //int pageSize = 10;
+        //List<MaAuthDto> resultList = authService.findAll();
 
-        PagingDto paging = pagingService.getPageInfo(resultList, pageNo, pageSize);
+        //PagingDto paging = pagingService.getPageInfo(resultList, pageNo, pageSize);
 
-        model.addAttribute("resultList", resultList);
-        model.addAttribute("paging", paging);
+        //model.addAttribute("resultList", resultList);
+        //model.addAttribute("paging", paging);
 
         return "pages/manage/sys/auth/addList";
     }
@@ -56,9 +57,8 @@ public class MaAuthController {
     @RequestMapping(FOLDER_PATH + "{procType}Form")
     public String form(@ModelAttribute("maAuthDto") MaAuthDto maAuthDto, @PathVariable String procType, Model model) {
 
-
         if("update".equals(procType)){
-            maAuthDto = authRepository.findOne(maAuthDto);
+            //maAuthDto = authService.findById(maAuthDto.getSeq());
         }
 
         // 1차 메뉴
@@ -86,7 +86,7 @@ public class MaAuthController {
 
             menuDto.setMaMenuDto(dto2);
         }
-        maAuthDto.setProcType(procType);
+        //maAuthDto.setProcType(procType);
         model.addAttribute("menuList", menuDto.getMenuList());
 
         return "pages/manage/sys/auth/form";
@@ -98,11 +98,11 @@ public class MaAuthController {
 
         try{
             if("insert".equals(procType)){
-                authRepository.insert(maAuthDto);
+                authService.save(maAuthDto);
             }else if("update".equals(procType)){
-                authRepository.update(maAuthDto);
+                authService.save(maAuthDto);
             }else if("delete".equals(procType)){
-                authRepository.delete(maAuthDto);
+                //authService.delete(maAuthDto);
             }
             model.addAttribute("result", "success");
         }catch (Exception e){

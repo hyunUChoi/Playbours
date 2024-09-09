@@ -28,9 +28,13 @@ dependencies {
 
     // fileUpload
     implementation("commons-io:commons-io:2.11.0")
-
+    runtimeOnly("mysql:mysql-connector-java")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
+
+    implementation("org.project lombok:lombok")
+    implementation("com.h2database:h2")
+    testImplementation("org.springframework.boot:spring-boot-data-jpa")
 }
 
 tasks.withType<Test> {
