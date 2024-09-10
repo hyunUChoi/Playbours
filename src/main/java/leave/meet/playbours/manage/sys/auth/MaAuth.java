@@ -3,6 +3,7 @@ package leave.meet.playbours.manage.sys.auth;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import java.util.Date;
 @Getter
 @NoArgsConstructor
 @Entity
+@Table(name = "maAuth")
 public class MaAuth {
     // 일련번호
     @Id

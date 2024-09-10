@@ -98,9 +98,9 @@ public class MaAuthController {
 
         try{
             if("insert".equals(procType)){
-                authService.save(maAuthDto);
+                authService.createMaAuth(maAuthDto.toEntity());
             }else if("update".equals(procType)){
-                authService.save(maAuthDto);
+                authService.createMaAuth(maAuthDto.toEntity());
             }else if("delete".equals(procType)){
                 //authService.delete(maAuthDto);
             }
