@@ -1,14 +1,6 @@
 package leave.meet.playbours.manage.sys.auth.dto;
 
-import leave.meet.playbours.common.dto.CmmnDto;
-import leave.meet.playbours.manage.sys.auth.MaAuth;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-import java.util.Date;
-
-@Getter
+/*@Getter
 @NoArgsConstructor
 public class MaAuthDto{
 
@@ -79,4 +71,4 @@ public class MaAuthDto{
         this.seq = seq;
         this.authCont = authCont;
     }
-}
+}*/

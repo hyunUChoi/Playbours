@@ -12,7 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-@Getter
+/*@Getter
 @NoArgsConstructor
 @Entity
 @Table(name = "maAuth")
@@ -72,4 +72,4 @@ public class MaAuth {
         this.lstChgId = lstChgId;
     }
 
-}
+}*/

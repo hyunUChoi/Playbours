@@ -16,7 +16,7 @@
     });
 
     function fnInsertMenu() {
-		document.getElementById('upperCd').value = [[${maMenuDto.menuCd}]];
+		document.getElementById('upperCd').value = [[${maMenuEntity.menuCd}]];
         gfnPageProcess('insert', 'lowerInsertForm');
     }
 </script>
@@ -28,7 +28,7 @@
 				<h5 class="mb-0">메뉴정보</h5>
 			</div>
 			<div class="card-body">
-				<form id="defaultFrm" th:object="${maMenuDto}" method="post" onsubmit="return false;">
+				<form id="defaultFrm" th:object="${maMenuEntity}" method="post" onsubmit="return false;">
 					<input type="hidden" th:field="*{seq}">
 					<input type="hidden" th:field="*{upperCd}">
 					<input type="hidden" th:field="*{pageNo}">

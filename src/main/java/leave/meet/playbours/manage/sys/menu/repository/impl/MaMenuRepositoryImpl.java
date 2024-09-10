@@ -1,7 +1,8 @@
+/*
 package leave.meet.playbours.manage.sys.menu.repository.impl;
 
+import leave.meet.playbours.manage.sys.menu.entity.MaMenuEntity;
 import leave.meet.playbours.manage.sys.menu.repository.MaMenuRepository;
-import leave.meet.playbours.manage.sys.menu.dto.MaMenuDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +27,7 @@ public class MaMenuRepositoryImpl implements MaMenuRepository {
     }
 
     @Override
-    public Page<MaMenuDto> findByPagingAndFiltering(int page, int size, MaMenuDto dto, String procType) {
+    public Page<MaMenuEntity> findByPagingAndFiltering(int page, int size, MaMenuEntity dto, String procType) {
         Pageable pageable = PageRequest.of(page == 0 ? 0 : page - 1, size, Sort.by("seq"));
         Query query = new Query()
                 .with(pageable)
@@ -35,7 +36,9 @@ public class MaMenuRepositoryImpl implements MaMenuRepository {
 
         query.addCriteria(Criteria.where("delYn").is("N"));
 
-        /* 쿼리 조건 */
+        */
+/* 쿼리 조건 *//*
+
         if(dto.getSearch1() != null && !"".equals(dto.getSearch1() )) {
             query.addCriteria(Criteria.where("menuClCd").is(dto.getSearch1()));
         }
@@ -63,27 +66,27 @@ public class MaMenuRepositoryImpl implements MaMenuRepository {
         query.addCriteria(Criteria.where("upperCd").is("view".equals(procType) ? dto.getMenuCd() : ""));
         query.with(Sort.by(Sort.Direction.DESC, "seq"));
 
-        List<MaMenuDto> filterData = mongoTemplate.find(query, MaMenuDto.class);
+        List<MaMenuEntity> filterData = mongoTemplate.find(query, MaMenuEntity.class);
 
         return PageableExecutionUtils.getPage(
-                filterData, pageable, () -> mongoTemplate.count(query.skip(-1).limit(-1), MaMenuDto.class)
+                filterData, pageable, () -> mongoTemplate.count(query.skip(-1).limit(-1), MaMenuEntity.class)
         );
     }
 
     @Override
-    public MaMenuDto findOne(MaMenuDto dto) {
+    public MaMenuEntity findOne(MaMenuEntity dto) {
         Query query = new Query();
         query.addCriteria(Criteria.where("seq").is(dto.getSeq()));
         query.addCriteria(Criteria.where("delYn").is("N"));
-        return mongoTemplate.findOne(query, MaMenuDto.class);
+        return mongoTemplate.findOne(query, MaMenuEntity.class);
     }
 
     @Override
-    public MaMenuDto findOneByCode(MaMenuDto dto) {
+    public MaMenuEntity findOneByCode(MaMenuEntity dto) {
         Query query = new Query();
         query.addCriteria(Criteria.where("menuCd").is(dto.getUpperCd()));
         query.addCriteria(Criteria.where("delYn").is("N"));
-        return mongoTemplate.findOne(query, MaMenuDto.class);
+        return mongoTemplate.findOne(query, MaMenuEntity.class);
     }
 
     @Override
@@ -91,12 +94,12 @@ public class MaMenuRepositoryImpl implements MaMenuRepository {
         Query query = new Query();
         query.addCriteria(Criteria.where("menuCd").is(menuCd));
         query.addCriteria(Criteria.where("delYn").is("N"));
-        return (int) mongoTemplate.count(query, MaMenuDto.class);
+        return (int) mongoTemplate.count(query, MaMenuEntity.class);
     }
 
     @Override
-    public void insert(MaMenuDto dto) {
-        MaMenuDto menuDto = new MaMenuDto();
+    public void insert(MaMenuEntity dto) {
+        MaMenuEntity menuDto = new MaMenuEntity();
         menuDto.setUpperCd(dto.getUpperCd());
         menuDto.setMenuClCd(dto.getMenuClCd());
         menuDto.setMenuOrd(dto.getMenuOrd());
@@ -113,7 +116,7 @@ public class MaMenuRepositoryImpl implements MaMenuRepository {
     }
 
     @Override
-    public void update(MaMenuDto dto) {
+    public void update(MaMenuEntity dto) {
         Query query = new Query();
         Update update = new Update();
 
@@ -129,11 +132,11 @@ public class MaMenuRepositoryImpl implements MaMenuRepository {
         // TODO 로그인한 아이디로 변경
         update.set("lstChgId", "admin");
         update.set("lstChgDt", new Date());
-        mongoTemplate.upsert(query, update, MaMenuDto.class);
+        mongoTemplate.upsert(query, update, MaMenuEntity.class);
     }
 
     @Override
-    public void delete(MaMenuDto dto) {
+    public void delete(MaMenuEntity dto) {
         Query query = new Query();
         Update update = new Update();
 
@@ -142,17 +145,18 @@ public class MaMenuRepositoryImpl implements MaMenuRepository {
         update.set("lstChgId", "admin");
         update.set("lstChgDt", new Date());
         update.set("delYn", "Y");
-        mongoTemplate.upsert(query, update, MaMenuDto.class);
+        mongoTemplate.upsert(query, update, MaMenuEntity.class);
     }
 
     @Override
-    public List<MaMenuDto> findMenuList(MaMenuDto dto) {
+    public List<MaMenuEntity> findMenuList(MaMenuEntity dto) {
         Query query = new Query();
         query.addCriteria(Criteria.where("menuClCd").is(dto.getMenuClCd()));
         query.addCriteria(Criteria.where("upperCd").is(dto.getUpperCd()));
         query.addCriteria(Criteria.where("useYn").is("Y"));
         query.addCriteria(Criteria.where("delYn").is("N"));
         query.with(Sort.by(Sort.Direction.ASC, "menuOrd"));
-        return mongoTemplate.find(query, MaMenuDto.class);
+        return mongoTemplate.find(query, MaMenuEntity.class);
     }
 }
+*/

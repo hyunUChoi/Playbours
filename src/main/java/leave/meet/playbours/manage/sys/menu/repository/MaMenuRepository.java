@@ -1,24 +1,24 @@
 package leave.meet.playbours.manage.sys.menu.repository;
 
-import leave.meet.playbours.manage.sys.menu.dto.MaMenuDto;
+import leave.meet.playbours.manage.sys.menu.entity.MaMenuEntity;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 
-public interface MaMenuRepository {
-    Page<MaMenuDto> findByPagingAndFiltering(int page, int size, MaMenuDto dto, String procType);
+/*public interface MaMenuRepository {
+    Page<MaMenuEntity> findByPagingAndFiltering(int page, int size, MaMenuEntity dto, String procType);
 
-    MaMenuDto findOne(MaMenuDto dto);
+    MaMenuEntity findOne(MaMenuEntity dto);
 
-    MaMenuDto findOneByCode(MaMenuDto dto);
+    MaMenuEntity findOneByCode(MaMenuEntity dto);
 
     int countByCode(String menuCd);
 
-    void insert(MaMenuDto dto);
+    void insert(MaMenuEntity dto);
 
-    void update(MaMenuDto dto);
+    void update(MaMenuEntity dto);
 
-    void delete(MaMenuDto dto);
+    void delete(MaMenuEntity dto);
 
-    List<MaMenuDto> findMenuList(MaMenuDto dto);
-}
+    List<MaMenuEntity> findMenuList(MaMenuEntity dto);
+}*/

@@ -47,7 +47,7 @@
 		</th:block>
 	</tbody>
 </table>
-<th:block th:if="${maMenuDto.procType eq 'list'}">
+<th:block th:if="${maMenuEntity.procType eq 'list'}">
 	<div class="demo-inline-spacing">
 		<button class="dt-button create-new btn btn-primary" onclick="gfnPageProcess('insert', 'insertForm')" style="position: absolute;right: 0;bottom: 1rem;">
 			<span><i class="bx bx-plus me-sm-1"></i>
@@ -82,7 +82,7 @@
 
     function fnPaging(pageNo) {
         document.getElementById('tbl').innerHTML = '';
-        gfnPageProcess('addList', [[${maMenuDto.procType}]] + 'AddList', pageNo.getAttribute('pageNo'));
+        gfnPageProcess('addList', [[${maMenuEntity.procType}]] + 'AddList', pageNo.getAttribute('pageNo'));
     }
 </script>
 </html>

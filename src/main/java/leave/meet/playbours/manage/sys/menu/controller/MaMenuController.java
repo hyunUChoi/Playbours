@@ -1,44 +1,35 @@
 package leave.meet.playbours.manage.sys.menu.controller;
 
 import jakarta.annotation.Resource;
-import leave.meet.playbours.common.paging.dto.PagingDto;
 import leave.meet.playbours.common.paging.service.PagingService;
-import leave.meet.playbours.manage.sys.menu.repository.MaMenuRepository;
-import leave.meet.playbours.manage.sys.menu.dto.MaMenuDto;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.HashMap;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping(value = "/ma/sys/menu/")
 public class MaMenuController {
 
-    private final MaMenuRepository menuRepository;
+    //private final MaMenuRepository menuRepository;
 
     @Resource(name= "pagingService")
     private PagingService pagingService;
 
-    private final static String FOLDER_PATH = "/ma/sys/menu/";
-
-    public MaMenuController(MaMenuRepository menuRepository, PagingService pagingService) {
+    /*public MaMenuController(MaMenuRepository menuRepository, PagingService pagingService) {
         this.menuRepository = menuRepository;
         this.pagingService = pagingService;
     }
 
-    @RequestMapping(FOLDER_PATH + "list")
-    public String list(@ModelAttribute("maMenuDto") MaMenuDto maMenuDto) {
+    @RequestMapping("list")
+    public String list(@ModelAttribute("maMenuDto") MaMenuEntity maMenuEntity) {
         return "pages/manage/sys/menu/list";
     }
 
-    @RequestMapping(FOLDER_PATH + "{procType:view|list}AddList")
-    public String addList(@ModelAttribute("maMenuDto") MaMenuDto maMenuDto, @PathVariable String procType, Model model) {
+    @RequestMapping("{procType:view|list}AddList")
+    public String addList(@ModelAttribute("maMenuDto") MaMenuEntity maMenuEntity, @PathVariable String procType, Model model) {
 
-        int pageNo = maMenuDto.getPageNo();
+        int pageNo = maMenuEntity.getPageNo();
         int pageSize = 10;
-        Page<MaMenuDto> resultList = menuRepository.findByPagingAndFiltering(pageNo, pageSize, maMenuDto, procType);
+        Page<MaMenuEntity> resultList = menuRepository.findByPagingAndFiltering(pageNo, pageSize, maMenuEntity, procType);
 
         PagingDto paging = pagingService.getPageInfo(resultList, pageNo, pageSize);
 
@@ -48,16 +39,16 @@ public class MaMenuController {
         return "pages/manage/sys/menu/addList";
     }
 
-    @RequestMapping(FOLDER_PATH + "{procType:insert|lowerInsert|update|lowerUpdate}Form")
-    public String form(@ModelAttribute("maMenuDto") MaMenuDto maMenuDto, @PathVariable String procType, Model model) {
+    @RequestMapping("{procType:insert|lowerInsert|update|lowerUpdate}Form")
+    public String form(@ModelAttribute("maMenuDto") MaMenuEntity maMenuEntity, @PathVariable String procType, Model model) {
 
-        MaMenuDto menuDto = new MaMenuDto();
-        /* 하위등록 취소 시 view로 돌아가기 위한 파라미터 */
-        menuDto.setSeq(maMenuDto.getSeq());
-        menuDto.setUpperCd(maMenuDto.getUpperCd());
+        MaMenuEntity menuDto = new MaMenuEntity();
+        *//* 하위등록 취소 시 view로 돌아가기 위한 파라미터 *//*
+        *//*menuDto.setSeq(maMenuEntity.getSeq());
+        menuDto.setUpperCd(maMenuEntity.getUpperCd());*//*
 
         if(procType.equals("update") || procType.equals("lowerUpdate")) {
-            menuDto = menuRepository.findOne(maMenuDto);
+            menuDto = menuRepository.findOne(maMenuEntity);
         }
 
         model.addAttribute("menuDto", menuDto);
@@ -66,7 +57,7 @@ public class MaMenuController {
     }
 
     @ResponseBody
-    @RequestMapping(FOLDER_PATH + "chkOverlap")
+    @RequestMapping("chkOverlap")
     public HashMap<String, String> chkOverlap(@RequestBody HashMap<String, Object> body) {
 
         HashMap<String, String> returnMap = new HashMap<>();
@@ -81,54 +72,54 @@ public class MaMenuController {
         return returnMap;
     }
 
-    @RequestMapping(FOLDER_PATH + "{procType:insert|lowerInsert|update|lowerUpdate|delete|lowerDelete}Proc")
-    public String proc(@ModelAttribute("maMenuDto") MaMenuDto maMenuDto, @PathVariable String procType, RedirectAttributes attributes) {
+    @RequestMapping("{procType:insert|lowerInsert|update|lowerUpdate|delete|lowerDelete}Proc")
+    public String proc(@ModelAttribute("maMenuDto") MaMenuEntity maMenuEntity, @PathVariable String procType, RedirectAttributes attributes) {
 
         switch (procType) {
             case "insert" -> {
-                menuRepository.insert(maMenuDto);
-                return "redirect:" + FOLDER_PATH + "list";
+                menuRepository.insert(maMenuEntity);
+                return "redirect:/ma/sys/menu/list";
             }
             case "lowerInsert" -> {
-                menuRepository.insert(maMenuDto);
-                attributes.addFlashAttribute("maMenuDto", maMenuDto);
-                return "redirect:" + FOLDER_PATH + "listView";
+                menuRepository.insert(maMenuEntity);
+                attributes.addFlashAttribute("maMenuDto", maMenuEntity);
+                return "redirect:/ma/sys/menu/listView";
             }
             case "update", "lowerUpdate" -> {
-                menuRepository.update(maMenuDto);
-                attributes.addFlashAttribute("maMenuDto", maMenuDto);
-                return "redirect:" + FOLDER_PATH + "listView";
+                menuRepository.update(maMenuEntity);
+                attributes.addFlashAttribute("maMenuDto", maMenuEntity);
+                return "redirect:/ma/sys/menu/listView";
             }
             case "delete" -> {
-                menuRepository.delete(maMenuDto);
-                return "redirect:" + FOLDER_PATH + "list";
+                menuRepository.delete(maMenuEntity);
+                return "redirect:/ma/sys/menu/list";
             }
             case "lowerDelete" -> {
-                menuRepository.delete(maMenuDto);
-                attributes.addFlashAttribute("maMenuDto", maMenuDto);
-                return "redirect:" + FOLDER_PATH + "viewView";
+                menuRepository.delete(maMenuEntity);
+                attributes.addFlashAttribute("maMenuDto", maMenuEntity);
+                return "redirect:/ma/sys/menu/viewView";
             }
         }
 
         return "pages/manage/sys/menu/list";
     }
 
-    @RequestMapping(FOLDER_PATH + "{procType:view|list}View")
-    public String view(@ModelAttribute("maMenuDto") MaMenuDto maMenuDto, @PathVariable String procType, Model model) {
+    @RequestMapping("{procType:view|list}View")
+    public String view(@ModelAttribute("maMenuDto") MaMenuEntity maMenuEntity, @PathVariable String procType, Model model) {
 
-        MaMenuDto searchVO = maMenuDto;
+        MaMenuEntity searchVO = maMenuEntity;
 
         if(procType.equals("view")) {
-            maMenuDto = menuRepository.findOneByCode(maMenuDto);
+            maMenuEntity = menuRepository.findOneByCode(maMenuEntity);
         } else {
-            maMenuDto = menuRepository.findOne(maMenuDto);
+            maMenuEntity = menuRepository.findOne(maMenuEntity);
         }
 
         // 검색 조건 저장
-        maMenuDto.setSearch(searchVO);
-        model.addAttribute("maMenuDto", maMenuDto);
+        maMenuEntity.setSearch(searchVO);
+        model.addAttribute("maMenuDto", maMenuEntity);
 
         return "pages/manage/sys/menu/view";
-    }
+    }*/
 
 }

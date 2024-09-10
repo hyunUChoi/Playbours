@@ -45,6 +45,7 @@ public class MaBoardRepositoryImpl implements MaBoardRepository {
         if("faq".equalsIgnoreCase(boardDivn)) {
             LookupOperation lookup = LookupOperation.newLookup()
                     .from("CLT_CODE").localField("code").foreignField("qstType").as("result");
+            MatchOperation matchOperation = new MatchOperation((CriteriaDefinition) query);
             filterData = mongoTemplate.aggregate(Aggregation.newAggregation(lookup), "CLT_BOARD", MaBoardDto.class).getMappedResults();
         } else {
             filterData = mongoTemplate.find(query, MaBoardDto.class);

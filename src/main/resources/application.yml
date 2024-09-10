@@ -3,17 +3,37 @@ server:
 
 spring:
   thymeleaf:
+    prefix: classpath:templates/
+    suffix: .html
+    check-template-location: true
+    mode: HTML
     cache: false
 
-  data:
-    mongodb:
-      uri: mongodb+srv://admin:zzz1234@playcluster.a1hqkve.mongodb.net/Playbours?retryWrites=true&w=majority
-
   datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    javaUrl: jdbc:mariadb://svc.sel4.cloudtype.app:32586/Playbours?characterEncoding=UTF-8&serverTimezone=UTC
-    username: test
-    password: zxcv1234
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: admin
+      password: 1234
+      url: jdbc:mysql://localhost:3306/playbours?serverTimezone=UTC&characterEncoding=UTF-8
+
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+        show-sql: true
+
+  ##data:
+    ##mongodb:
+      ##uri: mongodb+srv://admin:zzz1234@playcluster.a1hqkve.mongodb.net/Playbours?retryWrites=true&w=majority
+
+  ##datasource:
+    ##driver-class-name: org.mariadb.jdbc.Driver
+    ##javaUrl: jdbc:mariadb://svc.sel4.cloudtype.app:32586/Playbours?characterEncoding=UTF-8&serverTimezone=UTC
+    ##username: test
+    ##password: zxcv1234
 
   # 파일업로드 관련
   servlet:
@@ -28,3 +48,7 @@ spring:
 file:
   upload:
     path: 'C:\Playbours\attach\upload\'
+
+logging:
+  level:
+    root: info

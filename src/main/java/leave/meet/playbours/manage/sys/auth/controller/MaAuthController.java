@@ -1,23 +1,6 @@
 package leave.meet.playbours.manage.sys.auth.controller;
 
-import jakarta.annotation.Resource;
-import leave.meet.playbours.common.paging.dto.PagingDto;
-import leave.meet.playbours.common.paging.service.PagingService;
-import leave.meet.playbours.manage.member.user.dto.MaUserDto;
-import leave.meet.playbours.manage.sys.auth.dto.MaAuthDto;
-import leave.meet.playbours.manage.sys.auth.MaAuthRepository;
-import leave.meet.playbours.manage.sys.auth.service.MaAuthService;
-import leave.meet.playbours.manage.sys.menu.dto.MaMenuDto;
-import leave.meet.playbours.manage.sys.menu.repository.MaMenuRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.List;
-
-@Controller
+/*@Controller
 public class MaAuthController {
 
     private final MaAuthService authService;
@@ -98,9 +81,9 @@ public class MaAuthController {
 
         try{
             if("insert".equals(procType)){
-                authService.createMaAuth(maAuthDto.toEntity());
+                //authService.createMaAuth(maAuthDto.toEntity());
             }else if("update".equals(procType)){
-                authService.createMaAuth(maAuthDto.toEntity());
+                //authService.createMaAuth(maAuthDto.toEntity());
             }else if("delete".equals(procType)){
                 //authService.delete(maAuthDto);
             }
@@ -112,4 +95,4 @@ public class MaAuthController {
         return "redirect:/ma/sys/auth/list";
     }
 
-}
+}*/

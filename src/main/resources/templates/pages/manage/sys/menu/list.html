@@ -29,7 +29,7 @@
 </script>
 <h4 class="fw-bold py-3 mb-4">MENU</h4>
 <div class="card">
-	<form id="defaultFrm" th:object="${maMenuDto}" method="post" onsubmit="return false;">
+	<form id="defaultFrm" th:object="${maMenuEntity}" method="post" onsubmit="return false;">
 		<input type="hidden" th:field="*{seq}"/>
 		<input type="hidden" th:field="*{pageNo}"/>
 		<input type="hidden" th:field="*{menuCd}"/>
