@@ -2,23 +2,22 @@ package leave.meet.playbours.manage.sys.menu.controller;
 
 import jakarta.annotation.Resource;
 import leave.meet.playbours.common.paging.service.PagingService;
+import leave.meet.playbours.manage.sys.menu.service.MaMenuService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping(value = "/ma/sys/menu/")
 public class MaMenuController {
 
-    //private final MaMenuRepository menuRepository;
+    private final MaMenuService maMenuService;
 
     @Resource(name= "pagingService")
     private PagingService pagingService;
 
-    /*public MaMenuController(MaMenuRepository menuRepository, PagingService pagingService) {
-        this.menuRepository = menuRepository;
-        this.pagingService = pagingService;
-    }
-
+    /*
     @RequestMapping("list")
     public String list(@ModelAttribute("maMenuDto") MaMenuEntity maMenuEntity) {
         return "pages/manage/sys/menu/list";

@@ -1,3 +1,4 @@
+/*
 package leave.meet.playbours.manage.member.word.controller;
 
 import jakarta.annotation.Resource;
@@ -69,3 +70,4 @@ public class MaWordController {
     }
 
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package leave.meet.playbours.common.file.controller;
 
 import jakarta.servlet.RequestDispatcher;
@@ -48,12 +49,16 @@ public class FileController {
         String folderPath = now.getYear() + File.separator + now.getMonthValue()  + File.separator + now.getDayOfMonth() + File.separator;
 
         // TODO 서버컴 경로로 변경
-        /* window | mac 파일 상대경로 지정 */
+        */
+/* window | mac 파일 상대경로 지정 *//*
+
         String path = File.separator + "Playbours" + File.separator + "attach" + File.separator + "upload" + File.separator;
         if(request.getHeader("USER-AGENT").toLowerCase().contains("mac")) {
             path = File.separator + "Users" + path;
         } else if(request.getHeader("USER-AGENT").toLowerCase().contains("window")) {
-            /* 사용자의 컴퓨터의 드라이버가 유동적일 것을 감안하여 현재 java가 깔려있는 드라이버에 저장 */
+            */
+/* 사용자의 컴퓨터의 드라이버가 유동적일 것을 감안하여 현재 java가 깔려있는 드라이버에 저장 *//*
+
             path = System.getProperty("user.dir").split(":")[0] + ":" + path;
         }
 
@@ -113,13 +118,17 @@ public class FileController {
     @RequestMapping("/file/delete")
     public int delete(@RequestParam String saveFileNm, @RequestParam String atchFile) {
 
-        /* 물리파일 삭제 및 폴더 삭제 - 보류 */
-        /*FileDto fileDto = fileRepository.findFile(saveFileNm);
+        */
+/* 물리파일 삭제 및 폴더 삭제 - 보류 *//*
+
+        */
+/*FileDto fileDto = fileRepository.findFile(saveFileNm);
         File file = new File(fileDto.getFileStorePath(), fileDto.getSaveFileNm());
         File directory = new File(fileDto.getFileStorePath());
 
         file.delete();
-        directory.delete();*/
+        directory.delete();*//*
+
         fileRepository.delete(saveFileNm);
         return fileRepository.countByFileName(atchFile);
     }
@@ -127,7 +136,9 @@ public class FileController {
     @ResponseBody
     @RequestMapping("/file/tmpFile")
     public void tmpFile(@RequestBody HashMap<String, Object> param) {
-        /* parameter String casting 시 bootstrap 3.X.X version error 발생 */
+        */
+/* parameter String casting 시 bootstrap 3.X.X version error 발생 *//*
+
         Object atchFile = param.get("atchFile");
         Object type = param.get("type");
 
@@ -141,3 +152,4 @@ public class FileController {
     }
 
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package leave.meet.playbours.manage.support.board.controller;
 
 import jakarta.annotation.Resource;
@@ -157,3 +158,4 @@ public class MaBoardController {
         }
     }
 }
+*/

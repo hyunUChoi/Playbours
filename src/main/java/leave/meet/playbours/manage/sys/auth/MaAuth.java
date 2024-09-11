@@ -1,17 +1,5 @@
 package leave.meet.playbours.manage.sys.auth;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.util.Date;
-
 /*@Getter
 @NoArgsConstructor
 @Entity

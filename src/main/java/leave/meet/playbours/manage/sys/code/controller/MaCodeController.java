@@ -1,3 +1,4 @@
+/*
 package leave.meet.playbours.manage.sys.code.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import leave.meet.playbours.manage.support.board.dto.MaBoardDto;
@@ -93,3 +94,4 @@ public class MaCodeController {
     }
 
 }
+*/
