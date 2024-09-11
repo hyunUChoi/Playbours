@@ -1,11 +1,16 @@
 package leave.meet.playbours.manage.sys.menu.controller;
 
 import jakarta.annotation.Resource;
+import leave.meet.playbours.common.paging.dto.PagingDto;
 import leave.meet.playbours.common.paging.service.PagingService;
 import leave.meet.playbours.manage.sys.menu.service.MaMenuService;
+import leave.meet.playbours.manage.sys.menu.service.MaMenuVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.HashMap;
 
 @Controller
 @RequiredArgsConstructor
@@ -17,12 +22,11 @@ public class MaMenuController {
     @Resource(name= "pagingService")
     private PagingService pagingService;
 
-    /*
-    @RequestMapping("list")
-    public String list(@ModelAttribute("maMenuDto") MaMenuEntity maMenuEntity) {
+    @RequestMapping(value = "list")
+    public String list(@ModelAttribute("maMenuVO") MaMenuVO maMenuVO) {
         return "pages/manage/sys/menu/list";
     }
-
+    /*
     @RequestMapping("{procType:view|list}AddList")
     public String addList(@ModelAttribute("maMenuDto") MaMenuEntity maMenuEntity, @PathVariable String procType, Model model) {
 
