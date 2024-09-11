@@ -1,16 +1,13 @@
-package leave.meet.playbours.manage.sys.menu.entity;
+package leave.meet.playbours.manage.sys.menu.service;
 
 import jakarta.persistence.*;
 import leave.meet.playbours.common.dto.CmmnDto;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @SuppressWarnings("unused")
@@ -18,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "T_MENU")
-public class MaMenuEntity extends CmmnDto implements Serializable {
+public class MaMenuVO extends CmmnDto implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -82,10 +79,10 @@ public class MaMenuEntity extends CmmnDto implements Serializable {
     private String delYn;
 
     @OneToMany
-    private List<MaMenuEntity> menuList;
+    private List<MaMenuVO> menuList;
 
     @Builder
-    public MaMenuEntity(Long seq, String regId, String regDt, String modId, String modDt, String menuClCd, String menuCd, String upperCd, String menuNm, String menuOrd, String menuUrl, String menuCmt, String useYn, String delYn) {
+    public MaMenuVO(Long seq, String regId, String regDt, String modId, String modDt, String menuClCd, String menuCd, String upperCd, String menuNm, String menuOrd, String menuUrl, String menuCmt, String useYn, String delYn) {
         this.seq = seq;
         this.regId = regId;
         this.regDt = regDt;

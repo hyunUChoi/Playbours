@@ -1,7 +1,7 @@
 /*
 package leave.meet.playbours.manage.sys.menu.repository.impl;
 
-import leave.meet.playbours.manage.sys.menu.entity.MaMenuEntity;
+import leave.meet.playbours.manage.sys.menu.service.MaMenuEntity;
 import leave.meet.playbours.manage.sys.menu.repository.MaMenuRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

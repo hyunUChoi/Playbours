@@ -1,9 +1,4 @@
-package leave.meet.playbours.manage.sys.menu.repository;
-
-import leave.meet.playbours.manage.sys.menu.entity.MaMenuEntity;
-import org.springframework.data.domain.Page;
-
-import java.util.List;
+package leave.meet.playbours.manage.sys.menu.service;
 
 /*public interface MaMenuRepository {
     Page<MaMenuEntity> findByPagingAndFiltering(int page, int size, MaMenuEntity dto, String procType);

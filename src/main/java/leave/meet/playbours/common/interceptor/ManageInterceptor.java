@@ -3,14 +3,12 @@ package leave.meet.playbours.common.interceptor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import leave.meet.playbours.manage.sys.menu.entity.MaMenuEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.util.Enumeration;
-import java.util.List;
 
 @Component
 public class ManageInterceptor implements HandlerInterceptor {
