@@ -13,7 +13,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(value = "/ma/sys/menu/")
+@RequestMapping(value = "/ma/sys/auth/")
 public class MaAuthController {
 
     private final MaAuthService maAuthService;

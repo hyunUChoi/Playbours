@@ -1,16 +1,17 @@
 package leave.meet.playbours.manage.sys.menu.controller;
 
 import jakarta.annotation.Resource;
-import leave.meet.playbours.common.paging.dto.PagingDto;
 import leave.meet.playbours.common.paging.service.PagingService;
 import leave.meet.playbours.manage.sys.menu.service.MaMenuService;
 import leave.meet.playbours.manage.sys.menu.service.MaMenuVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.HashMap;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,22 +27,19 @@ public class MaMenuController {
     public String list(@ModelAttribute("maMenuVO") MaMenuVO maMenuVO) {
         return "pages/manage/sys/menu/list";
     }
-    /*
+
     @RequestMapping("{procType:view|list}AddList")
-    public String addList(@ModelAttribute("maMenuDto") MaMenuEntity maMenuEntity, @PathVariable String procType, Model model) {
+    public String addList(@ModelAttribute("maMenuVO") MaMenuVO maMenuVO, @PathVariable String procType, Model model) {
 
-        int pageNo = maMenuEntity.getPageNo();
+        int pageNo = maMenuVO.getPageNo();
         int pageSize = 10;
-        Page<MaMenuEntity> resultList = menuRepository.findByPagingAndFiltering(pageNo, pageSize, maMenuEntity, procType);
-
-        PagingDto paging = pagingService.getPageInfo(resultList, pageNo, pageSize);
+        List<MaMenuVO> resultList = maMenuService.selectList(maMenuVO);
 
         model.addAttribute("resultList", resultList);
-        model.addAttribute("paging", paging);
 
         return "pages/manage/sys/menu/addList";
     }
-
+    /*
     @RequestMapping("{procType:insert|lowerInsert|update|lowerUpdate}Form")
     public String form(@ModelAttribute("maMenuDto") MaMenuEntity maMenuEntity, @PathVariable String procType, Model model) {
 

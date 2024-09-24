@@ -1,18 +1,8 @@
 <!DOCTYPE html>
-<html lang="en"
-      class="light-style layout-menu-fixed"
-      dir="ltr"
-      data-theme="theme-default"
-      data-assets-path="/manage/assets/"
-      data-template="vertical-menu-template-free"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{common/manage/layout/layout}"
-      layout:fragment="content"
->
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="/manage/assets/" data-template="vertical-menu-template-free" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/manage/layout/layout}" layout:fragment="content">
 <script th:inline="javascript">
 	document.addEventListener("DOMContentLoaded", () => {
-        //gfnPageProcess('addList', 'listAddList', document.getElementById('pageNo').value);
+        gfnPageProcess('addList', 'listAddList', document.getElementById('pageNo').value);
 	});
 
     function fnSearch() {

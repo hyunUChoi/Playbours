@@ -2,7 +2,10 @@ package leave.meet.playbours.manage.sys.menu.service;
 
 import org.apache.ibatis.annotations.Mapper;
 
-@Mapper
-public class MaMenuDAO {
+import java.util.List;
 
+@Mapper
+public interface MaMenuDAO {
+
+    List<MaMenuVO> selectList(MaMenuVO maMenuVO);
 }
