@@ -8,4 +8,8 @@ import java.util.List;
 public interface MaMenuDAO {
 
     List<MaMenuVO> selectList(MaMenuVO maMenuVO);
+
+    int selectCodeCount(MaMenuVO maMenuVO);
+
+    void insertContents(MaMenuVO maMenuVO);
 }

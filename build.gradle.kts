@@ -18,12 +18,14 @@ repositories {
 dependencies {
     implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.2")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     runtimeOnly("com.mysql:mysql-connector-j")
 
     //implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-web-services")
     implementation("org.springframework.boot:spring-boot-starter-websocket")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
 
     // thymeleaf
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")

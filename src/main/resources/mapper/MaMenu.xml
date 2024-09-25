@@ -6,4 +6,37 @@
         SELECT * FROM T_MENU
     </select>
 
+    <select id="selectCodeCount" parameterType="maMenuVO" resultType="int">
+        SELECT COUNT(1)
+        FROM T_MENU
+        WHERE DEL_YN = 'N'
+        AND MENU_CD = #{menuCd}
+    </select>
+
+    <insert id="insertContents" parameterType="maMenuVO">
+        INSERT INTO T_MENU(
+              SEQ
+            , REG_ID
+            , MENU_CL_CD
+            , MENU_CD
+            , UPPER_CD
+            , MENU_NM
+            , MENU_ORD
+            , MENU_URL
+            , MENU_CMT
+            , USE_YN
+        ) VALUES (
+              #{}
+            , #{admin}
+            , #{menuClCd}
+            , #{menuCd}
+            , #{upperCd}
+            , #{menuNm}
+            , #{menuOrd}
+            , #{menuUrl}
+            , #{menuCmt}
+            , #{useYn}
+        )
+    </insert>
+
 </mapper>

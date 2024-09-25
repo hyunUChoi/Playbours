@@ -19,4 +19,14 @@ public class MaMenuServiceImpl implements MaMenuService {
     public List<MaMenuVO> selectList(MaMenuVO maMenuVO) {
         return maMenuDAO.selectList(maMenuVO);
     }
+
+    @Override
+    public int selectCodeCount(MaMenuVO maMenuVO) {
+        return maMenuDAO.selectCodeCount(maMenuVO);
+    }
+
+    @Override
+    public void insertContents(MaMenuVO maMenuVO) {
+        maMenuDAO.insertContents(maMenuVO);
+    }
 }

@@ -1,15 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"
-      class="light-style layout-menu-fixed"
-      dir="ltr"
-      data-theme="theme-default"
-      data-assets-path="/manage/assets/"
-      data-template="vertical-menu-template-free"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{common/manage/layout/layout}"
-      layout:fragment="content"
->
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="/manage/assets/" data-template="vertical-menu-template-free" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/manage/layout/layout}" layout:fragment="content">
 <script th:inline="javascript">
     document.addEventListener("DOMContentLoaded", () => {
 
@@ -25,34 +15,31 @@
     function fnChkOverlap() {
         fetch('/ma/sys/menu/chkOverlap', {
             method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 menuCd: document.getElementById('menuCd').value
             })
         })
-            .then(res => res.json())
-	        .then(data => {
-                let msg;
-                if(data.result === 'true') {
-					msg = '사용 가능한 값입니다.';
-                    chk = true;
-                } else {
-                    msg = '중복된 코드가 존재합니다. 다시 입력해주세요.';
-                    chk = false;
-                }
-                alert(msg);
-	        })
-	        .catch(error => alert('fetch 에러'));
+		.then(res => {
+			if(res.status === 200) {
+				alert('사용 가능한 값입니다.');
+				chk = true;
+			} else {
+				alert('이미 사용중인 코드입니다.');
+				chk = false;
+			}
+		})
+		.catch(() => {
+			alert('코드 중복확인 오류');
+		})
     }
 
     function fnSubmit(type) {
-        if([[${maMenuEntity.procType}]].indexOf('date') > -1) {
-            gfnPageProcess(type, [[${maMenuEntity.procType}]] + 'Proc');
+        if([[${maMenuVO.procType}]].indexOf('date') > -1) {
+            gfnPageProcess(type, [[${maMenuVO.procType}]] + 'Proc');
         } else {
             if(chk) {
-                gfnPageProcess(type, [[${maMenuEntity.procType}]] + 'Proc');
+                gfnPageProcess(type, [[${maMenuVO.procType}]] + 'Proc');
             } else {
                 alert("중복검사를 실시해주세요.");
             }
@@ -64,12 +51,12 @@
 	<div class="col-xl">
 		<div class="card mb-4">
 			<div class="card-header d-flex justify-content-between align-items-center">
-				<h5 class="mb-0">메뉴<th:block th:text="${maMenuEntity.procType eq 'insert' or maMenuEntity.procType eq 'lowerInsert' ? '등록' : '수정'}"></th:block></h5>
+				<h5 class="mb-0">메뉴<th:block th:text="${maMenuVO.procType eq 'insert' or maMenuVO.procType eq 'lowerInsert' ? '등록' : '수정'}"></th:block></h5>
 			</div>
 			<div class="card-body">
-				<form id="defaultFrm" th:object="${maMenuEntity}" method="post" onsubmit="return false;">
-					<input type="hidden" id="seq" name="seq" th:value="${menuDto.seq}">
-					<input type="hidden" id="upperCd" name="upperCd" th:value="${menuDto.upperCd}">
+				<form id="defaultFrm" th:object="${maMenuVO}" method="post" onsubmit="return false;">
+					<input type="hidden" id="seq" name="seq" th:value="${menuVO.seq}">
+					<input type="hidden" id="upperCd" name="upperCd" th:value="${menuVO.upperCd}">
 					<input type="hidden" th:field="*{pageNo}">
 					<input type="hidden" th:field="*{search1}">
 					<input type="hidden" th:field="*{searchOption}">
@@ -77,65 +64,65 @@
 					<div class="row">
 						<div class="mb-3 col-md-4">
 							<label for="menuClCd" class="form-label">구분</label>
-							<select class="form-select" id="menuClCd" name="menuClCd" th:value="${menuDto.menuClCd}" title="구분" required>
-								<option value="" th:selected="${menuDto.menuClCd} eq ''">선택</option>
-								<option value="ma" th:selected="${menuDto.menuClCd} eq 'ma'">관리자</option>
-								<option value="ft" th:selected="${menuDto.menuClCd} eq 'ft'">사용자</option>
+							<select class="form-select" id="menuClCd" name="menuClCd" th:value="${menuVO.menuClCd}" title="구분" required>
+								<option value="" th:selected="${menuVO.menuClCd} eq ''">선택</option>
+								<option value="ma" th:selected="${menuVO.menuClCd} eq 'ma'">관리자</option>
+								<option value="ft" th:selected="${menuVO.menuClCd} eq 'ft'">사용자</option>
 							</select>
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="menuOrd">순서</label>
-							<input type="text" class="form-control numOnly" id="menuOrd" name="menuOrd" th:value="${menuDto.menuOrd}" title="순서" th:maxlength="2" required/>
+							<input type="text" class="form-control numOnly" id="menuOrd" name="menuOrd" th:value="${menuVO.menuOrd}" title="순서" th:maxlength="2" required/>
 						</div>
 						<div class="mb-3 col-md-4">
 							<label class="form-label" for="useYn">사용여부</label>
-							<select class="form-select" id="useYn" name="useYn" th:value="${menuDto.useYn}" title="사용여부" required>
-								<option value="" th:selected="${menuDto.useYn} eq ''">선택</option>
-								<option value="Y" th:selected="${menuDto.useYn} eq 'Y'">사용</option>
-								<option value="N" th:selected="${menuDto.useYn} eq 'N'">미사용</option>
+							<select class="form-select" id="useYn" name="useYn" th:value="${menuVO.useYn}" title="사용여부" required>
+								<option value="" th:selected="${menuVO.useYn} eq ''">선택</option>
+								<option value="Y" th:selected="${menuVO.useYn} eq 'Y'">사용</option>
+								<option value="N" th:selected="${menuVO.useYn} eq 'N'">미사용</option>
 							</select>
 						</div>
 						<div class="mb-3 col-md-6">
 							<label class="form-label" for="menuNm">메뉴명</label>
-							<input type="text" class="form-control" id="menuNm" name="menuNm" th:value="${menuDto.menuNm}" title="메뉴명" th:maxlength="10" required/>
+							<input type="text" class="form-control" id="menuNm" name="menuNm" th:value="${menuVO.menuNm}" title="메뉴명" th:maxlength="10" required/>
 						</div>
 						<div class="mb-3 col-md-6">
 							<label class="form-label" for="menuCd">메뉴코드</label>
-							<th:block th:if="${maMenuEntity.procType eq 'insert' or maMenuEntity.procType eq 'lowerInsert'}">
+							<th:block th:if="${maMenuVO.procType eq 'insert' or maMenuVO.procType eq 'lowerInsert'}">
 								<div class="input-group">
-									<input type="text" class="form-control alphaOnly" id="menuCd" name="menuCd" th:value="${menuDto.menuCd}" title="메뉴코드" th:maxlength="10" required oninput="fnOnInput();"/>
+									<input type="text" class="form-control alphaOnly" id="menuCd" name="menuCd" th:value="${menuVO.menuCd}" title="메뉴코드" th:maxlength="10" required oninput="fnOnInput();"/>
 									<button class="btn btn-outline-primary" type="button" onclick="fnChkOverlap();">중복확인</button>
 								</div>
 							</th:block>
-							<th:block th:unless="${maMenuEntity.procType eq 'insert' or maMenuEntity.procType eq 'lowerInsert'}">
+							<th:block th:unless="${maMenuVO.procType eq 'insert' or maMenuVO.procType eq 'lowerInsert'}">
 								<input type="text" class="form-control-plaintext" th:field="*{menuCd}" readonly/>
 							</th:block>
 						</div>
 						<div class="mb-3">
 							<label class="form-label" for="menuUrl">URL</label>
-							<input type="text" class="form-control" id="menuUrl" name="menuUrl" th:value="${menuDto.menuUrl}" title="URL" th:maxlength="100" required/>
+							<input type="text" class="form-control" id="menuUrl" name="menuUrl" th:value="${menuVO.menuUrl}" title="URL" th:maxlength="100" required/>
 						</div>
 						<div class="mb-3">
 							<label class="form-label" for="menuCmt">설명</label>
-							<textarea class="form-control" id="menuCmt" th:field="${menuDto.menuCmt}" th:maxlength="100"></textarea>
+							<textarea class="form-control" id="menuCmt" th:field="${menuVO.menuCmt}" th:maxlength="100"></textarea>
 						</div>
 					</div>
 					<div class="text-end">
-						<th:block th:if="${maMenuEntity.procType eq 'insert'}">
+						<th:block th:if="${maMenuVO.procType eq 'insert'}">
 							<button type="button" class="btn btn-outline-primary" onclick="fnSubmit('submit')">등록</button>
 							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('list', 'list')">취소</button>
 						</th:block>
-						<th:block th:if="${maMenuEntity.procType eq 'lowerInsert'}">
+						<th:block th:if="${maMenuVO.procType eq 'lowerInsert'}">
 							<button type="button" class="btn btn-outline-primary" onclick="fnSubmit('submit')">등록</button>
-							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('view', 'listView', this.getAttribute('parameter'), 'seq')" th:parameter="${menuDto.seq}">취소</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('view', 'listView', this.getAttribute('parameter'), 'seq')" th:parameter="${menuVO.seq}">취소</button>
 						</th:block>
-						<th:block th:if="${maMenuEntity.procType eq 'update'}">
+						<th:block th:if="${maMenuVO.procType eq 'update'}">
 							<button type="button" class="btn btn-outline-primary" onclick="fnSubmit('update')">수정</button>
-							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('view', 'listView', this.getAttribute('parameter'), 'seq')" th:parameter="${menuDto.seq}">취소</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('view', 'listView', this.getAttribute('parameter'), 'seq')" th:parameter="${menuVO.seq}">취소</button>
 						</th:block>
-						<th:block th:if="${maMenuEntity.procType eq 'lowerUpdate'}">
+						<th:block th:if="${maMenuVO.procType eq 'lowerUpdate'}">
 							<button type="button" class="btn btn-outline-primary" onclick="fnSubmit('update')">수정</button>
-							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('view', 'listView', this.getAttribute('parameter'), 'seq')" th:parameter="${menuDto.seq}">취소</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('view', 'listView', this.getAttribute('parameter'), 'seq')" th:parameter="${menuVO.seq}">취소</button>
 						</th:block>
 					</div>
 				</form>
