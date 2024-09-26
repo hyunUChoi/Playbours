@@ -40,3 +40,5 @@ logging:
 mybatis:
   type-aliases-package: leave.meet.playbours
   mapper-locations: classpath:/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true

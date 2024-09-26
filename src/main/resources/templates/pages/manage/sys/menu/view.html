@@ -1,22 +1,12 @@
 <!DOCTYPE html>
-<html lang="en"
-      class="light-style layout-menu-fixed"
-      dir="ltr"
-      data-theme="theme-default"
-      data-assets-path="/manage/assets/"
-      data-template="vertical-menu-template-free"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{common/manage/layout/layout}"
-      layout:fragment="content"
->
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="/manage/assets/" data-template="vertical-menu-template-free" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/manage/layout/layout}" layout:fragment="content">
 <script th:inline="javascript">
     document.addEventListener("DOMContentLoaded", () => {
         gfnPageProcess('addList', 'viewAddList', document.getElementById('pageNo').value);
     });
 
     function fnInsertMenu() {
-		document.getElementById('upperCd').value = [[${maMenuEntity.menuCd}]];
+		document.getElementById('upperCd').value = [[${maMenuVO.menuCd}]];
         gfnPageProcess('insert', 'lowerInsertForm');
     }
 </script>
@@ -28,7 +18,7 @@
 				<h5 class="mb-0">메뉴정보</h5>
 			</div>
 			<div class="card-body">
-				<form id="defaultFrm" th:object="${maMenuEntity}" method="post" onsubmit="return false;">
+				<form id="defaultFrm" th:object="${maMenuVO}" method="post" onsubmit="return false;">
 					<input type="hidden" th:field="*{seq}">
 					<input type="hidden" th:field="*{upperCd}">
 					<input type="hidden" th:field="*{pageNo}">

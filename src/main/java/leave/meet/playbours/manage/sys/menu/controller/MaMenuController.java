@@ -67,19 +67,20 @@ public class MaMenuController {
     @ResponseBody
     @RequestMapping(value = "chkOverlap")
     public ResponseEntity<MaMenuVO> chkOverlap(@RequestBody MaMenuVO maMenuVO) {
-        HttpStatus status = maMenuService.selectCodeCount(maMenuVO) > 0 ? HttpStatus.CONFLICT : HttpStatus.OK;
+        HttpStatus status = maMenuService.selectCodeCount(maMenuVO) > 0 ? HttpStatus.UNPROCESSABLE_ENTITY : HttpStatus.OK;
         return new ResponseEntity<>(maMenuVO, status);
     }
 
     @RequestMapping("{procType:insert|lowerInsert|update|lowerUpdate|delete|lowerDelete}Proc")
     public String proc(@ModelAttribute("maMenuVO") MaMenuVO maMenuVO, BindingResult bindingResult, @PathVariable String procType, RedirectAttributes attributes) {
 
+        /*validator.validate(maMenuVO, bindingResult, MaMenuVO.insert.class);
+        if(bindingResult.hasErrors()) {
+            bindingResult.getAllErrors().stream().map(x -> x.getDefaultMessage()).collect(Collectors.joining(","));
+        }*/
+
         switch (procType) {
             case "insert" -> {
-                validator.validate(maMenuVO, bindingResult, MaMenuVO.insert.class);
-                if(bindingResult.hasErrors()) {
-                    //bindingResult.getAllErrors().stream(x -> x).collect(Collectors.joining(x, ","));
-                }
                 maMenuService.insertContents(maMenuVO);
                 return "redirect:/ma/sys/menu/list";
             }
@@ -107,23 +108,21 @@ public class MaMenuController {
 
         return "pages/manage/sys/menu/list";
     }
-/*
-    @RequestMapping("{procType:view|list}View")
-    public String view(@ModelAttribute("maMenuDto") MaMenuEntity maMenuEntity, @PathVariable String procType, Model model) {
 
-        MaMenuEntity searchVO = maMenuEntity;
+    @RequestMapping("{procType:view|list}View")
+    public String view(@ModelAttribute("maMenuVO") MaMenuVO maMenuVO, @PathVariable String procType, Model model) {
 
         if(procType.equals("view")) {
-            maMenuEntity = menuRepository.findOneByCode(maMenuEntity);
+            //maMenuVO = menuRepository.findOneByCode(maMenuEntity);
         } else {
-            maMenuEntity = menuRepository.findOne(maMenuEntity);
+            maMenuVO = maMenuService.selectContents(maMenuVO);
         }
 
         // 검색 조건 저장
-        maMenuEntity.setSearch(searchVO);
-        model.addAttribute("maMenuDto", maMenuEntity);
+        maMenuVO.setSearch(maMenuVO);
+        model.addAttribute("maMenuVO", maMenuVO);
 
         return "pages/manage/sys/menu/view";
-    }*/
+    }
 
 }

@@ -3,7 +3,49 @@
 <mapper namespace="leave.meet.playbours.manage.sys.menu.service.MaMenuDAO">
 
     <select id="selectList" parameterType="maMenuVO" resultType="maMenuVO">
-        SELECT * FROM T_MENU
+        SELECT SEQ
+             , REG_ID
+             , REG_DT
+             , MOD_ID
+             , MOD_DT
+             , MENU_CL_CD
+             , MENU_CD
+             , UPPER_CD
+             , MENU_NM
+             , MENU_ORD
+             , MENU_URL
+             , MENU_CMT
+             , USE_YN
+             , DEL_YN
+        FROM T_MENU
+        WHERE DEL_YN = 'N'
+        ORDER BY SEQ DESC
+    </select>
+
+    <select id="selectCount" parameterType="maMenuVO" resultType="int">
+        SELECT COUNT(1)
+        FROM T_MENU
+        WHERE DEL_YN = 'N'
+    </select>
+
+    <select id="selectContents" parameterType="maMenuVO" resultType="maMenuVO">
+        SELECT SEQ
+             , REG_ID
+             , REG_DT
+             , MOD_ID
+             , MOD_DT
+             , MENU_CL_CD
+             , MENU_CD
+             , UPPER_CD
+             , MENU_NM
+             , MENU_ORD
+             , MENU_URL
+             , MENU_CMT
+             , USE_YN
+             , DEL_YN
+        FROM T_MENU
+        WHERE DEL_YN = 'N'
+        AND SEQ = #{seq}
     </select>
 
     <select id="selectCodeCount" parameterType="maMenuVO" resultType="int">
@@ -15,8 +57,7 @@
 
     <insert id="insertContents" parameterType="maMenuVO">
         INSERT INTO T_MENU(
-              SEQ
-            , REG_ID
+              REG_ID
             , MENU_CL_CD
             , MENU_CD
             , UPPER_CD
@@ -26,8 +67,7 @@
             , MENU_CMT
             , USE_YN
         ) VALUES (
-              #{}
-            , #{admin}
+              'admin'
             , #{menuClCd}
             , #{menuCd}
             , #{upperCd}

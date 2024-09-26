@@ -21,6 +21,16 @@ public class MaMenuServiceImpl implements MaMenuService {
     }
 
     @Override
+    public int selectCount(MaMenuVO maMenuVO) {
+        return 0;
+    }
+
+    @Override
+    public MaMenuVO selectContents(MaMenuVO maMenuVO) {
+        return maMenuDAO.selectContents(maMenuVO);
+    }
+
+    @Override
     public int selectCodeCount(MaMenuVO maMenuVO) {
         return maMenuDAO.selectCodeCount(maMenuVO);
     }

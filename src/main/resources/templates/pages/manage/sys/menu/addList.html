@@ -23,14 +23,14 @@
 	</thead>
 	<tbody>
 		<th:block th:if="${#lists.size(resultList) gt 0}">
-			<tr class="text-body" th:each="result : ${resultList.content}" onclick="gfnPageProcess('view', 'listView', this.getAttribute('parameter'), 'seq')" th:parameter="${result.seq}" style="cursor: pointer;">
+			<tr class="text-body" th:each="result : ${resultList}" th:onclick="gfnPageProcess('view', 'listView', [[${result.seq}]],'seq')" th:parameter="${result.seq}" style="cursor: pointer;">
 				<td th:text="${result.menuClCd eq 'ma' ? '관리자' : '사용자'}"></td>
 				<td th:text="${result.menuNm}"></td>
 				<td th:text="${result.menuCd}"></td>
 				<td><span class="text-truncate" th:text="${result.menuUrl}"></span></td>
 				<td th:text="${result.menuOrd}" style="text-align: center;"></td>
-				<td th:text="${result.frstRegrId}"></td>
-				<td th:text="${#dates.format(result.frstRegrDt, 'yyyy-MM-dd')}"></td>
+				<td th:text="${result.regId}"></td>
+				<td th:text="${#dates.format(result.regDt, 'yyyy-MM-dd')}"></td>
 			</tr>
 		</th:block>
 		<th:block th:unless="${#lists.size(resultList) gt 0}">
@@ -42,7 +42,7 @@
 </table>
 <th:block th:if="${maMenuVO.procType eq 'list'}">
 	<div class="demo-inline-spacing">
-		<button class="dt-button create-new btn btn-primary" onclick="gfnPageProcess('insert', 'insertForm')" style="position: absolute;right: 0;bottom: 1rem;">
+		<button class="dt-button create-new btn btn-primary" onclick="gfnPageProcess('insert', 'insertForm')" style="float: right;">
 			<span><i class="bx bx-plus me-sm-1"></i>
 				<span class="d-none d-sm-inline-block">Add New Record</span>
 			</span>

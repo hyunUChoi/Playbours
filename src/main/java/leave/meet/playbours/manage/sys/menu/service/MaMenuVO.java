@@ -10,6 +10,7 @@ import org.apache.ibatis.type.Alias;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @SuppressWarnings("unused")
@@ -32,13 +33,13 @@ public class MaMenuVO extends CmmnDto implements Serializable {
     private String regId;
 
     // 최초등록일
-    private String regDt;
+    private Date regDt;
 
     // 최종수정자
     private String modId;
 
     // 최종수정일
-    private String modDt;
+    private Date modDt;
 
     // 메뉴 구분
     @NotBlank(groups = {insert.class}, message = "메뉴구분은 필수값입니다.")

@@ -9,6 +9,10 @@ public interface MaMenuDAO {
 
     List<MaMenuVO> selectList(MaMenuVO maMenuVO);
 
+    int selectCount(MaMenuVO maMenuVO);
+
+    MaMenuVO selectContents(MaMenuVO maMenuVO);
+
     int selectCodeCount(MaMenuVO maMenuVO);
 
     void insertContents(MaMenuVO maMenuVO);
