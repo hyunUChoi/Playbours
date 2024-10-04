@@ -1,18 +1,18 @@
 package leave.meet.playbours.manage.sys.auth.service;
 
+import leave.meet.playbours.manage.sys.menu.service.MaMenuVO;
+
 import java.util.List;
 
 public interface MaAuthService {
 
-    public String selectContent()throws Exception;
+    List<MaAuthVO> selectList(MaAuthVO maAuthVO);
 
-    public List<MaAuthVO> selectList()throws Exception;
+    int selectCount(MaAuthVO maAuthVO);
 
-    public int  selectCount()throws Exception;
+    MaAuthVO selectContents(MaAuthVO maAuthVO);
 
-    public int insertContet()throws Exception;
+    int selectCodeCount(MaAuthVO maAuthVO);
 
-    public int updateContet()throws Exception;
-
-    public int deleteContent()throws Exception;
+    void insertContents(MaAuthVO maAuthVO);
 }
