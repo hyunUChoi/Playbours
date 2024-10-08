@@ -40,6 +40,11 @@ public class MaMenuController {
 
         int pageNo = maMenuVO.getPageNo();
         int pageSize = 10;
+
+        maMenuVO.setProcType(procType);
+        if(procType.equalsIgnoreCase("view")) {
+            maMenuVO.setUpperCd(maMenuVO.getMenuCd());
+        }
         List<MaMenuVO> resultList = maMenuService.selectList(maMenuVO);
 
         model.addAttribute("resultList", resultList);
@@ -56,7 +61,7 @@ public class MaMenuController {
         menuVO.setUpperCd(maMenuVO.getUpperCd());
 
         if(procType.equals("update") || procType.equals("lowerUpdate")) {
-            //menuVO = menuRepository.findOne(maMenuEntity);
+            menuVO = maMenuService.selectContents(maMenuVO);
         }
 
         model.addAttribute("menuVO", menuVO);
@@ -90,11 +95,13 @@ public class MaMenuController {
                 attributes.addFlashAttribute("maMenuDto", maMenuEntity);
                 return "redirect:/ma/sys/menu/listView";
             }
+            */
             case "update", "lowerUpdate" -> {
-                menuRepository.update(maMenuEntity);
-                attributes.addFlashAttribute("maMenuDto", maMenuEntity);
+                maMenuService.updateContents(maMenuVO);
+                attributes.addFlashAttribute("maMenuVO", maMenuVO);
                 return "redirect:/ma/sys/menu/listView";
             }
+            /*
             case "delete" -> {
                 menuRepository.delete(maMenuEntity);
                 return "redirect:/ma/sys/menu/list";

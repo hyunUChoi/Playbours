@@ -16,4 +16,6 @@ public interface MaMenuDAO {
     int selectCodeCount(MaMenuVO maMenuVO);
 
     void insertContents(MaMenuVO maMenuVO);
+
+    void updateContents(MaMenuVO maMenuVO);
 }

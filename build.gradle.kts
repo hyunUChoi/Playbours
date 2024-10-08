@@ -35,6 +35,8 @@ dependencies {
     // fileUpload
     implementation("commons-io:commons-io:2.11.0")
 
+    implementation("org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4:1.16")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.2")

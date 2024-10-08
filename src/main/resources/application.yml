@@ -10,10 +10,10 @@ spring:
     cache: false
 
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     username: test_admin
     password: test1234!
-    url: jdbc:mysql://118.40.116.150:8888/playbours?serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:log4jdbc:mysql://118.40.116.150:8888/playbours?serverTimezone=UTC&characterEncoding=UTF-8
 
   jpa:
     database: mysql
@@ -42,12 +42,17 @@ file:
   upload:
     path: 'C:\Playbours\attach\upload\'
 
-logging:
-  level:
-    root: info
-
 mybatis:
   type-aliases-package: leave.meet.playbours
   mapper-locations: classpath:/mapper/*.xml
   configuration:
     map-underscore-to-camel-case: true
+
+logging:
+  level:
+    jdbc:
+      sqlonly: info
+      sqltiming: OFF
+      resultsettable: OFF
+      audit: OFF
+      resultset: OFF

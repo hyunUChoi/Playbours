@@ -19,6 +19,9 @@
              , DEL_YN
         FROM T_MENU
         WHERE DEL_YN = 'N'
+        <if test='procType == "view"'>
+            AND UPPER_CD = #{upperCd}
+        </if>
         ORDER BY SEQ DESC
     </select>
 
@@ -78,5 +81,20 @@
             , #{useYn}
         )
     </insert>
+
+    <update id="updateContents" parameterType="maMenuVO">
+        UPDATE T_MENU
+        SET MOD_ID = 'modId'
+          , MOD_DT = NOW()
+          , MENU_CL_CD = #{menuClCd}
+          , MENU_CD = #{menuCd}
+          , UPPER_CD = #{upperCd}
+          , MENU_NM = #{menuNm}
+          , MENU_ORD = #{menuOrd}
+          , MENU_URL = #{menuUrl}
+          , MENU_CMT = #{menuCmt}
+          , USE_YN = #{useYn}
+        WHERE SEQ = #{seq}
+    </update>
 
 </mapper>

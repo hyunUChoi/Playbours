@@ -39,4 +39,9 @@ public class MaMenuServiceImpl implements MaMenuService {
     public void insertContents(MaMenuVO maMenuVO) {
         maMenuDAO.insertContents(maMenuVO);
     }
+
+    @Override
+    public void updateContents(MaMenuVO maMenuVO) {
+        maMenuDAO.updateContents(maMenuVO);
+    }
 }

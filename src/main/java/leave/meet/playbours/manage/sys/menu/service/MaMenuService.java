@@ -13,4 +13,6 @@ public interface MaMenuService {
     int selectCodeCount(MaMenuVO maMenuVO);
 
     void insertContents(MaMenuVO maMenuVO);
+
+    void updateContents(MaMenuVO maMenuVO);
 }
