@@ -14,7 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class CmmnDto implements Serializable {
     // 현재 페이지
-    private int pageNo = 1;
+    private int pageNo = 0;
 
     // 구분값
     private String procType;

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="leave.meet.playbours.manage.sys.menu.service.MaMenuDAO">
 
-    <select id="selectList" parameterType="maMenuVO" resultType="maMenuVO">
+    <select id="selectList" parameterType="pagingResult" resultType="maMenuVO">
         SELECT SEQ
              , REG_ID
              , REG_DT
@@ -19,9 +19,29 @@
              , DEL_YN
         FROM T_MENU
         WHERE DEL_YN = 'N'
-        <if test='procType == "view"'>
-            AND UPPER_CD = #{upperCd}
-        </if>
+        AND UPPER_CD = ''
+        ORDER BY SEQ DESC
+        LIMIT #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <select id="selectLowerList" parameterType="maMenuVO" resultType="maMenuVO">
+        SELECT SEQ
+             , REG_ID
+             , REG_DT
+             , MOD_ID
+             , MOD_DT
+             , MENU_CL_CD
+             , MENU_CD
+             , UPPER_CD
+             , MENU_NM
+             , MENU_ORD
+             , MENU_URL
+             , MENU_CMT
+             , USE_YN
+             , DEL_YN
+        FROM T_MENU
+        WHERE DEL_YN = 'N'
+        AND UPPER_CD = #{upperCd}
         ORDER BY SEQ DESC
     </select>
 
@@ -49,6 +69,26 @@
         FROM T_MENU
         WHERE DEL_YN = 'N'
         AND SEQ = #{seq}
+    </select>
+
+    <select id="selectContentsByUpperCd" parameterType="maMenuVO" resultType="maMenuVO">
+        SELECT SEQ
+             , REG_ID
+             , REG_DT
+             , MOD_ID
+             , MOD_DT
+             , MENU_CL_CD
+             , MENU_CD
+             , UPPER_CD
+             , MENU_NM
+             , MENU_ORD
+             , MENU_URL
+             , MENU_CMT
+             , USE_YN
+             , DEL_YN
+        FROM T_MENU
+        WHERE DEL_YN = 'N'
+        AND MENU_CD = #{upperCd}
     </select>
 
     <select id="selectCodeCount" parameterType="maMenuVO" resultType="int">
@@ -95,6 +135,22 @@
           , MENU_CMT = #{menuCmt}
           , USE_YN = #{useYn}
         WHERE SEQ = #{seq}
+    </update>
+
+    <update id="deleteContents" parameterType="maMenuVO">
+        UPDATE T_MENU
+        SET MOD_ID = 'modId'
+          , MOD_DT = NOW()
+          , DEL_YN = 'Y'
+        WHERE SEQ = #{seq}
+    </update>
+
+    <update id="deleteLowerContents" parameterType="maMenuVO">
+        UPDATE T_MENU
+        SET MOD_ID = 'modId'
+          , MOD_DT = NOW()
+          , DEL_YN = 'Y'
+        WHERE UPPER_CD = #{menuCd}
     </update>
 
 </mapper>

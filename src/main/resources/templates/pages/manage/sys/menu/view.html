@@ -58,14 +58,14 @@
 					<div class="text-end">
 						<button type="button" class="btn btn-outline-primary" onclick="fnInsertMenu();">하위등록</button>
 						<th:block th:if="*{upperCd eq ''}">
-							<button type="button" class="btn btn-outline-info" onclick="gfnPageProcess('insert', 'updateForm')">수정</button>
-							<button type="button" class="btn btn-outline-danger" onclick="gfnPageProcess('delete', 'deleteProc')">삭제</button>
-							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('list', 'list')">목록</button>
+							<button type="button" class="btn btn-outline-info" th:onclick="gfnPageProcess('insert', 'updateForm')">수정</button>
+							<button type="button" class="btn btn-outline-danger" th:onclick="gfnPageProcess('delete', 'deleteProc')">삭제</button>
+							<button type="button" class="btn btn-outline-secondary" th:onclick="gfnPageProcess('list', 'list')">목록</button>
 						</th:block>
 						<th:block th:unless="*{upperCd eq ''}">
-							<button type="button" class="btn btn-outline-info" onclick="gfnPageProcess('insert', 'lowerUpdateForm')">수정</button>
-							<button type="button" class="btn btn-outline-danger" onclick="gfnPageProcess('delete', 'lowerDeleteProc')">삭제</button>
-							<button type="button" class="btn btn-outline-secondary" onclick="gfnPageProcess('view', 'viewView', this.getAttribute('parameter'), 'upperCd')" th:parameter="*{upperCd}">목록</button>
+							<button type="button" class="btn btn-outline-info" th:onclick="gfnPageProcess('insert', 'lowerUpdateForm')">수정</button>
+							<button type="button" class="btn btn-outline-danger" th:onclick="gfnPageProcess('delete', 'lowerDeleteProc')">삭제</button>
+							<button type="button" class="btn btn-outline-secondary" th:onclick="gfnPageProcess('view', 'viewView', [[*{upperCd}]], 'upperCd')">목록</button>
 						</th:block>
 					</div>
 				</form>

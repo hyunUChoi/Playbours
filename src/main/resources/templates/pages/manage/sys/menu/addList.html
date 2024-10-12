@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="/manage/assets/" data-template="vertical-menu-template-free" xmlns:th="http://www.thymeleaf.org">
+<script type="javascript">
+	document.addEventListener("DOMContentLoaded", () => {
+		PAGE.paging([[${resultList}]]);
+	});
+</script>
 <table class="datatables-users table border-top dataTable no-footer dtr-column" style="width: 100%;">
 	<colgroup>
 		<col style="width: 10%;">
@@ -48,10 +53,7 @@
 			</span>
 		</button>
 	</div>
+	<nav aria-label="Page navigation" id="pagingArea">
+	</nav>
 </th:block>
-<script th:inline="javascript">
-    document.addEventListener("DOMContentLoaded", () => {
-
-    });
-</script>
 </html>

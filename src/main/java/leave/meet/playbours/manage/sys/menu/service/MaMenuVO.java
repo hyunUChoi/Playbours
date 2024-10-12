@@ -22,6 +22,8 @@ import java.util.List;
 public class MaMenuVO extends CmmnDto implements Serializable {
 
     public interface insert{};
+    public interface lowerInsert{};
+    public interface update {};
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -42,33 +44,34 @@ public class MaMenuVO extends CmmnDto implements Serializable {
     private Date modDt;
 
     // 메뉴 구분
-    @NotBlank(groups = {insert.class}, message = "메뉴구분은 필수값입니다.")
+    @NotBlank(groups = {insert.class, lowerInsert.class, update.class}, message = "메뉴구분은 필수값입니다.")
     private String menuClCd;
 
     // 메뉴코드
-    @NotBlank(groups = {insert.class}, message = "메뉴코드는 필수값입니다.")
+    @NotBlank(groups = {insert.class, lowerInsert.class, update.class}, message = "메뉴코드는 필수값입니다.")
     private String menuCd;
 
     // 상위 메뉴코드
+    @NotBlank(groups = {lowerInsert.class}, message = "상위 메뉴코드는 필수값입니다.")
     private String upperCd;
 
     // 메뉴명
-    @NotBlank(groups = {insert.class}, message = "메뉴명은 필수값입니다.")
+    @NotBlank(groups = {insert.class, lowerInsert.class, update.class}, message = "메뉴명은 필수값입니다.")
     private String menuNm;
 
     // 순서
-    @NotBlank(groups = {insert.class}, message = "메뉴순서는 필수값입니다.")
+    @NotBlank(groups = {insert.class, lowerInsert.class, update.class}, message = "메뉴순서는 필수값입니다.")
     private String menuOrd;
 
     // url
-    @NotBlank(groups = {insert.class}, message = "메뉴 URL은 필수값입니다.")
+    @NotBlank(groups = {insert.class, lowerInsert.class, update.class}, message = "메뉴 URL은 필수값입니다.")
     private String menuUrl;
 
     // 메뉴설명
     private String menuCmt;
 
     // 사용여부
-    @NotBlank(groups = {insert.class}, message = "사용여부는 필수값입니다.")
+    @NotBlank(groups = {insert.class, lowerInsert.class, update.class}, message = "사용여부는 필수값입니다.")
     private String useYn;
 
     // 삭제여부
